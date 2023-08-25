@@ -19,13 +19,17 @@ int main(void)
     while (1)
     {
         line = readline("minishell> ");
+		add_history(line);
         if (line)
         {
             free(line);
             line = 0;
         }
         else
+		{
+			printf("exit");
             exit(1);
+		}
     }
     return (0);
 }
