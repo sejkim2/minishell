@@ -6,10 +6,9 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/08/25 16:04:14 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/08/25 16:09:19 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
 
 NAME = minishell
 CC = cc
@@ -25,7 +24,6 @@ HEADER = includes/minishell.h
 	$(CC) $(C_FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJS)
-# adsfasdfafsdasdfsdfasdfasfd 
 # @make -C ./mylib
 	$(CC) $(C_FLAGS) $(SRCS) -o $@ -L ./readline/lib -lreadline -lncurses
 
