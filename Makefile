@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
+#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/08/25 16:09:19 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/08/28 14:34:13 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = minishell
 CC = cc
 C_FLAGS = -Wall -Werror -Wextra
 
-SRCS = srcs/test.c	\
+SRCS = srcs/main.c	\
 
 OBJS = $(SRCS:%.c=%.o)
 HEADER = includes/minishell.h
