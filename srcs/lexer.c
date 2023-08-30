@@ -14,8 +14,8 @@
 
 static void init_token(t_token *token, t_type check_type, char *value)
 {
-    token->type = check_type;
-    token->value = value;
+    token->token_type = check_type;
+    token->token_value = value;
 }
 
 static t_token *make_token(t_type check_type, char *value)
@@ -110,8 +110,11 @@ static int check_is_meta_character(char *cmd_line, int index)
         return (0);
 }
 
-static int check_is_quote(char ch)
+static int check_is_quote(char *cmd_line, int index)
 {
+    char ch;
+
+    ch = cmd_line[index];
     if (ch == '\'' || ch == '\"')
         return (1);
     else
@@ -129,11 +132,11 @@ static int check_is_white_space(char *cmd_line, int index)
         return (0);
 }
 
-static int check_is_seperator(char ch, t_type *check_type)
+static int check_is_seperator(char *cmd_line, int index)
 {
-    if (check_is_meta_character(ch, check_type) \
-        || check_is_quote(ch, check_type) \
-        || check_is_white_space(ch, check_type))
+    if (check_is_meta_character(cmd_line, index) \
+        || check_is_quote(cmd_line, index) \
+        || check_is_white_space(cmd_line, index))
         return (1);
     else
         return (0);
@@ -177,14 +180,14 @@ static void set_other_character(char ch, t_type *token_type)
         *token_type = DOLLOR_SIGN;
 }
 
-static void set_token_type(char *cmd_line, int index, t_type *token_tpye)
+static void set_token_type(char *cmd_line, int index, t_type *token_type)
 {
     char ch;
 
     ch = cmd_line[index];
-    if (check_is_meta_character(ch))
+    if (check_is_meta_character(cmd_line, index))
     {
-        if (cmd_line[index + 1] == '&' || cmd_line[index + 1] == '|' || cmd_line[index + 1] == '<' \
+        if (cmd_line[index + 1] == '&' || cmd_line[index + 1] == '|' || cmd_line[index + 1] == '<' ||\
             cmd_line[index + 1] == '>')
             set_double_meta_character(ch, token_type);
         else
@@ -205,7 +208,7 @@ t_list *lexer(char *cmd_line)
     i = 0;
     start = 0;
     token_type = WORD;
-    list = make_list(void);
+    list = make_list();
     
     while (cmd_line[i])
     {
