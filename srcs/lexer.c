@@ -6,40 +6,51 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/30 13:49:53 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/30 16:00:12 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-// static void init_token(t_token *token, char *type, char *value)
-// {
-//     token->type = ft_strdup(type);
-//     token->value = ft_strdup(value);
-// }
+static void init_token(t_token *token, t_type check_type, char *value)
+{
+    token->type = check_type;
+    token->value = value;
+}
 
-// static t_token *make_token(char *type, char *value)
-// {
-//     t_token *new_token;
+static t_token *make_token(t_type check_type, char *value)
+{
+    t_token *new_token;
 
-//     new_token = (t_token *)malloc(sizeof(t_token));
-//     /* check null safety */
-//     init_token(new_token, type, value);
-//     return (new_token);
-// }
+    new_token = (t_token *)malloc(sizeof(t_token));
+    /* check null safety */
+    init_token(new_token, check_type, value);
+    return (new_token);
+}
 
-// static t_token_node *make_node(char *cmd_line, int start, int end, t_type check_type)
-// {
-//     char *str;
-//     t_token_node *new_node;
+static t_token_node *make_node(char *cmd_line, int start, int end, t_type check_type)
+{
+    char *value;
+    int i;
+    t_token_node *new_node;
 
-//     new_node = (t_token_node *)malloc(sizeof(t_token_node));
-//     str = (char *)malloc(sizeof(char) * (end - start))
-//     /* check null safety */
-//     new_node->token = make_token(type, value);
-//     new_node->next = 0;
-//     return (new_node);
-// }
+    //strdup로 수정 예정
+    value = (char *)malloc(sizeof(char) * (end - start + 2));
+    i = 0;
+    new_node = (t_token_node *)malloc(sizeof(t_token_node));
+    
+    while (start <= end)
+    {
+        value[i] = cmd_line[i];
+        i++;
+        start++;
+    }
+    value[i] = '\0';
+    /* check null safety */
+    new_node->token = make_token(check_type, value);
+    new_node->next = 0;
+    return (new_node);
+}
 
 static t_linked_list *make_list(void)
 {
@@ -85,6 +96,7 @@ static void push_back_list(t_linked_list *list, t_token_node *node)
 //         return (0);
 // }
 
+
 static int check_is_meta_character(char *cmd_line, int index)
 {
     char ch;
@@ -127,6 +139,61 @@ static int check_is_seperator(char ch, t_type *check_type)
         return (0);
 }
 
+static void set_double_meta_character(char ch, t_type *token_type)
+{
+    if (ch == '&')
+        *token_type = AND_IF;
+    else if (ch == '|')
+        *token_type = OR_IF;
+    else if (ch == '<')
+        *token_type = HEREDOC;
+    else
+        *token_type = APPEND;
+}
+
+static void set_single_meta_character(char ch, t_type *token_type)
+{
+    if (ch == '&')
+        *token_type = WORD;
+    else if (ch == '|')
+        *token_type = PIPE;
+    else if (ch == '<')
+        *token_type = IN_REDIRECTION;
+    else if (ch == '>')
+        *token_type = OUT_REDIRECTION;
+    else if (ch == '(')
+        *token_type = LEFT_BLANKET;
+    else
+        *token_type = RIGHT_BLANKET;
+}
+
+static void set_other_character(char ch, t_type *token_type)
+{
+    if (ch == '\'')
+        *token_type = SINGLE_QUOTE;
+    else if (ch == '\"')
+        *token_type = DOUBLE_QUOTE;
+    else
+        *token_type = DOLLOR_SIGN;
+}
+
+static void set_token_type(char *cmd_line, int index, t_type *token_tpye)
+{
+    char ch;
+
+    ch = cmd_line[index];
+    if (check_is_meta_character(ch))
+    {
+        if (cmd_line[index + 1] == '&' || cmd_line[index + 1] == '|' || cmd_line[index + 1] == '<' \
+            cmd_line[index + 1] == '>')
+            set_double_meta_character(ch, token_type);
+        else
+            set_single_meta_character(ch, token_type);
+    }
+    else
+        set_other_character(ch, token_type);
+}
+
 /* lexical analysis */
 t_list *lexer(char *cmd_line)
 {
@@ -149,19 +216,24 @@ t_list *lexer(char *cmd_line)
         start = i;
         if (check_is_meta_character(cmd_line, i))
         {
-            token_type = set_token_type(cmd_line, i);
-            push_back_list(&list, make_node(cmd_line, start, i, token_type));
+            set_token_type(cmd_line, i, &token_type);
             if (token_type == AND_IF || token_type == OR_IF || token_type == HEREDOC || token_type == APPEND)
+            {
+                push_back_list(&list, make_node(cmd_line, start, start + 1, token_type));
                 i = i + 2;
+            }
             else
+            {
+                push_back_list(&list, make_node(cmd_line, start, start, token_type));
                 i = i + 1;
+            }
         }
         else
         {
             while (!check_is_seperator(cmd_line, i))
                 i++;
             token_type = WORD;
-            push_back_list(&list, make_node(cmd_line, start, i, token_type));
+            push_back_list(&list, make_node(cmd_line, start, i - 1, token_type));
         }
     }
 }

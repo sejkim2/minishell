@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/30 13:31:58 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/30 16:00:42 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef struct s_token_node
 typedef struct s_linkded_list
 {
     int num_of_node;
-    t_node *head;
-    t_node *tail;
+    t_token_node *head;
+    t_token_node *tail;
 }   t_linked_list;
 
 t_list *lexer(char *cmd_line);
