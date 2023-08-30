@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/29 19:57:23 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/08/30 13:31:58 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 
 typedef enum e_type
 {
-    WORD,
+    WORD = 0,
     PIPE,
     AND_IF,
     OR_IF,
@@ -62,7 +62,7 @@ typedef struct s_linkded_list
     t_node *tail;
 }   t_linked_list;
 
-t_list *tokenize(char *str);
+t_list *lexer(char *cmd_line);
 
 
 #endif
