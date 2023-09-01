@@ -15,7 +15,7 @@ CC = cc
 C_FLAGS = -Wall -Werror -Wextra
 
 SRCS = srcs/main.c	\
-	srcs/lexer.c
+	srcs/tokenize_and_lexer.c
 
 OBJS = $(SRCS:%.c=%.o)
 HEADER = includes/minishell.h

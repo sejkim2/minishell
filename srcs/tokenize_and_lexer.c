@@ -69,30 +69,6 @@ static void push_back_list(t_linked_list *list, t_token_node *node)
     list->num_of_node++;
 }
 
-// static int check_is_heredoc_or_append_or_andif_or_orif(char *cmd_line, int index, t_type *check_type)
-// {
-//     char ch;
-
-//     ch = cmd_line[index];
-//     if (ch == cmd_line[index + 1])
-//     {
-//         if (ch == '&')
-//             *check_type = AND_IF;
-//         else if (ch == '|')
-//             *check_type = OR_IF;
-//         else if (ch == '<')
-//             *check_type = IN_REDIRECTION;
-//         else if (ch == '>')
-//             *check_type = OUT_REDIRECTION;
-//         else
-//             return (0);
-//         return (1);
-//     }
-//     else
-//         return (0);
-// }
-
-
 static int check_is_meta_character(char *cmd_line, int index)
 {
     char ch;
@@ -100,7 +76,7 @@ static int check_is_meta_character(char *cmd_line, int index)
     ch = cmd_line[index];
     if (ch == '&'|| ch == '|' \
     || ch == '<' || ch == '>' \
-    || ch == ')' || ch == '(')
+    || ch == '(' || ch == ')')
         return (1);
     else
         return (0);
@@ -123,7 +99,6 @@ static int check_is_white_space(char *cmd_line, int index)
 
     ch = cmd_line[index];
     if (ch == ' ' || ch == '\t' || ch == '\n')
-    // if (ch == ' ')
         return (1);
     else
         return (0);
@@ -184,8 +159,7 @@ static void set_token_type(char *cmd_line, int index, t_type *token_type)
     ch = cmd_line[index];
     if (check_is_meta_character(cmd_line, index))
     {
-        if (cmd_line[index + 1] == '&' || cmd_line[index + 1] == '|' || cmd_line[index + 1] == '<' ||\
-            cmd_line[index + 1] == '>')
+        if ((cmd_line[index] == cmd_line[index + 1]) && (cmd_line[index] != '(' && cmd_line[index] != ')'))
             set_double_meta_character(ch, token_type);
         else
             set_single_meta_character(ch, token_type);
@@ -211,8 +185,10 @@ t_linked_list *lexer(char *cmd_line)
     {
         while (cmd_line[i] && check_is_white_space(cmd_line, i))
             i++;
+        if (!cmd_line[i])
+            break;
         start = i;
-        if (check_is_meta_character(cmd_line, i))
+        if (check_is_meta_character(cmd_line, i) || check_is_quote(cmd_line, i))
         {
             set_token_type(cmd_line, i, &token_type);
             if (token_type == AND_IF || token_type == OR_IF || token_type == HEREDOC || token_type == APPEND)
@@ -238,7 +214,7 @@ t_linked_list *lexer(char *cmd_line)
     t_token_node *cur = list->head;
     while (cur)
     {
-        printf("[token : %s\n]", cur->token->token_value);
+        printf("[ token : %s type : %d]\n", cur->token->token_value, cur->token->token_type);
         cur = cur->next;
     }
     return (list);
