@@ -22,8 +22,12 @@
 # include <string.h>
 # include <term.h>
 # include <unistd.h>
-# include "../readline/include/readline/readline.h"
-# include "../readline/include/readline/history.h"
+// # include "../readline_dir/include/readline/readline.h"
+// # include "../readline_dir/include/readline/history.h"
+# include <readline/readline.h>
+# include <readline/history.h>
+// # include "../readline/include/readline/readline.h"
+// # include "../readline/include/readline/history.h"
 # include "../mylib/includes/libft.h"
 
 typedef enum e_type
@@ -52,7 +56,7 @@ typedef struct s_token
 typedef struct s_token_node
 {
     t_token *token;
-    struct s_node *next;
+    struct s_token_node *next;
 }   t_token_node;
 
 typedef struct s_linkded_list
@@ -62,7 +66,7 @@ typedef struct s_linkded_list
     t_token_node *tail;
 }   t_linked_list;
 
-t_list *lexer(char *cmd_line);
+t_linked_list *lexer(char *cmd_line);
 
 
 #endif

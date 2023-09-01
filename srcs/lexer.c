@@ -38,15 +38,11 @@ static t_token_node *make_node(char *cmd_line, int start, int end, t_type check_
     value = (char *)malloc(sizeof(char) * (end - start + 2));
     i = 0;
     new_node = (t_token_node *)malloc(sizeof(t_token_node));
+    /* check null safety */
     
     while (start <= end)
-    {
-        value[i] = cmd_line[i];
-        i++;
-        start++;
-    }
+        value[i++] = cmd_line[start++];
     value[i] = '\0';
-    /* check null safety */
     new_node->token = make_token(check_type, value);
     new_node->next = 0;
     return (new_node);
@@ -127,6 +123,7 @@ static int check_is_white_space(char *cmd_line, int index)
 
     ch = cmd_line[index];
     if (ch == ' ' || ch == '\t' || ch == '\n')
+    // if (ch == ' ')
         return (1);
     else
         return (0);
@@ -198,7 +195,7 @@ static void set_token_type(char *cmd_line, int index, t_type *token_type)
 }
 
 /* lexical analysis */
-t_list *lexer(char *cmd_line)
+t_linked_list *lexer(char *cmd_line)
 {
     int i;
     int start;
@@ -212,31 +209,37 @@ t_list *lexer(char *cmd_line)
     
     while (cmd_line[i])
     {
-        while (check_is_white_space(cmd_line, i))
+        while (cmd_line[i] && check_is_white_space(cmd_line, i))
             i++;
-        if (cmd_line[i] == '\0')
-            break;
         start = i;
         if (check_is_meta_character(cmd_line, i))
         {
             set_token_type(cmd_line, i, &token_type);
             if (token_type == AND_IF || token_type == OR_IF || token_type == HEREDOC || token_type == APPEND)
             {
-                push_back_list(&list, make_node(cmd_line, start, start + 1, token_type));
+                push_back_list(list, make_node(cmd_line, start, start + 1, token_type));
                 i = i + 2;
             }
             else
             {
-                push_back_list(&list, make_node(cmd_line, start, start, token_type));
+                push_back_list(list, make_node(cmd_line, start, start, token_type));
                 i = i + 1;
             }
         }
         else
         {
-            while (!check_is_seperator(cmd_line, i))
+            while (cmd_line[i] && !check_is_seperator(cmd_line, i))
                 i++;
             token_type = WORD;
-            push_back_list(&list, make_node(cmd_line, start, i - 1, token_type));
+            push_back_list(list, make_node(cmd_line, start, i - 1, token_type));
         }
     }
+
+    t_token_node *cur = list->head;
+    while (cur)
+    {
+        printf("[token : %s\n]", cur->token->token_value);
+        cur = cur->next;
+    }
+    return (list);
 }

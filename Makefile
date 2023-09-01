@@ -15,6 +15,7 @@ CC = cc
 C_FLAGS = -Wall -Werror -Wextra
 
 SRCS = srcs/main.c	\
+	srcs/lexer.c
 
 OBJS = $(SRCS:%.c=%.o)
 HEADER = includes/minishell.h
@@ -25,7 +26,8 @@ HEADER = includes/minishell.h
 
 $(NAME) : $(OBJS)
 # @make -C ./mylib
-	$(CC) $(C_FLAGS) $(SRCS) -o $@ -L ./readline/lib -lreadline -lncurses
+# $(CC) $(C_FLAGS) $(SRCS) -o $@ -L ./readline/lib -lreadline -lncurses
+	$(CC) $(C_FLAGS) $(SRCS) -o $@ -lreadline -lncurses
 
 all : $(NAME)
 
