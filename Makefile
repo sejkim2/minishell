@@ -6,15 +6,15 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/08/25 16:09:19 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/08/25 16:37:39 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 C_FLAGS = -Wall -Werror -Wextra
-
-SRCS = srcs/test.c	\
+LIBFTDIR = ./mylib/mylib.a
+SRCS = srcs/main.c	\
 
 OBJS = $(SRCS:%.c=%.o)
 HEADER = includes/minishell.h
@@ -24,17 +24,17 @@ HEADER = includes/minishell.h
 	$(CC) $(C_FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJS)
-# @make -C ./mylib
-	$(CC) $(C_FLAGS) $(SRCS) -o $@ -L ./readline/lib -lreadline -lncurses
+	@make -C ./mylib
+	$(CC) $(C_FLAGS) $(SRCS) -o $@ mylib/mylib.a -L ./readline/lib -lreadline -lncurses
 
 all : $(NAME)
 
 clean :
-# make clean -C ./mylib
+	@make clean -C ./mylib
 	rm -rf $(SRCS:%.c=%.o)
 
 fclean : clean
-# make fclean -C ./mylib
+	@make fclean -C ./mylib
 	rm -rf $(NAME)
 
 re :
