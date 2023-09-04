@@ -26,6 +26,7 @@
 int main(void)
 {
     char *line;
+    t_linked_list *list;
 
     // signal(SIGINT, handler);
     while (1)
@@ -34,7 +35,9 @@ int main(void)
         if (line)
         {
             add_history(line);
-            lexer(line);
+            list = lexer(line);
+            parser(list);
+            // free(list);
             free(line);
             line = 0;
         }
