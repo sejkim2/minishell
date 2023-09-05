@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.c                                            :+:      :+:    :+:   */
+/*   tokenize_and_lexer.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/30 16:00:12 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/05 09:39:35 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void init_token(t_token *token, t_type check_type, char *value)
+static void	init_token(t_token *token, t_type check_type, char *value)
 {
-    token->token_type = check_type;
-    token->token_value = value;
+	token->token_type = check_type;
+	token->token_value = value;
 }
 
-static t_token *make_token(t_type check_type, char *value)
+static t_token	*make_token(t_type check_type, char *value)
 {
-    t_token *new_token;
+	t_token	*new_token;
 
-    new_token = (t_token *)malloc(sizeof(t_token));
-    /* check null safety */
-    init_token(new_token, check_type, value);
-    return (new_token);
+	new_token = (t_token *)malloc(sizeof(t_token));
+	if (!new_token)
+		exit(1);
+	init_token(new_token, check_type, value);
+	return (new_token);
 }
 
 static t_token_node *make_node(char *cmd_line, int start, int end, t_type check_type)
@@ -62,7 +63,7 @@ static t_linked_list *make_list(void)
 static void push_back_list(t_linked_list *list, t_token_node *node)
 {
     if (list->num_of_node == 0)
-        list->head = node;        
+        list->head = node;
     else
         list->tail->next = node;
     list->tail = node;

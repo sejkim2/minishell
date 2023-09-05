@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/08/30 16:00:42 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/05 08:46:47 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@
 
 typedef enum e_type
 {
-    WORD = 0,
-    PIPE,
-    AND_IF,
-    OR_IF,
+	WORD = 0,
+	PIPE,
+	AND_IF,
+	OR_IF,
     IN_REDIRECTION,
     OUT_REDIRECTION,
     HEREDOC,
