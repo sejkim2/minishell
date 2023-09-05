@@ -14,11 +14,9 @@
 # define MINISHELL_H
 
 # include <stdio.h>
-# include <ctype.h>
-# include <stdbool.h>
 # include <stdlib.h>
 # include <signal.h>
-# include <stdbool.h>
+# include <errno.h>
 # include <string.h>
 # include <term.h>
 # include <unistd.h>

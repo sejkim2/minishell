@@ -77,7 +77,8 @@ static int check_is_meta_character(char *cmd_line, int index)
     ch = cmd_line[index];
     if (ch == '&'|| ch == '|' \
     || ch == '<' || ch == '>' \
-    || ch == '(' || ch == ')')
+    || ch == '(' || ch == ')' \
+    || ch == '$')
         return (1);
     else
         return (0);
@@ -139,8 +140,10 @@ static void set_single_meta_character(char ch, t_type *token_type)
         *token_type = OUT_REDIRECTION;
     else if (ch == '(')
         *token_type = LEFT_BLANKET;
-    else
+    else if (ch == ')')
         *token_type = RIGHT_BLANKET;
+    else
+        *token_type = DOLLOR_SIGN;
 }
 
 static void set_other_character(char ch, t_type *token_type)
@@ -160,7 +163,8 @@ static void set_token_type(char *cmd_line, int index, t_type *token_type)
     ch = cmd_line[index];
     if (check_is_meta_character(cmd_line, index))
     {
-        if ((cmd_line[index] == cmd_line[index + 1]) && (cmd_line[index] != '(' && cmd_line[index] != ')'))
+        if ((cmd_line[index] == cmd_line[index + 1]) && (cmd_line[index] != '(' && cmd_line[index] != ')' \
+        && cmd_line[index] != '$'))
             set_double_meta_character(ch, token_type);
         else
             set_single_meta_character(ch, token_type);
