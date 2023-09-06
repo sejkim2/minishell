@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/06 18:03:55 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/06 18:44:30 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_token_node
 
 typedef struct s_linkded_list
 {
+    char *cmd_line;
     int num_of_node;
     t_token_node *head;
     t_token_node *tail;
@@ -83,7 +84,7 @@ typedef struct s_tree_node
 t_linked_list *lexer(char *cmd_line);
 
 t_token_node *make_node(char *cmd_line, int start, int end, t_type check_type);
-t_linked_list *make_list(void);
+t_linked_list *make_list(char *cmd_line);
 void push_back_list(t_linked_list *list, t_token_node *node);
 
 void tokenize(t_linked_list *list, char *cmd_line, int *i, t_type *token_type);

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:55:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/06 18:00:12 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/06 19:11:04 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,25 @@ char *free_node(t_token_node *node)
 
 char *free_list(t_linked_list *list)
 {
-    t_linked_list *cur;
-    t_linked_list *del_node;
+    t_token_node *cur;
+    t_token_node *del_node;
 
+    free(list->cmd_line);
     cur = list->head;
     list->head = 0;
     list->tail = 0;
+    if (list->num_of_node == 0)
+    {
+        free(list);
+        return (0);
+    }
     while (cur->next)
     {
         del_node = cur;
         cur = cur->next;
         free_node(del_node);
     }
-    free_node(del_node);
+    free_node(cur);
     free(list);
     return (0);
 }
