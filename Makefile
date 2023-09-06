@@ -6,7 +6,7 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/06 17:40:07 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/09/06 20:19:32 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ C_FLAGS = -Wall -Werror -Wextra
 
 SRCS = srcs/main.c	\
 	srcs/tokenize_and_lexer.c	\
-	srcs/signal.c	\
+	srcs/shell_signal.c	\
+	srcs/block_signal.c	\
 
 OBJS = $(SRCS:%.c=%.o)
 HEADER = includes/minishell.h

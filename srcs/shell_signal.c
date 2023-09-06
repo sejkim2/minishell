@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signal.c                                           :+:      :+:    :+:   */
+/*   shell_signal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:54:42 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/06 19:53:15 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/06 20:17:47 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	set_signal_origin(void)
-// 현재 프로세스가 시그널 동작을 기본 설정대로 동작하도록 원상복귀시켜줌
-{
-	signal(SIGINT, SIG_DFL); // ctrl+c 시그널 입력시 동작을 기본 시그널 설정으로 되돌림
-	signal(SIGQUIT, SIG_DFL); // ctrl+\ 시그널 입력시 동작을 기본 시그널 설정으로 되돌림
-}
-
-void	set_signal(void)
+void	set_shell_signal(void)
 // 현재 프로세스가 터미널에 표시되고있을때의 시그널 상태로 설정
 {
 	set_terminal_print_off(); // 터미널에 ^C, ^\등의 시그널표식을 출력하지않도록 설정

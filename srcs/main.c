@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/06 19:53:51 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/06 20:11:10 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(void)
 		line = readline("minishell$ ");
 		if (line && *line)
 		{
+			printf("1\n");
 			add_history(line);
 			list = lexer(line);
 			// parser(list);
