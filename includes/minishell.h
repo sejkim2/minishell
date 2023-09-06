@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/05 08:46:47 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/06 19:53:38 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <term.h>
 # include <unistd.h>
+# include <termios.h>
 // # include "../readline_dir/include/readline/readline.h"
 // # include "../readline_dir/include/readline/history.h"
 # include <readline/readline.h>
@@ -64,7 +65,18 @@ typedef struct s_linkded_list
     t_token_node *tail;
 }   t_linked_list;
 
-t_linked_list *lexer(char *cmd_line);
+typedef struct s_tree
+{
+	t_token_node* t_node;
+	struct s_tree* left;
+	struct s_tree* right;
+}	t_tree;
 
+t_linked_list *lexer(char *cmd_line);
+void	set_signal(void);
+void	ctrl_c(int signum);
+int		ctrl_d(void);
+void	set_terminal_print_off(void);
+void	set_terminal_print_on(void);
 
 #endif

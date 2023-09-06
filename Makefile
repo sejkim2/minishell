@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
+#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/08/28 14:34:13 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/06 17:40:07 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ CC = cc
 C_FLAGS = -Wall -Werror -Wextra
 
 SRCS = srcs/main.c	\
-	srcs/tokenize_and_lexer.c
+	srcs/tokenize_and_lexer.c	\
+	srcs/signal.c	\
 
 OBJS = $(SRCS:%.c=%.o)
 HEADER = includes/minishell.h

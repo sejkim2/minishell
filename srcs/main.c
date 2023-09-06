@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/05 09:46:00 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/06 19:53:51 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,26 +23,26 @@
 //     rl_redisplay();
 // }
 
-int main(void)
+int	main(void)
 {
-    char *line;
-    t_linked_list *list;
+	char			*line;
+	t_linked_list	*list;
 
-    // signal(SIGINT, handler);
-    while (1)
-    {
-        line = readline("minishell> ");
-        if (line)
-        {
-            add_history(line);
-            list = lexer(line);
-            parser(list);
-            // free(list);
-            free(line);
-            line = 0;
-        }
-        else
-            exit(1);
-    }
-    return (0);
+	set_signal();
+	while (1)
+	{
+		line = readline("minishell$ ");
+		if (line && *line)
+		{
+			add_history(line);
+			list = lexer(line);
+			// parser(list);
+			// free(list);
+			free(line);
+			line = 0;
+		}
+		else
+			return (ctrl_d());
+	}
+	return (0);
 }
