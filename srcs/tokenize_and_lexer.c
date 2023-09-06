@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenize_and_lexer.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/05 09:39:35 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/06 16:59:13 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,31 @@ static void set_token_type(char *cmd_line, int index, t_type *token_type)
         set_other_character(ch, token_type);
 }
 
+static void tokenize()
+{
+	if (check_is_meta_character(cmd_line, i) || check_is_quote(cmd_line, i))
+	{
+		set_token_type(cmd_line, i, &token_type);
+		if (token_type == AND_IF || token_type == OR_IF || token_type == HEREDOC || token_type == APPEND)
+		{
+			push_back_list(list, make_node(cmd_line, start, start + 1, token_type));
+			i = i + 2;
+		}
+		else
+		{
+			push_back_list(list, make_node(cmd_line, start, start, token_type));
+			i = i + 1;
+		}
+	}
+	else
+	{
+		while (cmd_line[i] && !check_is_seperator(cmd_line, i))
+			i++;
+		token_type = WORD;
+		push_back_list(list, make_node(cmd_line, start, i - 1, token_type));
+	}
+}
+
 /* lexical analysis */
 t_linked_list *lexer(char *cmd_line)
 {
@@ -216,11 +241,11 @@ t_linked_list *lexer(char *cmd_line)
         }
     }
 
-    t_token_node *cur = list->head;
-    while (cur)
-    {
-        printf("[ token : %s type : %d]\n", cur->token->token_value, cur->token->token_type);
-        cur = cur->next;
-    }
+    // t_token_node *cur = list->head;
+    // while (cur)
+    // {
+    //     printf("[ token : %s type : %d]\n", cur->token->token_value, cur->token->token_type);
+    //     cur = cur->next;
+    // }
     return (list);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/05 08:46:47 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/06 16:43:48 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,12 @@ typedef enum e_type
     DOLLOR_SIGN
 }   t_type;
 
+typedef enum e_tree_symbol
+{
+    EXPRESS = 0,
+    PIPELINE
+}   t_tree_symbol;
+
 typedef struct s_token
 {
     t_type token_type;
@@ -63,6 +69,16 @@ typedef struct s_linkded_list
     t_token_node *head;
     t_token_node *tail;
 }   t_linked_list;
+
+typedef struct s_tree_node
+{
+
+    t_linked_list *list;
+    t_tree_symbol node_symbol;
+    struct s_tree_node *parent;
+    struct s_tree_node *left_child;
+    struct s_tree_node *right_child;
+}   t_tree_node;
 
 t_linked_list *lexer(char *cmd_line);
 
