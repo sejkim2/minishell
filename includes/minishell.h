@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/07 12:36:43 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/07 17:00:04 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ typedef enum e_type
     DOLLOR_SIGN
 }   t_type;
 
+/*트리 심볼(임시)*/
 typedef enum e_tree_symbol
 {
     EXPRESS = 0,
@@ -74,35 +75,39 @@ typedef struct s_linkded_list
 
 typedef struct s_tree_node
 {
-
     t_linked_list *list;
     t_tree_symbol node_symbol;
-    struct s_tree_node *parent;
     struct s_tree_node *left_child;
     struct s_tree_node *right_child;
 }   t_tree_node;
 
+/*lexer*/
 t_linked_list *lexer(char *cmd_line);
 
+/*node, list*/
 t_token_node *make_node(char *cmd_line, int start, int end, t_type check_type);
 t_linked_list *make_list(char *cmd_line);
 void push_back_list(t_linked_list *list, t_token_node *node);
 
+/*tokenize*/
 void tokenize(t_linked_list *list, char *cmd_line, int *i, t_type *token_type);
 int check_is_meta_character(char *cmd_line, int index);
 int check_is_quote(char *cmd_line, int index);
 int check_is_white_space(char *cmd_line, int index);
 int check_is_seperator(char *cmd_line, int index);
 
-
+/*free*/
 char *free_list(t_linked_list *list);
 char *free_node(t_token_node *node);
 char *free_token(t_token *token);
 
+/*signal*/
 void	set_shell_signal(void);
 void	ctrl_c(int signum);
 int		ctrl_d(void);
 void	set_terminal_print_off(void);
 void	set_terminal_print_on(void);
+
+
 
 #endif

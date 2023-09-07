@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/07 12:42:19 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/07 14:26:55 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ int	main(void)
 		{
 			add_history(line);
 			list = lexer(line);
+			//parser(list);
 			free_list(list);
 			line = 0;
 		}
