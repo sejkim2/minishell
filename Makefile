@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/06 18:03:23 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/07 11:15:49 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,8 @@ SRCS = srcs/main.c	\
 	srcs/list.c \
 	srcs/tokenize.c \
 	srcs/free_list.c
+	srcs/shell_signal.c	\
+	srcs/block_signal.c
 
 OBJS = $(SRCS:%.c=%.o)
 HEADER = includes/minishell.h

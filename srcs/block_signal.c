@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   block_signal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/05 09:41:07 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/05 09:48:43 by jaehyji          ###   ########.fr       */
+/*   Created: 2023/09/06 20:17:08 by jaehyji           #+#    #+#             */
+/*   Updated: 2023/09/06 20:19:10 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	print_error(char *error_string, int code)
+void	set_block_signal(void)
+// 현재 프로세스가 시그널 동작을 기본 설정대로 동작하도록 원상복귀시켜줌
 {
-	write(2, "minishell: ", 8);
-	write(2, error_string, ft_strlen(error_string));
-	write(2, ": ", 2);
-	write(2, errno, ft_strlen(errno));
-	write(2, "\n", 1);
-	open_close(info);
-	exit(1);
+	signal(SIGINT, SIG_DFL); // ctrl+c 시그널 입력시 동작을 기본 시그널 설정으로 되돌림
+	signal(SIGQUIT, SIG_DFL); // ctrl+\ 시그널 입력시 동작을 기본 시그널 설정으로 되돌림
 }

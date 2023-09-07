@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/06 18:44:30 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/07 11:14:01 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <string.h>
 # include <term.h>
 # include <unistd.h>
+# include <termios.h>
 // # include "../readline_dir/include/readline/readline.h"
 // # include "../readline_dir/include/readline/history.h"
 # include <readline/readline.h>
@@ -98,5 +99,10 @@ char *free_list(t_linked_list *list);
 char *free_node(t_token_node *node);
 char *free_token(t_token *token);
 
+void	set_signal(void);
+void	ctrl_c(int signum);
+int		ctrl_d(void);
+void	set_terminal_print_off(void);
+void	set_terminal_print_on(void);
 
 #endif
