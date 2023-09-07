@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:19:56 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/06 18:17:46 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/07 18:20:58 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,15 @@ static	void	set_token_type(char *cmd_line, int index, t_type *token_type)
 		set_other_character(ch, token_type);
 }
 
+static char *make_string(char *cmd_line, int start, int end)
+{
+	char *dest;
+
+	dest = (char *)malloc(sizeof(char) * (end - start + 2));
+	ft_strlcpy(dest, cmd_line + start, (end - start + 2));
+	return (dest);
+}
+
 void	tokenize(t_linked_list *list, char *cmd_line, int *i, \
 t_type *token_type)
 {
@@ -82,12 +91,12 @@ t_type *token_type)
 		if (*token_type == AND_IF || *token_type == OR_IF \
 		|| *token_type == HEREDOC || *token_type == APPEND)
 		{
-			push_back_list(list, make_node(cmd_line, s, s + 1, *token_type));
+			push_back_list(list, make_node(make_string(cmd_line, s, s + 1), *token_type));
 			*i = *i + 2;
 		}
 		else
 		{
-			push_back_list(list, make_node(cmd_line, s, s, *token_type));
+			push_back_list(list, make_node(make_string(cmd_line, s, s), *token_type));
 			*i = *i + 1;
 		}
 	}
@@ -95,6 +104,6 @@ t_type *token_type)
 	{
 		while (cmd_line[*i] && !check_is_seperator(cmd_line, *i))
 			(*i)++;
-		push_back_list(list, make_node(cmd_line, s, *i - 1, *token_type));
+		push_back_list(list, make_node(make_string(cmd_line, s, *i - 1), *token_type));
 	}
 }

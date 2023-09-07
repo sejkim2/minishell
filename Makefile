@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/07 12:36:54 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/07 18:22:36 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ HEADER = includes/minishell.h
 $(NAME) : $(OBJS)
 # @make -C ./mylib
 # $(CC) $(C_FLAGS) $(SRCS) -o $@ -L ./readline/lib -lreadline -lncurses
-	$(CC) $(C_FLAGS) $(SRCS) -o $@ -lreadline -lncurses
+	$(CC) $(C_FLAGS) $(SRCS) -o $@ -lreadline -lncurses mylib/mylib.a
 
 all : $(NAME)
 

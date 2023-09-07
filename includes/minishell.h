@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/07 17:00:04 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/07 18:19:42 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ typedef struct s_tree_node
 t_linked_list *lexer(char *cmd_line);
 
 /*node, list*/
-t_token_node *make_node(char *cmd_line, int start, int end, t_type check_type);
+t_token_node *make_node(char *str, t_type check_type);
 t_linked_list *make_list(char *cmd_line);
 void push_back_list(t_linked_list *list, t_token_node *node);
 

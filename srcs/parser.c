@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/07 18:02:59 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/07 19:04:28 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ void parser(t_linked_list *list)
 
         }
         else    //simple command
-        {
-            
-        }
+            push_back_list(simple_cmd, cur);
+        cur = cur->next;
     }
 }

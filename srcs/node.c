@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:15:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/06 18:08:07 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/07 18:19:34 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,18 @@ static	t_token	*make_token(t_type check_type, char *value)
 	return (new_token);
 }
 
-t_token_node	*make_node(char *cmd_line, int start, \
-int end, t_type check_type)
+t_token_node	*make_node(char *str, t_type check_type)
 {
-	char			*value;
 	int				i;
 	t_token_node	*new_node;
 
-	value = (char *)malloc(sizeof(char) * (end - start + 2));
-	if (value == 0)
-		return (0);
 	i = 0;
 	new_node = (t_token_node *)malloc(sizeof(t_token_node));
 	if (new_node == 0)
-	{
-		free(value);
 		return (0);
-	}
-	while (start <= end)
-		value[i++] = cmd_line[start++];
-	value[i] = '\0';
-	new_node->token = make_token(check_type, value);
+	new_node->token = make_token(check_type, str);
 	if (new_node->token == 0)
 	{
-		free(value);
 		free(new_node);
 		return (0);
 	}
