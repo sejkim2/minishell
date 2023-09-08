@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/07 18:19:42 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/08 18:56:57 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,9 +77,17 @@ typedef struct s_tree_node
 {
     t_linked_list *list;
     t_tree_symbol node_symbol;
+    int blanket_flag;
+    struct s_tree_node *sub_tree;   //if token list include ()
     struct s_tree_node *left_child;
     struct s_tree_node *right_child;
 }   t_tree_node;
+
+typedef struct s_tree_manager
+{
+    t_tree_node *root_node;
+    int num_of_node;    //or num_of_leaf_node
+}   t_tree_manager;
 
 /*lexer*/
 t_linked_list *lexer(char *cmd_line);
