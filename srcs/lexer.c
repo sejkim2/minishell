@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/06 18:41:15 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/11 16:50:19 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-static	void	print_list(t_linked_list *list)
-{
-	t_token_node	*cur;
-
-	cur = list->head;
-	while (cur)
-	{
-		printf("[ token : %s type : %d]\n", \
-		cur->token->token_value, cur->token->token_type);
-		cur = cur->next;
-	}
-}
 
 t_linked_list	*lexer(char *cmd_line)
 {
@@ -48,6 +35,5 @@ t_linked_list	*lexer(char *cmd_line)
 		token_type = WORD;
 		tokenize(list, cmd_line, &i, &token_type);
 	}
-	print_list(list);
 	return (list);
 }

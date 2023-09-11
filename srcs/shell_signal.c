@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:54:42 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/11 12:01:52 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/11 17:23:06 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,13 @@
 	ctrl_\ : 어떤 동작도 하지 않음.
 */
 
-int	set_shell_signal(void)
+void	set_shell_signal(int *cursor)
 // 현재 프로세스가 터미널에 표시되고있을때의 시그널 상태로 설정
 {
+	*cursor = 15;
 	set_terminal_print_off(); // 터미널에 ^C, ^\등의 시그널표식을 출력하지않도록 설정
 	signal(SIGINT, shell_ctrl_c); // ctrl+c 시그널 입력시 ctrl_c 함수 실행
 	signal(SIGQUIT, SIG_IGN); // ctrl+\ 시그널 입력시 시그널을 무시함
-	return (0);
 }
 
 void	shell_ctrl_c(int signum)
@@ -38,11 +38,11 @@ void	shell_ctrl_c(int signum)
 	rl_redisplay(); // readline 메시지를 다시 출력
 }
 
-int	shell_ctrl_d(void)
+int	shell_ctrl_d(int cursor)
 // ctrl+d를 눌렀을때 작동
 {
 	printf("\033[1A");
-	printf("\033[15C");
+	printf("\033[%dC", cursor);
 	printf("exit\n");
 	return (0);
 }

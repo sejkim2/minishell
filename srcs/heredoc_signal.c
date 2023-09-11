@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:55:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/07 17:51:54 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/11 17:17:12 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,3 +19,24 @@
 	ctrl_d : 입력버퍼가 존재하지 않으면 대기상태 종료. (현재 줄에서)프롬프트로 돌아감. 
 			입력버퍼가 존재하면 동작하지 않음.
 */
+
+void	set_heredoc_signal(void)
+// 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
+{
+	set_terminal_print_off();
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	check_heredoc_signal(int *cursor)
+{
+	*cursor = 17;
+	signal(SIGINT, heredoc_ctrl_c);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	heredoc_ctrl_c(int signum)
+{
+	(void)signum;
+	printf("\n");
+}

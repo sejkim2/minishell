@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 20:17:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/11 14:02:59 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/11 15:25:30 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,32 +21,28 @@
 			 입력버퍼가 존재하면 입력버퍼를 1번 반복하고, 버퍼를 지움.
 */
 
-extern pid_t child;
-
 void	set_blocking_signal(void)
 // 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
 {
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
+	set_terminal_print_on();
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
 }
 
-int	check_blocking_signal(void)
+void	check_blocking_signal(void)
 {
 	signal(SIGINT, blocking_ctrl_c);
 	signal(SIGQUIT, blocking_ctrl_backslash);
-	return (1);
 }
 
 void	blocking_ctrl_c(int signum)
 {
 	(void)signum;
-	kill(child, SIGTERM);
-	printf("^C\n");
+	printf("\n");
 }
 
 void	blocking_ctrl_backslash(int signum)
 {
 	(void)signum;
-	kill(child, SIGTERM);
-	printf("^\\Quit: 3\n");
+	printf("Quit: 3\n");
 }

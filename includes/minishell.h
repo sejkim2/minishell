@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/11 14:02:50 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/11 17:23:01 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,17 +101,19 @@ char			*free_node(t_token_node *node);
 char			*free_token(t_token *token);
 
 /* shell signal */
-int				set_shell_signal(void);
+void			set_shell_signal(int *cursor);
 void			shell_ctrl_c(int signum);
-int				shell_ctrl_d(void);
+int				shell_ctrl_d(int cursor);
 
 /* blocking signal */
 void			set_blocking_signal(void);
-int				check_blocking_signal(void);
+void			check_blocking_signal(void);
 void			blocking_ctrl_c(int signum);
 void			blocking_ctrl_backslash(int signum);
 /* heredoc signal */
-
+void			set_heredoc_signal(void);
+void			check_heredoc_signal(int *cursor);
+void			heredoc_ctrl_c(int signum);
 /* terminal option */
 struct termios	terminal_option(void);
 void			set_origin_signal(void);
