@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/08 18:56:57 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/11 16:15:21 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ int		ctrl_d(void);
 void	set_terminal_print_off(void);
 void	set_terminal_print_on(void);
 
-
+/*parser*/
+t_tree_manager *parser(t_linked_list *list);
 
 #endif

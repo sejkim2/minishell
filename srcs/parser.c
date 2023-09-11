@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/08 19:55:39 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/11 17:49:13 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void init_tree_manager(t_tree_manager *tree)
 {
-    new_tree->root_node = 0;
-    new_tree->num_of_node = 0;
+    tree->root_node = 0;
+    tree->num_of_node = 0;
 }
 
 static t_tree_manager *make_tree_manager(void)
@@ -47,8 +47,10 @@ static	void	print_list(t_linked_list *list)
 	cur = list->head;
 	while (cur)
 	{
-		printf("[ token : %s type : %d]\n", \
+		printf("[ token : %s type : %d ]", \
 		cur->token->token_value, cur->token->token_type);
+        if (cur == list->tail)
+            break;
 		cur = cur->next;
 	}
 }
@@ -56,11 +58,16 @@ static	void	print_list(t_linked_list *list)
 void visited(t_tree_node *node)
 {
     print_list(node->list);
-}
-
-static print_tree(t_tree_manager *manager)
-{
-    
+    printf("\n");
+    if (node->left_child != 0) {
+        printf("left child: ");
+        visited(node->left_child);
+    }
+    if (node->right_child != 0) {
+        printf("right child: ");
+        visited(node->right_child);
+    }
+    printf("\n");
 }
 
 t_tree_manager *parser(t_linked_list *list)
@@ -69,40 +76,31 @@ t_tree_manager *parser(t_linked_list *list)
     t_tree_node *child_node;
     t_tree_manager *manager;
     t_tree_node *new_root;
-    int flag;
 
     cur = list->head;
-    child_node = make_tree_node(void);
-    manager = make_tree_manager(void);
+    child_node = make_tree_node();
+    manager = make_tree_manager();
     manager->root_node = child_node;
     manager->num_of_node++;
     new_root = 0;
-    flag = 1;
     
     while (cur)
     {
         if (cur->token->token_type == AND_IF || cur->token->token_type == OR_IF)
         {
-            new_root = make_tree_node(void);
+            new_root = make_tree_node();
             push_back_list(new_root->list, cur);
             
             if (manager->num_of_node == 1)
-            {
-                if (flag == 1)
-                    new_root->left_child = manager->root_node;
-                else
-                    new_root->right_child = manager->root_node;
-                flag *= -1;
-                manager->root_node = new_root;
-            }
+                new_root->left_child = child_node;
             else
             {
                 manager->root_node->right_child = child_node;
                 new_root->left_child = manager->root_node;
-                manager->root_node = new_root;
-            }   
-            child_node = make_tree_node(void);
+            }
+            manager->root_node = new_root;
             manager->num_of_node++;
+            child_node = make_tree_node();
         }
         else if (cur->token->token_type == LEFT_BLANKET)
         {
@@ -119,11 +117,9 @@ t_tree_manager *parser(t_linked_list *list)
             push_back_list(child_node->list, cur);
         cur = cur->next;
     }
-    if (manager->num_of_node > 1)
-    {
+    if (child_node->list->num_of_node > 0 && manager->num_of_node > 1)
         manager->root_node->right_child = child_node;
-        new_root->left_child = manager->root_node;
-        manager->root_node = new_root;
-    }
+
+    visited(manager->root_node);
     return (manager);
 }
