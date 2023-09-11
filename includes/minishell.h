@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/07 12:36:43 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/11 12:41:34 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <term.h>
 # include <unistd.h>
 # include <termios.h>
+# include <sys/wait.h>
+# include <fcntl.h>
 // # include "../readline_dir/include/readline/readline.h"
 // # include "../readline_dir/include/readline/history.h"
 # include <readline/readline.h>
@@ -35,74 +37,85 @@ typedef enum e_type
 	PIPE,
 	AND_IF,
 	OR_IF,
-    IN_REDIRECTION,
-    OUT_REDIRECTION,
-    HEREDOC,
-    APPEND,
-    SINGLE_QUOTE,
-    DOUBLE_QUOTE,
-    LEFT_BLANKET,
-    RIGHT_BLANKET,
-    DOLLOR_SIGN
-}   t_type;
+	IN_REDIRECTION,
+	OUT_REDIRECTION,
+	HEREDOC,
+	APPEND,
+	SINGLE_QUOTE,
+	DOUBLE_QUOTE,
+	LEFT_BLANKET,
+	RIGHT_BLANKET,
+	DOLLOR_SIGN
+}	t_type;
 
 typedef enum e_tree_symbol
 {
-    EXPRESS = 0,
-    PIPELINE
-}   t_tree_symbol;
+	EXPRESS = 0,
+	PIPELINE
+}	t_tree_symbol;
 
 typedef struct s_token
 {
-    t_type token_type;
-    char *token_value;
-}   t_token;
+	t_type	token_type;
+	char	*token_value;
+}	t_token;
 
 typedef struct s_token_node
 {
-    t_token *token;
-    struct s_token_node *next;
-}   t_token_node;
+	t_token				*token;
+	struct s_token_node	*next;
+}	t_token_node;
 
 typedef struct s_linkded_list
 {
-    char *cmd_line;
-    int num_of_node;
-    t_token_node *head;
-    t_token_node *tail;
-}   t_linked_list;
+	char			*cmd_line;
+	int				num_of_node;
+	t_token_node	*head;
+	t_token_node	*tail;
+}	t_linked_list;
 
 typedef struct s_tree_node
 {
+	t_linked_list		*list;
+	t_tree_symbol		node_symbol;
+	struct s_tree_node	*parent;
+	struct s_tree_node	*left_child;
+	struct s_tree_node	*right_child;
+}	t_tree_node;
 
-    t_linked_list *list;
-    t_tree_symbol node_symbol;
-    struct s_tree_node *parent;
-    struct s_tree_node *left_child;
-    struct s_tree_node *right_child;
-}   t_tree_node;
+t_linked_list	*lexer(char *cmd_line);
+t_token_node	*make_node(char *cmd_line, \
+int start, int end, t_type check_type);
+t_linked_list	*make_list(char *cmd_line);
+void			push_back_list(t_linked_list *list, t_token_node *node);
 
-t_linked_list *lexer(char *cmd_line);
+void			tokenize(t_linked_list *list, \
+char *cmd_line, int *i, t_type *token_type);
+int				check_is_meta_character(char *cmd_line, int index);
+int				check_is_quote(char *cmd_line, int index);
+int				check_is_white_space(char *cmd_line, int index);
+int				check_is_seperator(char *cmd_line, int index);
 
-t_token_node *make_node(char *cmd_line, int start, int end, t_type check_type);
-t_linked_list *make_list(char *cmd_line);
-void push_back_list(t_linked_list *list, t_token_node *node);
+char			*free_list(t_linked_list *list);
+char			*free_node(t_token_node *node);
+char			*free_token(t_token *token);
 
-void tokenize(t_linked_list *list, char *cmd_line, int *i, t_type *token_type);
-int check_is_meta_character(char *cmd_line, int index);
-int check_is_quote(char *cmd_line, int index);
-int check_is_white_space(char *cmd_line, int index);
-int check_is_seperator(char *cmd_line, int index);
+/* shell signal */
+int				set_shell_signal(void);
+void			shell_ctrl_c(int signum);
+int				shell_ctrl_d(void);
 
+/* blocking signal */
+int				set_blocking_signal(void);
+void			check_blocking_signal(pid_t child);
+void			blocking_ctrl_c(int signum);
+void			blocking_ctrl_backslash(int signum);
+/* heredoc signal */
 
-char *free_list(t_linked_list *list);
-char *free_node(t_token_node *node);
-char *free_token(t_token *token);
-
-void	set_shell_signal(void);
-void	ctrl_c(int signum);
-int		ctrl_d(void);
-void	set_terminal_print_off(void);
-void	set_terminal_print_on(void);
+/* terminal option */
+struct termios	terminal_option(void);
+void			set_origin_signal(void);
+void			set_terminal_print_off(void);
+void			set_terminal_print_on(void);
 
 #endif
