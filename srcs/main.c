@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/11 12:42:32 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/11 14:03:19 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	main(int argc, char **argv, char **envp)
 				}
 				else
 				{
-					check_blocking_signal(child);
+					g_signal_number = check_blocking_signal();
 					wait(0);
 				}
 			}
@@ -54,5 +54,4 @@ int	main(int argc, char **argv, char **envp)
 		else
 			return (shell_ctrl_d());
 	}
-	return (0);
 }

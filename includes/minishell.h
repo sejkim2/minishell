@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/11 12:41:34 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/11 14:02:50 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,8 @@ void			shell_ctrl_c(int signum);
 int				shell_ctrl_d(void);
 
 /* blocking signal */
-int				set_blocking_signal(void);
-void			check_blocking_signal(pid_t child);
+void			set_blocking_signal(void);
+int				check_blocking_signal(void);
 void			blocking_ctrl_c(int signum);
 void			blocking_ctrl_backslash(int signum);
 /* heredoc signal */

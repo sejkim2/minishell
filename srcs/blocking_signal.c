@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 20:17:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/11 13:14:29 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/11 14:02:59 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@
 
 extern pid_t child;
 
-int	set_blocking_signal(void)
+void	set_blocking_signal(void)
 // 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
 {
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
-	return (1);
 }
 
-void	check_blocking_signal(pid_t child)
+int	check_blocking_signal(void)
 {
 	signal(SIGINT, blocking_ctrl_c);
 	signal(SIGQUIT, blocking_ctrl_backslash);
+	return (1);
 }
 
 void	blocking_ctrl_c(int signum)
