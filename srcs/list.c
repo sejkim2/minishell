@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:13:44 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/07 11:21:49 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/12 20:08:37 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-t_linked_list	*make_list(char *cmd_line)
+t_linked_list	*make_list()
 {
 	t_linked_list	*new_list;
 
@@ -20,7 +20,6 @@ t_linked_list	*make_list(char *cmd_line)
 	if (new_list == 0)
 		return (0);
 
-	new_list->cmd_line = cmd_line;
 	new_list->num_of_node = 0;
 	new_list->head = 0;
 	new_list->tail = 0;

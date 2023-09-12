@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/11 16:15:21 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/12 21:23:48 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,65 +29,43 @@
 // # include "../readline/include/readline/history.h"
 # include "../mylib/includes/libft.h"
 
-typedef enum e_type
+typedef enum e_symbol
 {
 	WORD = 0,
+	ASSIGNMENT_WORD,
+	REDIRECTION,
 	PIPE,
-	AND_IF,
-	OR_IF,
-    IN_REDIRECTION,
-    OUT_REDIRECTION,
-    HEREDOC,
-    APPEND,
-    SINGLE_QUOTE,
-    DOUBLE_QUOTE,
-    LEFT_BLANKET,
-    RIGHT_BLANKET,
-    DOLLOR_SIGN
-}   t_type;
-
-/*트리 심볼(임시)*/
-typedef enum e_tree_symbol
-{
-    EXPRESS = 0,
-    PIPELINE
-}   t_tree_symbol;
+    AND_IF,
+    OR_IF,
+    EQUAL,
+    L_BRA,
+    R_BRA,
+    SIMPLE_COMMAND_ELEMENT,
+    SIMPLE_COMMAND,
+    COMMAND,
+    PIPELINE,
+    LIST,
+    ROOT
+}   t_symbol;
 
 typedef struct s_token
 {
-    t_type token_type;
-    char *token_value;
+    t_symbol symbol;
+    char *value;
 }   t_token;
 
 typedef struct s_token_node
 {
-    t_token *token;
+    t_token token;
     struct s_token_node *next;
 }   t_token_node;
 
 typedef struct s_linkded_list
 {
-    char *cmd_line;
     int num_of_node;
     t_token_node *head;
     t_token_node *tail;
 }   t_linked_list;
-
-typedef struct s_tree_node
-{
-    t_linked_list *list;
-    t_tree_symbol node_symbol;
-    int blanket_flag;
-    struct s_tree_node *sub_tree;   //if token list include ()
-    struct s_tree_node *left_child;
-    struct s_tree_node *right_child;
-}   t_tree_node;
-
-typedef struct s_tree_manager
-{
-    t_tree_node *root_node;
-    int num_of_node;    //or num_of_leaf_node
-}   t_tree_manager;
 
 /*lexer*/
 t_linked_list *lexer(char *cmd_line);
@@ -117,6 +95,5 @@ void	set_terminal_print_off(void);
 void	set_terminal_print_on(void);
 
 /*parser*/
-t_tree_manager *parser(t_linked_list *list);
 
 #endif

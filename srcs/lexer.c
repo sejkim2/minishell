@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/11 16:17:47 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/12 20:08:27 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ t_linked_list	*lexer(char *cmd_line)
 {
 	int				i;
 	t_linked_list	*list;
-	t_type			token_type;
+	t_token_node	*node;
 
 	i = 0;
-	list = make_list(cmd_line);
+	list = make_list();
 	if (list == 0)
 	{
 		write(2, "malloc error\n", 13);
@@ -45,8 +45,8 @@ t_linked_list	*lexer(char *cmd_line)
 			i++;
 		if (!cmd_line[i])
 			break ;
-		token_type = WORD;
-		tokenize(list, cmd_line, &i, &token_type);
+		node = tokenize(cmd_line, &i);
+		push_back_list(list, node);
 	}
 	// print_list(list);
 	return (list);
