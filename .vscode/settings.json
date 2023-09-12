@@ -1,6 +1,8 @@
 {
     "files.associations": {
-        "unistd.h": "c",
-        "chrono": "c"
-    }
+		"unistd.h": "c",
+		"chrono": "c",
+		"termios.h": "c",
+		"wait.h": "c"
+	}
 }
