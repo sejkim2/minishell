@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/12 15:07:21 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/12 19:38:51 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <sys/wait.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <curses.h>
 // # include "../readline_dir/include/readline/readline.h"
 // # include "../readline_dir/include/readline/history.h"
 # include <readline/readline.h>
