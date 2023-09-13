@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/12 21:23:48 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/13 15:02:28 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ typedef struct s_token
 
 typedef struct s_token_node
 {
-    t_token token;
+    t_token *token;
     struct s_token_node *next;
 }   t_token_node;
 
@@ -71,21 +71,14 @@ typedef struct s_linkded_list
 t_linked_list *lexer(char *cmd_line);
 
 /*node, list*/
-t_token_node *make_node(char *str, t_type check_type);
-t_linked_list *make_list(char *cmd_line);
-void push_back_list(t_linked_list *list, t_token_node *node);
 
 /*tokenize*/
-void tokenize(t_linked_list *list, char *cmd_line, int *i, t_type *token_type);
-int check_is_meta_character(char *cmd_line, int index);
-int check_is_quote(char *cmd_line, int index);
-int check_is_white_space(char *cmd_line, int index);
-int check_is_seperator(char *cmd_line, int index);
+t_token_node	*tokenize(char *cmd_line, int *index);
 
 /*free*/
-char *free_list(t_linked_list *list);
-char *free_node(t_token_node *node);
-char *free_token(t_token *token);
+// char *free_list(t_linked_list *list);
+// char *free_node(t_token_node *node);
+// char *free_token(t_token *token);
 
 /*signal*/
 void	set_shell_signal(void);

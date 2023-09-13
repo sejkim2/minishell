@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/12 19:21:28 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/13 15:02:01 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,7 @@ C_FLAGS = -Wall -Werror -Wextra
 
 SRCS = srcs/main.c	\
 	srcs/lexer.c \
-	srcs/check_character_type.c \
-	srcs/node.c \
-	srcs/list.c \
 	srcs/tokenize.c \
-	srcs/free_list.c \
 	srcs/shell_signal.c	\
 	srcs/block_signal.c 
 # srcs/parser.c
