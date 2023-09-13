@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:19:56 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/13 18:44:40 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/13 18:54:18 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 t_token_node	*tokenize(char *cmd_line, int *index)
 {
 	char *value;
+	t_token *new_token;
 	int end;
 	t_symbol symbol;
 
@@ -51,7 +52,7 @@ t_token_node	*tokenize(char *cmd_line, int *index)
 	else
 		symbol = parse_word(cmd_line, &end);
 	value = make_value(cmd_line, *index, end);
-	t_token *new_token = make_token(symbol, value);
+	new_token = make_token(symbol, value);
 	*index = end;
 	return (make_node(new_token));
 }
