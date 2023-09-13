@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/13 15:02:28 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/13 18:43:53 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ typedef enum e_symbol
     SIMPLE_COMMAND,
     COMMAND,
     PIPELINE,
+    SUBSHELL,
     LIST,
     ROOT
 }   t_symbol;
@@ -67,13 +68,43 @@ typedef struct s_linkded_list
     t_token_node *tail;
 }   t_linked_list;
 
+typedef struct s_tree_node
+{
+    t_token *token;
+    struct s_tree_node *left_child;
+    struct s_tree_node *right_child;
+}   t_tree_node;
+
 /*lexer*/
 t_linked_list *lexer(char *cmd_line);
 
-/*node, list*/
+/*list*/
+t_linked_list	*make_list();
+void	push_back_list(t_linked_list *list, t_token_node *node);
+t_token_node *pop_list(t_linked_list *list);
+
+/*node*/
+void	init_token(t_token *token, t_symbol symbol, char *value);
+t_token	*make_token(t_symbol symbol, char *value);
+t_token_node	*make_node(t_token *token);
 
 /*tokenize*/
 t_token_node	*tokenize(char *cmd_line, int *index);
+
+t_symbol parse_redirection(char *cmd_line, int *end);
+t_symbol parse_word(char *cmd_line, int *end);
+t_symbol parse_equal_or_branket(char ch, int *end);
+t_symbol parse_pipe_or_orif_or_andif(char ch, char next_ch, int *end);
+char *make_value(char *cmd_line, int start, int end);
+void parse_single_quote_string(char *cmd_line, int *end);
+void parse_double_quote_string(char *cmd_line, int *end);
+
+/*check_character_symbol*/
+int check_is_single_quote(char ch);
+int check_is_double_quote(char ch);
+int check_is_white_space(char ch);
+int check_is_meta_character(char ch);
+int check_is_seperator(char ch);
 
 /*free*/
 // char *free_list(t_linked_list *list);

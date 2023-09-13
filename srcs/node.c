@@ -5,20 +5,20 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/06 17:15:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/13 14:56:30 by sejkim2          ###   ########.fr       */
+/*   Created: 2023/09/13 18:03:01 by sejkim2           #+#    #+#             */
+/*   Updated: 2023/09/13 18:05:15 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static	void	init_token(t_token *token, t_symbol symbol, char *value)
+void	init_token(t_token *token, t_symbol symbol, char *value)
 {
 	token->symbol = symbol;
 	token->value = value;
 }
 
-static	t_token	*make_token(t_symbol symbol, char *value)
+t_token	*make_token(t_symbol symbol, char *value)
 {
 	t_token	*new_token;
 
