@@ -1,28 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_pwd.c                                         :+:      :+:    :+:   */
+/*   func_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 16:04:23 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/13 16:16:03 by jaehyji          ###   ########.fr       */
+/*   Created: 2023/09/13 18:06:44 by jaehyji           #+#    #+#             */
+/*   Updated: 2023/09/13 19:42:39 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-	옵션없는 pwd구현.
-	pwd는 인자를 받지 않음. 인자 개수의 상관없이 pwd는 출력을 진행함.
-*/
-
-int	main(int argc, char **argv)
+int	list_env(char **envp)
 {
-	char	buff[PATH_MAX];
+	int		idx;
 
-	if (argc != 2 || strcmp("pwd", argv[1]))
+	idx = 0;
+	while (envp[idx])
+	{
+		printf("%s\n", envp[idx]);
+		idx++;
+	}
+	return (0);
+}
+
+int	set_env(char **argv, char **envp)
+{
+	while
+	argv[i][j]
+}
+
+int	main(int argc, char **argv, char **envp)
+{
+	if (argc == 1 || strcmp(argv[1], "env"))
 		return (printf("error\n"));
-	getcwd(buff, PATH_MAX);
-	printf("%s\n", buff);
+	if (argc == 2)
+		return (list_env(envp));
+	else
+		return (set_env(argv + 2, envp));
 }

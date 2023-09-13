@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:36:27 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/13 12:53:35 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/13 20:01:01 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	main(int argc, char **argv)
 {
 	if (argc < 2 || strcmp(argv[1], "echo"))
 		return (printf("error\n"));
+	argv = change_env(argv);
 	if (!argv[2] || argv[2][0] != '-')
 		echo_no_opt_print(argc, argv);
 	else

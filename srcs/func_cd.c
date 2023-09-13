@@ -6,11 +6,17 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:28:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/12 16:05:25 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/13 20:24:02 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+/*
+	옵션없는 cd 구현.
+	cd는 인자로 절대 & 상대 경로를 받음.
+	인자가 2개 이상일 경우, 즉 경로가 여러개일 경우, 첫 번째 인자만 상관함.
+*/
 
 int	main(int argc, char **argv)
 {
@@ -20,6 +26,7 @@ int	main(int argc, char **argv)
 	error_code = 0;
 	if (argc != 2 && argc != 3)
 		return (printf("error\n"));
+	change_env(argv);
 	getcwd(buff, PATH_MAX);
 	printf("현재 경로: %s\n", buff);
 	if (!strcmp(argv[1], "cd"))

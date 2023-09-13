@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/12 19:38:51 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/13 19:42:34 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 // # include "../readline/include/readline/readline.h"
 // # include "../readline/include/readline/history.h"
 # include "../mylib/includes/libft.h"
+
+typedef unsigned long long	t_ull;
 
 typedef enum e_type
 {
@@ -122,4 +124,6 @@ void			set_origin_signal(void);
 void			set_terminal_print_off(void);
 void			set_terminal_print_on(void);
 
+/*	env	*/
+char	**change_env(char **argv);
 #endif
