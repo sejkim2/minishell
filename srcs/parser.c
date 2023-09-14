@@ -6,11 +6,39 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/13 19:58:38 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/14 20:19:08 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+static t_tree_node *make_tree_node(void)
+{
+    t_tree_node *node;
+
+    node = (t_tree_node *)malloc(sizeof(t_tree_node));
+    // node->symbol = WORD;
+    node->num_of_child = 0;
+    node->next = 0;
+    node->child_list = 0;
+    return (node);
+}
+
+static void addchild(t_tree_node *parent, t_tree_node *child)
+{
+    t_tree_node *cur;
+
+    cur = parent->child_list;
+    if (parent->num_of_child == 0)
+        parent->child_list = child;
+    else
+    {
+        while (cur->next)
+            cur = cur->next;
+        cur->next = child;
+    }
+    (parent->num_of_child)++;
+}
 
 static void print_symbol(t_symbol symbol)
 {
@@ -69,13 +97,22 @@ static void print_symbol(t_symbol symbol)
     }
 }
 
-static void traverse(t_tree_node *node, int depth)
+static void tree_traverse(t_tree_node *node, int depth)
 {
     for(int i = 0; i<depth; i++)
         printf("\t\t");
-    print_symbol(node->token->symbol);
+    print_symbol(node->symbol);
+
     t_tree_node *child;
-    while (node->)
+    child = node->child_list;
+    if (child)
+    {
+        while (child)
+        {
+            tree_traverse(child, depth + 1);
+            child = child->next;
+        }
+    }
 }
 
 static t_symbol next_symbol(t_linked_list *list)
@@ -105,54 +142,29 @@ static int accept(t_linked_list *list, t_symbol symbol)
 static int expect(t_linked_list *list, t_symbol symbol)
 {
     if (!accept(list, symbol))
+    {
         parse_error();
+        return (0);
+    }
     else
         return (1);
 }
 
-static void parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
-{
-    t_tree_node *node;
-
-    if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
-    {
-        node = make_tree_node();
-        node->token->symbol = next_symbol(list);
-        addchild(parent, node);
-    }
-    else
-        parse_error();
-}
-
-static void parse_simple_command(t_linked_list *list, t_tree_node *parent)
-{
-    t_tree_node *node;
-
-    if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
-    {
-        node = make_tree_node();
-        node->token->symbol = next_symbol(list);
-        addchild(parent, node);
-    }
-    else
-        parse_error();
-}
-
-static void parse_command(t_linked_list *list, t_tree_node *parent)
+void parse_command(t_linked_list *list, t_tree_node *parent)
 {
     t_tree_node *node;
 
     if (accept(list, WORD) || accept(list, REDIRECTION))
     {
         node = make_tree_node();
-        node->token->symbol = SIMPLE_COMMAND;
+        node->symbol = SIMPLE_COMMAND;
         addchild(parent, node);
         parse_simple_command(list, node);
     }
     else if (accept(list, L_BRA))
     {
         node = make_tree_node();
-        node->token->symbol = SUBSHELL;
+        node->symbol = SUBSHELL;
         addchild(parent, node);
         parse_subshell(list, node);
     }
@@ -160,44 +172,44 @@ static void parse_command(t_linked_list *list, t_tree_node *parent)
         parse_error();
 }
 
-static void parse_pipeline(t_linked_list *list, t_tree_node *parent)
+void parse_pipeline(t_linked_list *list, t_tree_node *parent)
 {
     t_tree_node *node;
 
     node = make_tree_node();
-    node->token->symbol = COMMAND;
+    node->symbol = COMMAND;
     addchild(parent, node);
     parse_command(list, node);
     if (accept(list, PIPE))
     {
         node = make_tree_node();
-        node->token->symbol = next_symbol(list);
+        node->symbol = next_symbol(list);
         addchild(parent, node);
         node = make_tree_node();
-        node->token->symbol = PIPELINE;
+        node->symbol = PIPELINE;
         addchild(parent, node);
         parse_pipeline(list, node);
     }
 }
 
-static void parse_list(t_linked_list *list, t_tree_node *parent)
+void parse_list(t_linked_list *list, t_tree_node *parent)
 {
     t_tree_node *node;
 
     node = make_tree_node();
-    node->token->symbol = PIPELINE;
+    node->symbol = PIPELINE;
     addchild(parent, node);
     parse_pipeline(list, node);
-    if (accept(AND_IF) || accept(OR_IF))
+    if (accept(list, AND_IF) || accept(list, OR_IF))
     {
         node = make_tree_node();
-        node->token->symbol = next_symbol(list);
+        node->symbol = next_symbol(list);
         addchild(parent, node);
         parse_list(list, node);
     }
 }
 
-static void parse_subshell(t_linked_list *list, t_tree_node *parent)
+void parse_subshell(t_linked_list *list, t_tree_node *parent)
 {
     t_tree_node *node;
 
@@ -205,32 +217,65 @@ static void parse_subshell(t_linked_list *list, t_tree_node *parent)
     node = make_tree_node();
     addchild(parent, node);
     node = make_tree_node();
-    node->token->symbol = LIST;
+    node->symbol = LIST;
     addchild(parent, node);
     parse_list(list, node);
     expect(list, R_BRA);
     node = make_tree_node();
-    node->token->symbol = next_symbol(list);
+    node->symbol = next_symbol(list);
     addchild(parent, node);
 }
 
-static void parser(t_linked_list *list, t_tree_node *root)
+void parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 {
     t_tree_node *node;
 
+    if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
+    {
+        node = make_tree_node();
+        node->symbol = next_symbol(list);
+        addchild(parent, node);
+    }
+    else
+        parse_error();
+}
+
+void parse_simple_command(t_linked_list *list, t_tree_node *parent)
+{
+    t_tree_node *node;
+
+    if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
+    {
+        node = make_tree_node();
+        node->symbol = next_symbol(list);
+        addchild(parent, node);
+    }
+    else
+        parse_error();
+}
+
+void parser(t_linked_list *list)
+{
+    t_tree_node *root;
+    t_tree_node *node;
+
+    root = make_tree_node();
+    root->symbol = ROOT;
     node = make_tree_node();
     if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
     {
-        node->token->symbol = LIST;
+        node->symbol = LIST;
         addchild(root, node);
         parse_list(list, node);
     }
     else if (accept(list, L_BRA))
     {
-        node->token->symbol = COMMAND;
+        node->symbol = COMMAND;
         addchild(root, node);
         parse_command(list, node);
     }
     else
         parse_error();
+
+    tree_traverse(root, 0);
 }

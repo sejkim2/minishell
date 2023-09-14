@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:13:44 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/13 18:00:08 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/14 20:08:50 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ t_token_node *pop_list(t_linked_list *list)
 
 	pop_node = list->head;
 	list->head = list->head->next;
+	(list->num_of_node)--;
 	return (pop_node);
 }

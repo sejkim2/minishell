@@ -6,13 +6,13 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/13 18:44:34 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/14 20:16:42 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-C_FLAGS = -Wall -Werror -Wextra
+C_FLAGS = 
 
 SRCS = srcs/main.c	\
 	srcs/lexer.c \
@@ -23,8 +23,8 @@ SRCS = srcs/main.c	\
 	srcs/tokenize_utils_1.c \
 	srcs/tokenize_utils_2.c \
 	srcs/shell_signal.c	\
-	srcs/block_signal.c 
-# srcs/parser.c
+	srcs/block_signal.c \
+	srcs/parser.c
 
 OBJS = $(SRCS:%.c=%.o)
 HEADER = includes/minishell.h

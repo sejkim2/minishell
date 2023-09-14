@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/13 20:29:13 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/14 19:54:00 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,10 @@ typedef struct s_linkded_list
 
 typedef struct s_tree_node
 {
-    t_token *token;
-    
+    t_symbol symbol;
+    int num_of_child;
+    struct s_tree_node *next;
+    struct s_tree_node *child_list;
 }   t_tree_node;
 
 /*lexer*/
@@ -118,5 +120,14 @@ void	set_terminal_print_off(void);
 void	set_terminal_print_on(void);
 
 /*parser*/
+void parser(t_linked_list *list);
+
+void parse_simple_command(t_linked_list *list, t_tree_node *parent);
+void parse_simple_command_element(t_linked_list *list, t_tree_node *parent);
+void parse_subshell(t_linked_list *list, t_tree_node *parent);
+void parse_list(t_linked_list *list, t_tree_node *parent);
+void parse_pipeline(t_linked_list *list, t_tree_node *parent);
+void parse_command(t_linked_list *list, t_tree_node *parent);
+
 
 #endif
