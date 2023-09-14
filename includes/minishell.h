@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/13 19:42:34 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/14 19:22:39 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,5 +125,7 @@ void			set_terminal_print_off(void);
 void			set_terminal_print_on(void);
 
 /*	env	*/
-char	**change_env(char **argv);
+char			**change_env(char **av, char **env);
+void			matrix_cpy(char **src, char **dst);
+char			**init_environ(char **envp);
 #endif

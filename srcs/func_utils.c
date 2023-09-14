@@ -6,15 +6,11 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:27:46 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/13 20:15:02 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/14 20:04:04 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-/*
-	change_env: 들어온 인자가 환경변수라면 해당 환경변수를 참조하여 문자열을 확장.
-*/
 
 static void	free_2str(char *s1, char *s2)
 {
@@ -22,31 +18,57 @@ static void	free_2str(char *s1, char *s2)
 	free(s2);
 }
 
-char	**change_env(char **av)
+void	make_str(int i, int j, char **av, char **str)
 {
+	str[0] = ft_substr(av[i], 0, j - 1);
+	str[1] = ft_substr(av[i], j + 1, ft_strlen(av[i] - ft_strlen(str[0]) - 1));
+}
+
+void	matrix_cpy(char **src, char **dst)
+{
+	int		idx;
+
+	idx = 0;
+	while (src[idx])
+	{
+		dst[idx] = src[idx];
+		idx++;
+	}
+}
+
+void	sort_ascii(char **envp, int cnt)
+{
+	char	*a;
+	char	*b;
 	int		i;
 	int		j;
-	char	*str[3];
 
-	i = 0;
-	while (av[i])
+	while (cnt--)
 	{
-		j = 0;
-		while (av[i][j] && av[i][j] != '$')
-			j++;
-		if (av[i][j] == '$')
+		i = 0;
+		while (envp[i] && envp[i + 1])
 		{
-			str[0] = ft_substr(av[i], 0, j - 1);
-			str[1] = ft_substr(av[i], j + 1, \
-			ft_strlen(av[i] - ft_strlen(str[0]) - 1));
-			if (getenv(str[1]))
-				str[2] = getenv(str[1]);
-			else
-				str[2] = ft_strdup("");
-			av[i] = ft_strjoin(str[0], str[2]);
-			free_2str(str[0], str[2]);
+			j = 0;
+			while (envp[i][j] == envp[i + 1][j])
+				j++;
+			if (envp[i][j] > envp[i + 1][j])
+			{
+				a = envp[i];
+				b = envp[i + 1];
+				envp[i] = b;
+				envp[i + 1] = a;
+			}
+			i++;
 		}
-		i++;
 	}
-	return (av);
+}
+
+int	cnt_line(char **str_arr)
+{
+	int		cnt;
+
+	cnt = 0;
+	while (str_arr[cnt])
+		cnt++;
+	return (cnt);
 }

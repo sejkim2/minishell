@@ -1,28 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_pwd.c                                         :+:      :+:    :+:   */
+/*   func_unset.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 16:04:23 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/14 19:00:32 by jaehyji          ###   ########.fr       */
+/*   Created: 2023/09/14 14:42:03 by jaehyji           #+#    #+#             */
+/*   Updated: 2023/09/14 20:03:17 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-/*
-	옵션없는 pwd구현.
-	pwd는 인자를 받지 않음. 인자 개수의 상관없이 pwd는 출력을 진행함.
-*/
-
-int	main(int argc, char **argv)
+void	func_unset(char **argv, char **env)
 {
-	char	buff[PATH_MAX];
+	int		i;
+	int		j;
+	int		cnt;
 
-	if (argc != 2 || strcmp("pwd", argv[1]))
-		return (printf("error\n"));
-	getcwd(buff, PATH_MAX);
-	printf("%s\n", buff);
+	i = 0;
+	cnt = cnt_line(env);
+	while (argv[i])
+	{
+		j = 0;
+		while (env[j])
+		{
+			if (!strncmp(argv[i], env[j], ft_strlen(argv[i])))
+			{
+				env[i] = 0;
+				break ;
+			}
+			j++;
+		}
+		i++;
+	}
+	env = rearrange_env(env, cnt);
 }
