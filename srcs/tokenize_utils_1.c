@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/13 18:42:15 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/15 21:07:48 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ t_symbol parse_redirection(char *cmd_line, int *end)
 {
 	while (cmd_line[*end] && check_is_white_space(cmd_line[*end]))
 		(*end)++;
+	if (!cmd_line[*end])
+	{
+		printf("syntax!\n");
+		exit(1); // syntax error
+	}
 	while (cmd_line[*end])
 	{
 		if (check_is_single_quote(cmd_line[*end]))

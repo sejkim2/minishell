@@ -28,6 +28,11 @@ t_token_node	*tokenize(char *cmd_line, int *index)
 	if (cmd_line[*index] == '<' || cmd_line[*index] == '>')
 	{
 		end++;
+		if (!cmd_line[end])
+		{
+			printf("syntax!\n");
+			exit(1); // syntax error
+		}
 		// <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
 		if (cmd_line[*index] == cmd_line[*index + 1])
 			end++;
