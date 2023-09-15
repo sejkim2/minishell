@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/15 15:08:00 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/15 20:12:41 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,9 @@ static void print_symbol(t_symbol symbol)
     {
     case WORD:
         printf("WORD");
+        break;
+    case REDIRECTION_LIST:
+        printf("REDIRECTION_LIST");
         break;
     case ASSIGNMENT_WORD:
         printf("ASSIGNMENT_WORD");
@@ -170,6 +173,24 @@ void parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
         parse_error();
 }
 
+void parse_redirection_list(t_linked_list *list, t_tree_node *parent)
+{
+    t_tree_node *node;
+
+    while (1)
+    {
+        if (accept(list, REDIRECTION))
+        {
+            node = make_tree_node();
+            node->token = list->head->token;
+            node->symbol = next_symbol(list);
+            addchild(parent, node);
+        }
+        else
+            break;
+    }
+}
+
 void parse_simple_command(t_linked_list *list, t_tree_node *parent)
 {
     t_tree_node *node;
@@ -178,11 +199,22 @@ void parse_simple_command(t_linked_list *list, t_tree_node *parent)
     {
         if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
         {
-            node = make_tree_node();
-            node->symbol = SIMPLE_COMMAND_ELEMENT;
-            node->token = list->head->token;
-            addchild(parent, node);
-            parse_simple_command_element(list, node);
+            if (accept(list, REDIRECTION) && list->head->next->token->symbol == REDIRECTION)
+            {
+                node = make_tree_node();
+                node->symbol = REDIRECTION_LIST;
+                node->token = list->head->token;
+                addchild(parent, node);
+                parse_redirection_list(list, node);
+            }
+            else
+            {
+                node = make_tree_node();
+                node->symbol = SIMPLE_COMMAND_ELEMENT;
+                node->token = list->head->token;
+                addchild(parent, node);
+                parse_simple_command_element(list, node);
+            }
         }
         else
             break;
@@ -207,6 +239,14 @@ void parse_command(t_linked_list *list, t_tree_node *parent)
         node->token = list->head->token;
         addchild(parent, node);
         parse_subshell(list, node);
+        if (accept(list, REDIRECTION))
+        {
+            node = make_tree_node();
+            node->symbol = REDIRECTION_LIST;
+            node->token = list->head->token;
+            addchild(parent, node);
+            parse_redirection_list(list, node);
+        }
     }
     else
         parse_error();
@@ -215,6 +255,7 @@ void parse_command(t_linked_list *list, t_tree_node *parent)
 void parse_pipeline(t_linked_list *list, t_tree_node *parent)
 {
     t_tree_node *node;
+    t_symbol symbol;
 
     node = make_tree_node();
     node->symbol = COMMAND;
@@ -227,6 +268,12 @@ void parse_pipeline(t_linked_list *list, t_tree_node *parent)
         node->token = list->head->token;
         node->symbol = next_symbol(list);
         addchild(parent, node);
+        symbol = list->head->token->symbol;
+        if (symbol == PIPE || symbol == AND_IF || symbol == OR_IF || symbol == R_BRA)
+        {
+            printf("parse error\n");
+            exit(1);
+        }
         node = make_tree_node();
         node->symbol = PIPELINE;
         node->token = list->head->token;
@@ -238,6 +285,7 @@ void parse_pipeline(t_linked_list *list, t_tree_node *parent)
 void parse_list(t_linked_list *list, t_tree_node *parent)
 {
     t_tree_node *node;
+    t_symbol symbol;
 
     node = make_tree_node();
     node->symbol = PIPELINE;
@@ -250,6 +298,12 @@ void parse_list(t_linked_list *list, t_tree_node *parent)
         node->token = list->head->token;
         node->symbol = next_symbol(list);
         addchild(parent, node);
+        symbol = list->head->token->symbol;
+        if (symbol == PIPE || symbol == AND_IF || symbol == OR_IF || symbol == R_BRA)
+        {
+            printf("parse error\n");
+            exit(1);
+        }
         node = make_tree_node();
         node->symbol = LIST;
         node->token = list->head->token;
@@ -288,19 +342,12 @@ void parser(t_linked_list *list)
     root->token = 0;
     node = make_tree_node();
 
-    if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
+    if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION) || accept(list, L_BRA))
     {
         node->symbol = LIST;
         node->token = list->head->token;
         addchild(root, node);
         parse_list(list, node);
-    }
-    else if (accept(list, L_BRA))
-    {
-        node->symbol = COMMAND;
-        node->token = list->head->token;
-        addchild(root, node);
-        parse_command(list, node);
     }
     else
         parse_error();
