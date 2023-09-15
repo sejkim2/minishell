@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/15 14:38:34 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/15 15:08:00 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,52 +45,52 @@ static void print_symbol(t_symbol symbol)
     switch (symbol)
     {
     case WORD:
-        printf("WORD\n");
+        printf("WORD");
         break;
     case ASSIGNMENT_WORD:
-        printf("ASSIGNMENT_WORD\n");
+        printf("ASSIGNMENT_WORD");
         break;
     case REDIRECTION:
-        printf("REDIRECTION\n");
+        printf("REDIRECTION");
         break;
     case PIPE:
-        printf("PIPE\n");
+        printf("PIPE");
         break;
     case AND_IF:
-        printf("AND_IF\n");
+        printf("AND_IF");
         break;
     case OR_IF:
-        printf("OR_IF\n");
+        printf("OR_IF");
         break;
     case EQUAL:
-        printf("EQUAL\n");
+        printf("EQUAL");
         break;
     case L_BRA:
-        printf("L_BRA\n");
+        printf("L_BRA");
         break;
     case R_BRA:
-        printf("R_BRA\n");
+        printf("R_BRA");
         break;
     case SIMPLE_COMMAND:
-        printf("SIMPLE_COMMAND\n");
+        printf("SIMPLE_COMMAND");
         break;
     case SIMPLE_COMMAND_ELEMENT:
-        printf("SIMPLE_COMMAND_ELEMENT\n");
+        printf("SIMPLE_COMMAND_ELEMENT");
         break;
     case COMMAND:
-        printf("COMMAND\n");
+        printf("COMMAND");
         break;
     case PIPELINE:
-        printf("PIPELINE\n");
+        printf("PIPELINE");
         break;
     case SUBSHELL:
-        printf("SUBSHELL\n");
+        printf("SUBSHELL");
         break;
     case LIST:
-        printf("LIST\n");
+        printf("LIST");
         break;
     case ROOT:
-        printf("ROOT\n");
+        printf("ROOT");
         break;
     default:
         break;
@@ -101,7 +101,12 @@ static void tree_traverse(t_tree_node *node, int depth)
 {
     for(int i = 0; i<depth; i++)
         printf("\t");
+    printf("symbol : ");
     print_symbol(node->symbol);
+    if (node->token != 0)
+        printf(" value : %s\n", node->token->value);
+    else
+        printf(" value : root\n");
 
     t_tree_node *child;
     child = node->child_list;
@@ -157,6 +162,7 @@ void parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
     if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
     {
         node = make_tree_node();
+        node->token = list->head->token;
         node->symbol = next_symbol(list);
         addchild(parent, node);
     }
@@ -174,6 +180,7 @@ void parse_simple_command(t_linked_list *list, t_tree_node *parent)
         {
             node = make_tree_node();
             node->symbol = SIMPLE_COMMAND_ELEMENT;
+            node->token = list->head->token;
             addchild(parent, node);
             parse_simple_command_element(list, node);
         }
@@ -190,12 +197,14 @@ void parse_command(t_linked_list *list, t_tree_node *parent)
     if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
     {
         node->symbol = SIMPLE_COMMAND;
+        node->token = list->head->token;
         addchild(parent, node);
         parse_simple_command(list, node);
     }
     else if (accept(list, L_BRA))
     {
         node->symbol = SUBSHELL;
+        node->token = list->head->token;
         addchild(parent, node);
         parse_subshell(list, node);
     }
@@ -209,15 +218,18 @@ void parse_pipeline(t_linked_list *list, t_tree_node *parent)
 
     node = make_tree_node();
     node->symbol = COMMAND;
+    node->token = list->head->token;
     addchild(parent, node);
     parse_command(list, node);
     if (accept(list, PIPE))
     {
         node = make_tree_node();
+        node->token = list->head->token;
         node->symbol = next_symbol(list);
         addchild(parent, node);
         node = make_tree_node();
         node->symbol = PIPELINE;
+        node->token = list->head->token;
         addchild(parent, node);
         parse_pipeline(list, node);
     }
@@ -229,15 +241,18 @@ void parse_list(t_linked_list *list, t_tree_node *parent)
 
     node = make_tree_node();
     node->symbol = PIPELINE;
+    node->token = list->head->token;
     addchild(parent, node);
     parse_pipeline(list, node);
     if (accept(list, AND_IF) || accept(list, OR_IF))
     {
         node = make_tree_node();
+        node->token = list->head->token;
         node->symbol = next_symbol(list);
         addchild(parent, node);
         node = make_tree_node();
         node->symbol = LIST;
+        node->token = list->head->token;
         addchild(parent, node);
         parse_list(list, node);
     }
@@ -249,6 +264,7 @@ void parse_subshell(t_linked_list *list, t_tree_node *parent)
 
     expect(list, L_BRA);
     node = make_tree_node();
+    node->token = list->head->token;
     node->symbol = next_symbol(list);
     addchild(parent, node);
     node = make_tree_node();
@@ -257,6 +273,7 @@ void parse_subshell(t_linked_list *list, t_tree_node *parent)
     parse_list(list, node);
     expect(list, R_BRA);
     node = make_tree_node();
+    node->token = list->head->token;
     node->symbol = next_symbol(list);
     addchild(parent, node);
 }
@@ -268,17 +285,20 @@ void parser(t_linked_list *list)
 
     root = make_tree_node();
     root->symbol = ROOT;
+    root->token = 0;
     node = make_tree_node();
 
     if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
     {
         node->symbol = LIST;
+        node->token = list->head->token;
         addchild(root, node);
         parse_list(list, node);
     }
     else if (accept(list, L_BRA))
     {
         node->symbol = COMMAND;
+        node->token = list->head->token;
         addchild(root, node);
         parse_command(list, node);
     }

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/14 19:54:00 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/15 14:53:41 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct s_linkded_list
 typedef struct s_tree_node
 {
     t_symbol symbol;
+    t_token *token;
     int num_of_child;
     struct s_tree_node *next;
     struct s_tree_node *child_list;
