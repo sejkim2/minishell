@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/14 20:19:08 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/15 14:38:34 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static void print_symbol(t_symbol symbol)
 static void tree_traverse(t_tree_node *node, int depth)
 {
     for(int i = 0; i<depth; i++)
-        printf("\t\t");
+        printf("\t");
     print_symbol(node->symbol);
 
     t_tree_node *child;
@@ -150,20 +150,51 @@ static int expect(t_linked_list *list, t_symbol symbol)
         return (1);
 }
 
+void parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
+{
+    t_tree_node *node;
+
+    if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
+    {
+        node = make_tree_node();
+        node->symbol = next_symbol(list);
+        addchild(parent, node);
+    }
+    else
+        parse_error();
+}
+
+void parse_simple_command(t_linked_list *list, t_tree_node *parent)
+{
+    t_tree_node *node;
+
+    while (1)
+    {
+        if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
+        {
+            node = make_tree_node();
+            node->symbol = SIMPLE_COMMAND_ELEMENT;
+            addchild(parent, node);
+            parse_simple_command_element(list, node);
+        }
+        else
+            break;
+    }
+}
+
 void parse_command(t_linked_list *list, t_tree_node *parent)
 {
     t_tree_node *node;
 
-    if (accept(list, WORD) || accept(list, REDIRECTION))
+    node = make_tree_node();
+    if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
     {
-        node = make_tree_node();
         node->symbol = SIMPLE_COMMAND;
         addchild(parent, node);
         parse_simple_command(list, node);
     }
     else if (accept(list, L_BRA))
     {
-        node = make_tree_node();
         node->symbol = SUBSHELL;
         addchild(parent, node);
         parse_subshell(list, node);
@@ -205,6 +236,9 @@ void parse_list(t_linked_list *list, t_tree_node *parent)
         node = make_tree_node();
         node->symbol = next_symbol(list);
         addchild(parent, node);
+        node = make_tree_node();
+        node->symbol = LIST;
+        addchild(parent, node);
         parse_list(list, node);
     }
 }
@@ -215,6 +249,7 @@ void parse_subshell(t_linked_list *list, t_tree_node *parent)
 
     expect(list, L_BRA);
     node = make_tree_node();
+    node->symbol = next_symbol(list);
     addchild(parent, node);
     node = make_tree_node();
     node->symbol = LIST;
@@ -226,34 +261,6 @@ void parse_subshell(t_linked_list *list, t_tree_node *parent)
     addchild(parent, node);
 }
 
-void parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
-{
-    t_tree_node *node;
-
-    if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
-    {
-        node = make_tree_node();
-        node->symbol = next_symbol(list);
-        addchild(parent, node);
-    }
-    else
-        parse_error();
-}
-
-void parse_simple_command(t_linked_list *list, t_tree_node *parent)
-{
-    t_tree_node *node;
-
-    if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
-    {
-        node = make_tree_node();
-        node->symbol = next_symbol(list);
-        addchild(parent, node);
-    }
-    else
-        parse_error();
-}
-
 void parser(t_linked_list *list)
 {
     t_tree_node *root;
@@ -262,6 +269,7 @@ void parser(t_linked_list *list)
     root = make_tree_node();
     root->symbol = ROOT;
     node = make_tree_node();
+
     if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) || accept(list, REDIRECTION))
     {
         node->symbol = LIST;
