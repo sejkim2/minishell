@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/15 18:17:50 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/15 21:26:58 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ t_token_node	*tokenize(char *cmd_line, int *index);
 t_symbol parse_redirection(char *cmd_line, int *end);
 t_symbol parse_word(char *cmd_line, int *end);
 t_symbol parse_equal_or_branket(char ch, int *end);
-t_symbol parse_pipe_or_orif_or_andif(char ch, char next_ch, int *end);
+t_symbol parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end);
 char *make_value(char *cmd_line, int start, int end);
 void parse_single_quote_string(char *cmd_line, int *end);
 void parse_double_quote_string(char *cmd_line, int *end);

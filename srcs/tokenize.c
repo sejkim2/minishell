@@ -39,7 +39,7 @@ t_token_node	*tokenize(char *cmd_line, int *index)
 		symbol = parse_redirection(cmd_line, &end);
 	}
 	else if (cmd_line[*index] == '|' || cmd_line[*index] == '&')
-		symbol = parse_pipe_or_orif_or_andif(cmd_line[*index], cmd_line[*index + 1], &end);
+		symbol = parse_pipe_or_orif_or_andif(cmd_line, cmd_line[*index], &end);
 	else if (cmd_line[*index] == '=' || cmd_line[*index] == '(' || cmd_line[*index] == ')')
 		symbol = parse_equal_or_branket(cmd_line[*index], &end);
 	else
