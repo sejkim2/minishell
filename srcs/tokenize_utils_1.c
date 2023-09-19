@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/19 15:09:44 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/19 20:12:41 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_symbol parse_redirection(char *cmd_line, int *end)
 		printf("lexer error!\n");
 		exit(1);
 	}
-	if (cmd_line[*end] == '(' || cmd_line[*end] == ')')
+	if (cmd_line[*end] == '(' || cmd_line[*end] == ')' || cmd_line[*end] == '<' || cmd_line[*end] == '>')
 	{
 		printf("lexer error!\n");
 		exit(1);

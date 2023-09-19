@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/15 20:08:19 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/19 19:55:33 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ int	main(void)
 	while (1)
 	{
 		line = readline("minishell$ ");
+		if (line[0] == '\0')
+		{
+			free(line);
+			continue;
+		}
 		if (line)
 		{
 			add_history(line);
@@ -28,6 +33,7 @@ int	main(void)
 			parser(list); //check_syntax_errror
 			//execve()
 			// free_list(list);
+			free(line);
 			line = 0;
 		}
 		else
