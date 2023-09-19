@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:32:26 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/14 20:04:42 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/19 19:23:28 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,50 +16,44 @@ int	list_export(char **envp)
 {
 	int		cnt;
 	int		idx;
-	int		eql;
 	char	*env_name;
+	char	*env_val;
 
 	cnt = cnt_line(envp);
-	idx = 0;
 	sort_ascii(envp, cnt);
+	idx = 0;
 	while (idx < cnt)
 	{
-		eql = 0;
-		if (!envp[idx])
-		{
-			idx++;
-			continue ;
-		}
-		while (envp[idx][eql] != '=')
-			eql++;
-		env_name = ft_substr(envp[idx], 0, eql);
-		printf("declare -x %s=\"%s\"\n", env_name, envp[idx] + eql);
-		free(env_name);
+		env_name = get_envname(envp[idx]);
+		env_val = get_envval(env_name, envp);
+		printf("declare -x %s", env_name);
+		if (is_equal(envp[idx]))
+			printf("=\"%s\"", env_val);
+		printf("\n");
+		free_2str(env_name, env_val);
 		idx++;
 	}
 	return (0);
 }
 
-void	check_equation(char **argv)
-{
-	
-}
-
 int	set_env(char **argv, char **env)
 {
-	check_equation(argv);
-	func_unset(argv, env);
+	int		error_code;
+
+	error_code = check_key_rule(argv, &env);
+	list_export(env);
+	return (error_code);
 }
 
 int	main(int argc, char **argv, char **envp)
 {
 	char	**env;
 
-	env = init_envrion(envp);
+	env = init_environ(envp);
 	if (argc == 1 || strcmp(argv[1], "export"))
 		return (printf("error\n"));
 	if (argc == 2)
 		return (list_export(envp));
 	else
-		return (set_env(argv, env));
+		return (set_env(argv + 2, env));
 }

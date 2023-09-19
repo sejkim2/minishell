@@ -6,13 +6,13 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:27:46 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/14 20:04:04 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:36:46 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void	free_2str(char *s1, char *s2)
+void	free_2str(char *s1, char *s2)
 {
 	free(s1);
 	free(s2);

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   environ.c                                          :+:      :+:    :+:   */
+/*   make_env_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/14 20:03:55 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/19 19:28:48 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,38 +17,48 @@ char	**init_environ(char **envp)
 	int		cnt;
 	char	**environ;
 
-	cnt = 0;
-	while (envp[cnt])
-		cnt++;
+	cnt = cnt_line(envp);
 	environ = (char **)malloc(sizeof(char *) * (cnt + 1));
-	if (!environ)
-		exit(1);
 	environ[cnt] = 0;
 	matrix_cpy(envp, environ);
 	return (environ);
 }
 
-char	*get_env(char *env_name, char **env)
+char	*get_envname(char *av)
+{
+	int		idx;
+	char	*rstr;
+
+	idx = 0;
+	while (av[idx] && av[idx] != '=')
+		idx++;
+	rstr = ft_substr(av, 0, idx);
+	return (rstr);
+}
+
+char	*get_envval(char *env_name, char **env)
 {
 	int		i;
 	int		j;
+	char	*compare;
 	char	*rstr;
-
 
 	i = 0;
 	while (env[i])
 	{
 		j = 0;
-		if (!strncmp(env_name, env[i], ft_strlen(env_name)))
+		compare = get_envname(env[i]);
+		if (!strcmp(env_name, compare))
 		{
 			while (env[i][j] != '=')
 				j++;
 			rstr = ft_substr(env[i], j + 1, ft_strlen(env[i]));
+			free(compare);
 			return (rstr);
 		}
 		i++;
 	}
-	return (0);
+	return (NULL);
 }
 
 char	**change_env(char **av, char **env)
@@ -67,7 +77,7 @@ char	**change_env(char **av, char **env)
 		if (av[i][j] == '$')
 		{
 			make_str(i, j, av, str);
-			env_val = get_env(str[1], env);
+			env_val = get_envval(str[1], env);
 			if (env_val)
 				str[2] = env_val;
 			else
@@ -80,26 +90,24 @@ char	**change_env(char **av, char **env)
 	return (av);
 }
 
-char	**rearrange_env(int cnt, char **env)
+char	**add_env(char *av, char **env)
 {
 	int		i;
 	int		j;
+	int		cnt;
 	char	**renv;
 
 	i = 0;
-	renv = (char **)malloc(sizeof(char *) * (cnt + 1));
+	j = 0;
+	cnt = cnt_line(env);
+	renv = (char **)malloc(sizeof(char *) * (cnt + 2));
 	while (i < cnt)
 	{
-		if (!env[i])
-		{
-			i++;
-			continue ;
-		}
 		renv[j] = env[i];
 		i++;
 		j++;
 	}
-	free(env);
-	renv[j] = NULL;
+	renv[j] = av;
+	renv[j + 1] = NULL;
 	return (renv);
 }
