@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:59 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/13 18:42:25 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/19 15:10:08 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void parse_single_quote_string(char *cmd_line, int *end)
 		(*end)++;
 	if (!check_is_single_quote(cmd_line[*end]))
 	{
-		printf("syntax!\n");
-		exit(1); // syntax error
+		printf("lexer error!\n");
+		exit(1);
 	}
 	(*end)++;
 }
@@ -62,8 +62,8 @@ void parse_double_quote_string(char *cmd_line, int *end)
 		(*end)++;
 	if (!check_is_double_quote(cmd_line[*end]))
 	{
-		printf("syntax!\n");
-		exit(1); // syntax error
+		printf("lexer error!\n");
+		exit(1);
 	}
 	(*end)++;
 }

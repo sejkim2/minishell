@@ -30,8 +30,13 @@ t_token_node	*tokenize(char *cmd_line, int *index)
 		end++;
 		if (!cmd_line[end])
 		{
-			printf("syntax!\n");
-			exit(1); // syntax error
+			printf("lexer error!\n");
+			exit(1);
+		}
+		if ((cmd_line[*index] == '<' && cmd_line[end] == '>') || (cmd_line[*index] == '>' && cmd_line[end] == '<'))
+		{
+			printf("lexer error!\n");
+			exit(1);
 		}
 		// <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
 		if (cmd_line[*index] == cmd_line[*index + 1])
