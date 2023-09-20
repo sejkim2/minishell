@@ -6,13 +6,14 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/20 17:48:25 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/20 18:47:49 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-C_FLAGS = -Wall -Werror -Wextra
+# C_FLAGS = -Wall -Werror -Wextra
+C_FLAGS =
 
 SRCS = srcs/main.c	\
 	srcs/lexer.c \
