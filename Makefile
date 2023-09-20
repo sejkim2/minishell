@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/20 17:41:06 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/20 17:48:25 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,6 @@ SRCS = srcs/main.c	\
 
 OBJS = $(SRCS:%.c=%.o)
 HEADER = includes/minishell.h
-
 
 %.o : %.c $(HEADER)
 	$(CC) $(C_FLAGS) -c $< -o $@
