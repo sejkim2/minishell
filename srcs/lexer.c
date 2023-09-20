@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 13:42:23 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:47:56 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_linked_list	*lexer(char *cmd_line)
 
 	i = 0;
 	list = make_list();
+	if (list == 0)
+		malloc_error();
 	while (cmd_line[i])
 	{
 		while (cmd_line[i] && check_is_white_space(cmd_line[i]))

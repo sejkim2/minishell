@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 13:37:48 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/20 16:47:30 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,13 @@ int check_is_white_space(char ch);
 int check_is_meta_character(char ch);
 int check_is_seperator(char ch);
 
+void malloc_error();
+
+
 /*free*/
-// char *free_list(t_linked_list *list);
-// char *free_node(t_token_node *node);
-// char *free_token(t_token *token);
+char *free_list(t_linked_list *list);
+char *free_token_node(t_token_node *node);
+char *free_token(t_token *token);
 
 /*signal*/
 void	set_shell_signal(void);
@@ -125,7 +128,7 @@ void	set_terminal_print_off(void);
 void	set_terminal_print_on(void);
 
 /*parser*/
-void parser(t_linked_list *list);
+t_tree_node *parser(t_linked_list *list);
 
 t_symbol next_symbol(t_linked_list *list);
 int accept(t_linked_list *list, t_symbol symbol);
@@ -144,6 +147,9 @@ void parse_list(t_linked_list *list, t_tree_node *parent);
 void parse_pipeline(t_linked_list *list, t_tree_node *parent);
 void parse_command(t_linked_list *list, t_tree_node *parent);
 void parse_redirection_list(t_linked_list *list, t_tree_node *parent);
+
+char *free_tree_node(t_tree_node *node);
+char *free_tree(t_tree_node *parent);
 
 
 #endif
