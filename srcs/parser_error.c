@@ -6,14 +6,14 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:32:50 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 13:42:24 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:10:57 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void parse_error(void)
+void	parse_error(void)
 {
-    printf("parse error\n");
-    exit(1);
+	printf("parse error\n");
+	exit(1);
 }

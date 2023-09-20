@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer_tokenize.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/09/20 17:09:15 by sejkim2           #+#    #+#             */
+/*   Updated: 2023/09/20 17:10:10 by sejkim2          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 // < in1
@@ -17,14 +29,15 @@
 	구별
 */
 
-static t_symbol parse_redirection__(char *cmd_line, int cur_index, int *end)
+// <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
+static	t_symbol	parse_redirection__(char *cmd_line, int cur_index, int *end)
 {
 	(*end)++;
 	if (!cmd_line[*end])
 		lexer_error();
-	if ((cmd_line[cur_index] == '<' && cmd_line[*end] == '>') || (cmd_line[cur_index] == '>' && cmd_line[*end] == '<'))
+	if ((cmd_line[cur_index] == '<' && cmd_line[*end] == '>') \
+	|| (cmd_line[cur_index] == '>' && cmd_line[*end] == '<'))
 		lexer_error();
-	// <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
 	if (cmd_line[cur_index] == cmd_line[cur_index + 1])
 		(*end)++;
 	return (parse_redirection(cmd_line, end));
@@ -32,17 +45,18 @@ static t_symbol parse_redirection__(char *cmd_line, int cur_index, int *end)
 
 t_token_node	*tokenize(char *cmd_line, int *index)
 {
-	char *value;
-	t_token *new_token;
-	int end;
-	t_symbol symbol;
+	char		*value;
+	t_token		*new_token;
+	int			end;
+	t_symbol	symbol;
 
 	end = *index;
 	if (cmd_line[*index] == '<' || cmd_line[*index] == '>')
 		symbol = parse_redirection__(cmd_line, *index, &end);
 	else if (cmd_line[*index] == '|' || cmd_line[*index] == '&')
 		symbol = parse_pipe_or_orif_or_andif(cmd_line, cmd_line[*index], &end);
-	else if (cmd_line[*index] == '=' || cmd_line[*index] == '(' || cmd_line[*index] == ')')
+	else if (cmd_line[*index] == '=' || \
+	cmd_line[*index] == '(' || cmd_line[*index] == ')')
 		symbol = parse_equal_or_branket(cmd_line[*index], &end);
 	else
 		symbol = parse_word(cmd_line, &end);

@@ -6,13 +6,14 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:59 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 13:42:21 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:09:05 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void make_string_single_quote(char *cmd_line, char *new_string, int *start, int *index)
+static	void	make_string_single_quote(char *cmd_line, \
+char *new_string, int *start, int *index)
 {
 	(*start)++;
 	while (!check_is_single_quote(cmd_line[*start]))
@@ -20,7 +21,8 @@ static void make_string_single_quote(char *cmd_line, char *new_string, int *star
 	(*start)++;
 }
 
-static void make_string_double_quote(char *cmd_line, char *new_string, int *start, int *index)
+static	void	make_string_double_quote(char *cmd_line, \
+char *new_string, int *start, int *index)
 {
 	(*start)++;
 	while (!check_is_double_quote(cmd_line[*start]))
@@ -28,10 +30,10 @@ static void make_string_double_quote(char *cmd_line, char *new_string, int *star
 	(*start)++;
 }
 
-char *make_value(char *cmd_line, int start, int end)
+char	*make_value(char *cmd_line, int start, int end)
 {
-	char *new_string;
-	int i;
+	char	*new_string;
+	int		i;
 
 	new_string = malloc(sizeof(char) * (end - start + 1));
 	i = 0;
@@ -48,7 +50,7 @@ char *make_value(char *cmd_line, int start, int end)
 	return (new_string);
 }
 
-void parse_single_quote_string(char *cmd_line, int *end)
+void	parse_single_quote_string(char *cmd_line, int *end)
 {
 	(*end)++;
 	while (cmd_line[*end] && !check_is_single_quote(cmd_line[*end]))
@@ -58,7 +60,7 @@ void parse_single_quote_string(char *cmd_line, int *end)
 	(*end)++;
 }
 
-void parse_double_quote_string(char *cmd_line, int *end)
+void	parse_double_quote_string(char *cmd_line, int *end)
 {
 	(*end)++;
 	while (cmd_line[*end] && !check_is_double_quote(cmd_line[*end]))

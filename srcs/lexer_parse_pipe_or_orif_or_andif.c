@@ -6,24 +6,24 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:44:19 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 13:42:20 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:06:37 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void parse_if_one_token(char *cmd_line, char ch, int *end)
-{
-    (*end)++;
-    if (!cmd_line[*end])
-        lexer_error();
-}
-
-t_symbol parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end)
+static	void	parse_if_one_token(char *cmd_line, char ch, int *end)
 {
 	(*end)++;
 	if (!cmd_line[*end])
-        lexer_error();
+		lexer_error();
+}
+
+t_symbol	parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end)
+{
+	(*end)++;
+	if (!cmd_line[*end])
+		lexer_error();
 	if (ch == '|')
 	{
 		if (ch == cmd_line[*end])
@@ -34,7 +34,7 @@ t_symbol parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end)
 		else
 			return (PIPE);
 	}
-	else //ch == '&'
+	else
 	{
 		if (ch == cmd_line[*end])
 		{
@@ -42,8 +42,7 @@ t_symbol parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end)
 			return (AND_IF);
 		}
 		else
-            lexer_error();
+			lexer_error();
 	}
 	return (WORD);
 }
-

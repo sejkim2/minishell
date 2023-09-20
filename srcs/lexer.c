@@ -6,16 +6,16 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 13:47:56 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/20 17:10:39 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static void check_blank_error(t_linked_list *list)
+static	void	check_blank_error(t_linked_list *list)
 {
-	int cnt_l_bra;
-	int cnt_r_bra;
+	int				cnt_l_bra;
+	int				cnt_r_bra;
 	t_token_node	*cur;
 
 	cnt_l_bra = 0;
