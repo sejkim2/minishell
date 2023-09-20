@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/14 20:16:42 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/20 13:41:26 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,15 +16,21 @@ C_FLAGS =
 
 SRCS = srcs/main.c	\
 	srcs/lexer.c \
-	srcs/tokenize.c \
-	srcs/list.c \
-	srcs/node.c \
-	srcs/check_character_symbol.c \
-	srcs/tokenize_utils_1.c \
-	srcs/tokenize_utils_2.c \
+	srcs/lexer_error.c \
+	srcs/lexer_tokenize.c \
+	srcs/lexer_list.c \
+	srcs/lexer_node.c \
+	srcs/lexer_check_character_symbol.c \
+	srcs/lexer_parse_pipe_or_orif_or_andif.c \
+	srcs/lexer_tokenize_utils_1.c \
+	srcs/lexer_tokenize_utils_2.c \
 	srcs/shell_signal.c	\
 	srcs/block_signal.c \
-	srcs/parser.c
+	srcs/parser.c \
+	srcs/parser_error.c \
+	srcs/parser_function_1.c \
+	srcs/parser_function_2.c \
+	srcs/parser_tree_node.c
 
 OBJS = $(SRCS:%.c=%.o)
 HEADER = includes/minishell.h

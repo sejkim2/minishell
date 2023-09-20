@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tokenize_utils_2.c                                 :+:      :+:    :+:   */
+/*   lexer_tokenize_utils_2.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:59 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 12:32:49 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:42:21 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,7 @@ void parse_single_quote_string(char *cmd_line, int *end)
 	while (cmd_line[*end] && !check_is_single_quote(cmd_line[*end]))
 		(*end)++;
 	if (!check_is_single_quote(cmd_line[*end]))
-	{
-		printf("lexer error!\n");
-		exit(1);
-	}
+		lexer_error();
 	(*end)++;
 }
 
@@ -67,9 +64,6 @@ void parse_double_quote_string(char *cmd_line, int *end)
 	while (cmd_line[*end] && !check_is_double_quote(cmd_line[*end]))
 		(*end)++;
 	if (!check_is_double_quote(cmd_line[*end]))
-	{
-		printf("lexer error!\n");
-		exit(1);
-	}
+		lexer_error();
 	(*end)++;
 }

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 12:14:39 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:37:48 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ typedef struct s_tree_node
 /*lexer*/
 t_linked_list *lexer(char *cmd_line);
 
+/*error*/
+void lexer_error();
+
 /*list*/
 t_linked_list	*make_list();
 void	push_back_list(t_linked_list *list, t_token_node *node);
@@ -124,12 +127,23 @@ void	set_terminal_print_on(void);
 /*parser*/
 void parser(t_linked_list *list);
 
+t_symbol next_symbol(t_linked_list *list);
+int accept(t_linked_list *list, t_symbol symbol);
+int expect(t_linked_list *list, t_symbol symbol);
+
+void init_tree_node(t_linked_list *list, t_tree_node *node, t_symbol symbol);
+t_tree_node *make_tree_node(t_linked_list *list, t_symbol symbol);
+void addchild(t_tree_node *parent, t_tree_node *child);
+
+void parse_error(void);
+
 void parse_simple_command(t_linked_list *list, t_tree_node *parent);
 void parse_simple_command_element(t_linked_list *list, t_tree_node *parent);
 void parse_subshell(t_linked_list *list, t_tree_node *parent);
 void parse_list(t_linked_list *list, t_tree_node *parent);
 void parse_pipeline(t_linked_list *list, t_tree_node *parent);
 void parse_command(t_linked_list *list, t_tree_node *parent);
+void parse_redirection_list(t_linked_list *list, t_tree_node *parent);
 
 
 #endif

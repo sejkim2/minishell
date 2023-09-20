@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/19 20:03:36 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/20 13:42:23 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ static void check_blank_error(t_linked_list *list)
 		cur = cur->next;
 	}
 	if (cnt_l_bra != cnt_r_bra)
-	{
-		printf("lexer error!\n");
-		exit(1);
-	}
+		lexer_error();
 }
 
 static	void	print_list(t_linked_list *list)

@@ -21,15 +21,9 @@ static t_symbol parse_redirection__(char *cmd_line, int cur_index, int *end)
 {
 	(*end)++;
 	if (!cmd_line[*end])
-	{
-		printf("lexer error!\n");
-		exit(1);
-	}
+		lexer_error();
 	if ((cmd_line[cur_index] == '<' && cmd_line[*end] == '>') || (cmd_line[cur_index] == '>' && cmd_line[*end] == '<'))
-	{
-		printf("lexer error!\n");
-		exit(1);
-	}
+		lexer_error();
 	// <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
 	if (cmd_line[cur_index] == cmd_line[cur_index + 1])
 		(*end)++;
