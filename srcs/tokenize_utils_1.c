@@ -6,32 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/19 20:12:41 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/20 12:23:18 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// static int check_is_blank_string(char *cmd_line, int index)
-// {
-// 	if (cmd_line[index] && check_is_single_quote(cmd_line[index]))
-// 	{
-// 		if (cmd_line[index + 1] && check_is_single_quote(cmd_line[index + 1]))
-// 		{
-// 			if (!cmd_line[index + 2])
-// 				return (1);
-// 		}
-// 	}
-// 	else if (cmd_line[index] && check_is_double_quote(cmd_line[index]))
-// 	{
-// 		if (cmd_line[index + 1] && check_is_double_quote(cmd_line[index + 1]))
-// 		{
-// 			if (!cmd_line[index + 2])
-// 				return (1);
-// 		}
-// 	}
-// 	return (0);
-// }
 
 t_symbol parse_redirection(char *cmd_line, int *end)
 {
@@ -47,11 +26,6 @@ t_symbol parse_redirection(char *cmd_line, int *end)
 		printf("lexer error!\n");
 		exit(1);
 	}
-	// if (check_is_blank_string(cmd_line, *end) == 1)
-	// {
-	// 	printf("lexer error!\n");
-	// 	exit(1);
-	// }
 	while (cmd_line[*end])
 	{
 		if (check_is_single_quote(cmd_line[*end]))

@@ -17,6 +17,25 @@
 	구별
 */
 
+static t_symbol parse_redirection__(char *cmd_line, int cur_index, int *end)
+{
+	(*end)++;
+	if (!cmd_line[*end])
+	{
+		printf("lexer error!\n");
+		exit(1);
+	}
+	if ((cmd_line[cur_index] == '<' && cmd_line[*end] == '>') || (cmd_line[cur_index] == '>' && cmd_line[*end] == '<'))
+	{
+		printf("lexer error!\n");
+		exit(1);
+	}
+	// <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
+	if (cmd_line[cur_index] == cmd_line[cur_index + 1])
+		(*end)++;
+	return (parse_redirection(cmd_line, end));
+}
+
 t_token_node	*tokenize(char *cmd_line, int *index)
 {
 	char *value;
@@ -26,23 +45,7 @@ t_token_node	*tokenize(char *cmd_line, int *index)
 
 	end = *index;
 	if (cmd_line[*index] == '<' || cmd_line[*index] == '>')
-	{
-		end++;
-		if (!cmd_line[end])
-		{
-			printf("lexer error!\n");
-			exit(1);
-		}
-		if ((cmd_line[*index] == '<' && cmd_line[end] == '>') || (cmd_line[*index] == '>' && cmd_line[end] == '<'))
-		{
-			printf("lexer error!\n");
-			exit(1);
-		}
-		// <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
-		if (cmd_line[*index] == cmd_line[*index + 1])
-			end++;
-		symbol = parse_redirection(cmd_line, &end);
-	}
+		symbol = parse_redirection__(cmd_line, *index, &end);
 	else if (cmd_line[*index] == '|' || cmd_line[*index] == '&')
 		symbol = parse_pipe_or_orif_or_andif(cmd_line, cmd_line[*index], &end);
 	else if (cmd_line[*index] == '=' || cmd_line[*index] == '(' || cmd_line[*index] == ')')

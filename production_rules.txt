@@ -16,9 +16,5 @@
 <SIMPLE_COMMAND_ELEMENT> ::= <WORD> | <ASSIGNMENT_WORD> | <REDIRECTION>
 
 
-<>cmd
-><cmd
->>(ls)
-
-\n, ))
-a && n (c||d)
+>'>'a
+>""
