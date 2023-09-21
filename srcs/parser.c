@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 20:21:57 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/21 16:28:05 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ static void print_symbol(t_symbol symbol)
         break;
     case OR_IF:
         printf("OR_IF");
-        break;
-    case EQUAL:
-        printf("EQUAL");
         break;
     case L_BRA:
         printf("L_BRA");

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:09:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 17:10:10 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/21 16:27:20 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,11 @@ static	t_symbol	parse_redirection__(char *cmd_line, int cur_index, int *end)
 {
 	(*end)++;
 	if (!cmd_line[*end])
-		lexer_error();
-	if ((cmd_line[cur_index] == '<' && cmd_line[*end] == '>') \
-	|| (cmd_line[cur_index] == '>' && cmd_line[*end] == '<'))
-		lexer_error();
+		print_unexpected_token_syntax_error('\n');
+	if (cmd_line[cur_index] == '<' && cmd_line[*end] == '>')
+		print_unexpected_token_syntax_error('\n');
+	if (cmd_line[cur_index] == '>' && cmd_line[*end] == '<')
+		print_unexpected_token_syntax_error('<');
 	if (cmd_line[cur_index] == cmd_line[cur_index + 1])
 		(*end)++;
 	return (parse_redirection(cmd_line, end));
@@ -55,9 +56,8 @@ t_token_node	*tokenize(char *cmd_line, int *index)
 		symbol = parse_redirection__(cmd_line, *index, &end);
 	else if (cmd_line[*index] == '|' || cmd_line[*index] == '&')
 		symbol = parse_pipe_or_orif_or_andif(cmd_line, cmd_line[*index], &end);
-	else if (cmd_line[*index] == '=' || \
-	cmd_line[*index] == '(' || cmd_line[*index] == ')')
-		symbol = parse_equal_or_branket(cmd_line[*index], &end);
+	else if (cmd_line[*index] == '(' || cmd_line[*index] == ')')
+		symbol = parse_branket(cmd_line[*index], &end);
 	else
 		symbol = parse_word(cmd_line, &end);
 	value = make_value(cmd_line, *index, end);

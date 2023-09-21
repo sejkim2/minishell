@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:59 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 17:09:05 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/21 16:15:52 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,24 +48,4 @@ char	*make_value(char *cmd_line, int start, int end)
 	}
 	new_string[i] = '\0';
 	return (new_string);
-}
-
-void	parse_single_quote_string(char *cmd_line, int *end)
-{
-	(*end)++;
-	while (cmd_line[*end] && !check_is_single_quote(cmd_line[*end]))
-		(*end)++;
-	if (!check_is_single_quote(cmd_line[*end]))
-		lexer_error();
-	(*end)++;
-}
-
-void	parse_double_quote_string(char *cmd_line, int *end)
-{
-	(*end)++;
-	while (cmd_line[*end] && !check_is_double_quote(cmd_line[*end]))
-		(*end)++;
-	if (!check_is_double_quote(cmd_line[*end]))
-		lexer_error();
-	(*end)++;
 }

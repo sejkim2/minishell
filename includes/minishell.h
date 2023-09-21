@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/20 16:47:30 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/21 16:27:56 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ typedef enum e_symbol
 	PIPE,
     AND_IF,
     OR_IF,
-    EQUAL,
     L_BRA,
     R_BRA,
     SIMPLE_COMMAND_ELEMENT,
@@ -99,7 +98,7 @@ t_token_node	*tokenize(char *cmd_line, int *index);
 
 t_symbol parse_redirection(char *cmd_line, int *end);
 t_symbol parse_word(char *cmd_line, int *end);
-t_symbol parse_equal_or_branket(char ch, int *end);
+t_symbol parse_branket(char ch, int *end);
 t_symbol parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end);
 char *make_value(char *cmd_line, int start, int end);
 void parse_single_quote_string(char *cmd_line, int *end);
@@ -112,8 +111,9 @@ int check_is_white_space(char ch);
 int check_is_meta_character(char ch);
 int check_is_seperator(char ch);
 
+/*error*/
 void malloc_error();
-
+void	print_unexpected_token_syntax_error(char ch);
 
 /*free*/
 char *free_list(t_linked_list *list);
