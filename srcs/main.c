@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/21 15:19:08 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/21 19:55:36 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,14 @@ static void print_ascii_banner(void)
 	printf("******************************************************\n");
 }
 
+void f()
+{
+	system("leaks minishell");
+}
+
 int	main(void)
 {
+	atexit(f);
 	print_ascii_banner();
 	char			*line;
 	t_linked_list	*list;

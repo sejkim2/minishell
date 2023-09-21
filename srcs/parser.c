@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/21 16:28:05 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/21 19:55:15 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,10 @@ t_tree_node	*parser(t_linked_list *list)
 	t_tree_node		*root;
 	t_tree_node		*node;
 	t_token_node	*head;
+    int num_of_node;
 
 	head = list->head;
+    num_of_node = list->num_of_node;
 	root = make_tree_node(list, ROOT);
 	root->token = 0;
 	if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) \
@@ -140,5 +142,6 @@ t_tree_node	*parser(t_linked_list *list)
 		parse_error();
 	tree_traverse(root, 0);
 	list->head = head;
+    list->num_of_node = num_of_node;
 	return (root);
 }
