@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/21 18:01:07 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/21 21:03:27 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@ t_symbol	parse_word(char *cmd_line, int *end)
 {
 	while (cmd_line[*end])
 	{
-		if (check_is_single_quote(cmd_line[*end]))
-			parse_single_quote_string(cmd_line, end);
-		else if (check_is_double_quote(cmd_line[*end]))
-			parse_double_quote_string(cmd_line, end);
-		else if (check_is_seperator(cmd_line[*end]))
+		// if (check_is_single_quote(cmd_line[*end]))
+		// 	parse_single_quote_string(cmd_line, end);
+		// else if (check_is_double_quote(cmd_line[*end]))
+		// 	parse_double_quote_string(cmd_line, end);
+		// else if (check_is_seperator(cmd_line[*end]))
+		if (check_is_seperator(cmd_line[*end]))
 			break ;
 		else
 			(*end)++;
