@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/21 20:38:52 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/22 11:46:39 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ SRCS = srcs/main.c	\
 	srcs/lexer_node.c \
 	srcs/lexer_check_character_symbol.c \
 	srcs/lexer_parse_pipe_or_orif_or_andif.c \
-	srcs/lexer_tokenize_utils_1.c \
+	srcs/lexer_tokenize_utils.c \
 	srcs/lexer_make_value.c \
 	srcs/shell_signal.c	\
 	srcs/block_signal.c \

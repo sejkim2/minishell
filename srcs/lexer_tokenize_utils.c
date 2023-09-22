@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_tokenize_utils_1.c                           :+:      :+:    :+:   */
+/*   lexer_tokenize_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/21 21:03:27 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/22 13:47:24 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,11 @@ t_symbol	parse_word(char *cmd_line, int *end)
 {
 	while (cmd_line[*end])
 	{
-		// if (check_is_single_quote(cmd_line[*end]))
-		// 	parse_single_quote_string(cmd_line, end);
-		// else if (check_is_double_quote(cmd_line[*end]))
-		// 	parse_double_quote_string(cmd_line, end);
-		// else if (check_is_seperator(cmd_line[*end]))
-		if (check_is_seperator(cmd_line[*end]))
+		if (check_is_single_quote(cmd_line[*end]))
+			parse_single_quote_string(cmd_line, end);
+		else if (check_is_double_quote(cmd_line[*end]))
+			parse_double_quote_string(cmd_line, end);
+		else if (check_is_seperator(cmd_line[*end]))
 			break ;
 		else
 			(*end)++;
@@ -64,22 +63,46 @@ t_symbol	parse_branket(char ch, int *end)
 
 void	parse_single_quote_string(char *cmd_line, int *end)
 {
-	(*end)++;
-	while (cmd_line[*end] && !check_is_single_quote(cmd_line[*end]))
+	int i;
+
+	i = *end + 1;
+	while (cmd_line[i] && !check_is_single_quote(cmd_line[i]))
+		i++;
+	if (check_is_single_quote(cmd_line[i]))
+	{
 		(*end)++;
-	if (!check_is_single_quote(cmd_line[*end]))
-		lexer_error();
-	(*end)++;
+		while (cmd_line[*end] && !check_is_single_quote(cmd_line[*end]))
+			(*end)++;
+		(*end)++;
+	}
+	else
+	{
+		(*end)++;
+		while (cmd_line[*end] && !check_is_double_quote(cmd_line[*end]) && !check_is_white_space(cmd_line[*end]))
+			(*end)++;
+	}
 }
 
 void	parse_double_quote_string(char *cmd_line, int *end)
 {
-	(*end)++;
-	while (cmd_line[*end] && !check_is_double_quote(cmd_line[*end]))
+	int i;
+
+	i = *end + 1;
+	while (cmd_line[i] && !check_is_double_quote(cmd_line[i]))
+		i++;
+	if (check_is_double_quote(cmd_line[i]))
+	{
 		(*end)++;
-	if (!check_is_double_quote(cmd_line[*end]))
-		lexer_error();
-	(*end)++;
+		while (cmd_line[*end] && !check_is_double_quote(cmd_line[*end]))
+			(*end)++;
+		(*end)++;
+	}
+	else
+	{
+		(*end)++;
+		while (cmd_line[*end] && !check_is_single_quote(cmd_line[*end]) && !check_is_white_space(cmd_line[*end]))
+			(*end)++;
+	}
 }
 
 // void	parse_single_quote_string(char *cmd_line, int *end)
