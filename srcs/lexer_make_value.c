@@ -6,20 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:59 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/22 13:43:14 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/22 15:08:16 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-// static	void	make_string_single_quote(char *cmd_line, \
-// char *new_string, int *start, int *index)
-// {
-// 	(*start)++;
-// 	while (!check_is_single_quote(cmd_line[*start]))
-// 		new_string[(*index)++] = cmd_line[(*start)++];
-// 	(*start)++;
-// }
 
 static	void	make_string_single_quote(char *cmd_line, \
 char *new_string, int *start, int *index)
@@ -75,6 +66,8 @@ char	*make_value(char *cmd_line, int start, int end)
 	int		i;
 
 	new_string = malloc(sizeof(char) * (end - start + 1));
+	if (new_string == 0)
+		malloc_error();
 	i = 0;
 	while (start < end)
 	{

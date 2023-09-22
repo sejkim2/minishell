@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/22 13:47:24 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/22 15:03:11 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void	parse_single_quote_string(char *cmd_line, int *end)
 	else
 	{
 		(*end)++;
-		while (cmd_line[*end] && !check_is_double_quote(cmd_line[*end]) && !check_is_white_space(cmd_line[*end]))
+		while (cmd_line[*end] && !check_is_double_quote(cmd_line[*end]) \
+		&& !check_is_white_space(cmd_line[*end]))
 			(*end)++;
 	}
 }
@@ -100,50 +101,8 @@ void	parse_double_quote_string(char *cmd_line, int *end)
 	else
 	{
 		(*end)++;
-		while (cmd_line[*end] && !check_is_single_quote(cmd_line[*end]) && !check_is_white_space(cmd_line[*end]))
+		while (cmd_line[*end] && !check_is_single_quote(cmd_line[*end]) \
+		&& !check_is_white_space(cmd_line[*end]))
 			(*end)++;
 	}
 }
-
-// void	parse_single_quote_string(char *cmd_line, int *end)
-// {
-// 	int i;
-
-// 	i = *end + 1;
-// 	while (cmd_line[i] && !check_is_single_quote(cmd_line[i]))
-// 		i++;
-// 	if (!check_is_single_quote(cmd_line[i]))
-// 	{
-// 		while (cmd_line[*end] && !check_is_double_quote(cmd_line[*end]))
-// 			(*end)++;
-// 	}
-// 	else
-// 	{
-// 		(*end)++;
-// 		while (cmd_line[*end] && !check_is_single_quote(cmd_line[*end]))
-// 			(*end)++;
-// 		(*end)++;
-// 	}
-// }
-
-// void	parse_double_quote_string(char *cmd_line, int *end)
-// {
-// 	int i;
-
-// 	i = *end + 1;
-// 	while (cmd_line[i] && !check_is_double_quote(cmd_line[i]))
-// 		i++;
-// 	if (!check_is_double_quote(cmd_line[i]))
-// 	{
-// 		while (cmd_line[*end] && !check_is_single_quote(cmd_line[*end]))
-// 			(*end)++;
-// 	}
-// 	else
-// 	{
-// 		(*end)++;
-// 		while (cmd_line[*end] && !check_is_double_quote(cmd_line[*end]))
-// 			(*end)++;
-// 		(*end)++;
-// 	}
-// }
-
