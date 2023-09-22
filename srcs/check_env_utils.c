@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:28:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/19 19:34:45 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/21 16:11:03 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ char	**check_equation(char *av, char **env)
 int	check_dup(char *av, char *env_name, char **env)
 {
 	int		i;
-	int		j;
 	char	*compare;
 
 	i = 0;

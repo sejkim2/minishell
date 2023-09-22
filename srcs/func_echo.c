@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:36:27 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/14 18:25:25 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/21 19:18:42 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ static void	echo_no_opt_print(int argc, char **argv)
 {
 	int		idx;
 
-	if (!argv[2])
+	if (!*argv)
 	{
 		printf("\n");
 		return ;
 	}
-	idx = 2;
+	idx = 0;
 	while (idx < argc)
 	{
 		printf("%s", argv[idx]);
@@ -42,20 +42,28 @@ static void	echo_no_opt_print(int argc, char **argv)
 static void	echo_opt_print(int argc, char **argv)
 {
 	int		idx;
-	int		plen;
 
-	if (!*argv)
-		return ;
-	plen = 0;
-	idx = 2;
+	idx = 0;
 	while (idx < argc)
 	{
-		plen += printf("%s", argv[idx]);
+		printf("%s", argv[idx]);
 		if (idx < argc - 1)
-			plen += printf(" ");
+			printf(" ");
 		idx++;
 	}
 	return ;
+}
+
+static int	echo_opt_flag(char *argv)
+{
+	int		idx;
+
+	idx = 1;
+	while (argv[idx] && argv[idx] == 'n')
+		idx++;
+	if (argv[idx] != '\0')
+		return (0);
+	return (1);
 }
 
 static void	echo_opt(int argc, char **argv)
@@ -63,22 +71,27 @@ static void	echo_opt(int argc, char **argv)
 	int		i;
 	int		j;
 
-	i = 2;
-	while (argv[i] && *argv[i] == '-')
+	if (echo_opt_flag(*argv))
 	{
-		j = 1;
-		if (!argv[i][j])
-			break ;
-		while (argv[i][j])
+		i = 0;
+		while (argv[i] && *argv[i] == '-')
 		{
-			if (argv[i][j] == 'n')
-				j++;
-			else
-				return (echo_opt_print(argc - i + 2, argv + i - 2));
+			j = 1;
+			if (!argv[i][j])
+				break ;
+			while (argv[i][j])
+			{
+				if (argv[i][j] == 'n')
+					j++;
+				else
+					return (echo_opt_print(argc - i, argv + i));
+			}
+			i++;
 		}
-		i++;
+		return (echo_opt_print(argc - i, argv + i));
 	}
-	return (echo_opt_print(argc - i + 2, argv + i - 2));
+	else
+		return (echo_no_opt_print(argc, argv));
 }
 
 int	main(int argc, char **argv, char **envp)
@@ -86,8 +99,9 @@ int	main(int argc, char **argv, char **envp)
 	if (argc < 2 || strcmp(argv[1], "echo"))
 		return (printf("error\n"));
 	argv = change_env(argv, envp);
-	if (!argv[2] || argv[2][0] != '-')
-		echo_no_opt_print(argc, argv);
+	if (!argv[2] || argv[2][0] != '-' || !argv[2][1])
+		echo_no_opt_print(argc - 2, argv + 2);
 	else
-		echo_opt(argc, argv);
+		echo_opt(argc - 2, argv + 2);
+	exit(0);
 }

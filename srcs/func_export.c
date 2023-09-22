@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:32:26 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/19 19:23:28 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/21 19:27:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,22 @@ int	set_env(char **argv, char **env)
 	return (error_code);
 }
 
+void	f()
+{
+	system("leaks a.out");
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	char	**env;
 
+	atexit(f);
 	env = init_environ(envp);
 	if (argc == 1 || strcmp(argv[1], "export"))
 		return (printf("error\n"));
 	if (argc == 2)
-		return (list_export(envp));
+		list_export(env);
 	else
-		return (set_env(argv + 2, env));
+		set_env(argv + 2, env);
+	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:13:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/13 20:27:19 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/21 19:17:00 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,14 @@ unsigned char	ft_atol(char *str, int *flag)
 	return (n * s);
 }
 
-int	main(int argc, char **argv)
+int	main(int argc, char **argv, char **envp)
 {
 	unsigned char	error_code;
 	int				flag;
 
 	if (argc == 1 || strcmp(argv[1], "exit"))
 		return (printf("error\n"));
-	change_env(argv);
+	change_env(argv, envp);
 	if (argc == 2)
 	{
 		printf("exit\n");

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/19 19:28:48 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/22 12:26:59 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char	*get_envval(char *env_name, char **env)
 			free(compare);
 			return (rstr);
 		}
+		free(compare);
 		i++;
 	}
 	return (NULL);

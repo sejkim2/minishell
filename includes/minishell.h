@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/19 18:54:52 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/22 16:12:40 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 // # include "../readline/include/readline/readline.h"
 // # include "../readline/include/readline/history.h"
 # include "../mylib/includes/libft.h"
+# include "../mylib/includes/get_next_line.h"
 
 typedef unsigned long long	t_ull;
 
