@@ -30,9 +30,10 @@
 */
 
 // <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
-static	t_symbol	parse_redirection__(char *cmd_line, int cur_index, int *end)
+static	t_symbol	parse_redirection__(char *cmd_line, int cur_index, int *end, t_redir *type, int **bit_mask)
 {
 	(*end)++;
+	*type = SINGLE_REDIR;
 	if (!cmd_line[*end])
 		print_unexpected_token_syntax_error('\n');
 	if (cmd_line[cur_index] == '<' && cmd_line[*end] == '>')
@@ -40,8 +41,11 @@ static	t_symbol	parse_redirection__(char *cmd_line, int cur_index, int *end)
 	if (cmd_line[cur_index] == '>' && cmd_line[*end] == '<')
 		print_unexpected_token_syntax_error('<');
 	if (cmd_line[cur_index] == cmd_line[cur_index + 1])
+	{
 		(*end)++;
-	return (parse_redirection(cmd_line, end));
+		*type = DOUBLE_REDIR;
+	}
+	return (parse_redirection(cmd_line, end, bit_mask));
 }
 
 t_token_node	*tokenize(char *cmd_line, int *index)
@@ -50,18 +54,22 @@ t_token_node	*tokenize(char *cmd_line, int *index)
 	t_token		*new_token;
 	int			end;
 	t_symbol	symbol;
+	t_redir		type;
+	int			*bit_mask;
 
 	end = *index;
+	type = NO_REDIR;
+	bit_mask = 0;
 	if (cmd_line[*index] == '<' || cmd_line[*index] == '>')
-		symbol = parse_redirection__(cmd_line, *index, &end);
+		symbol = parse_redirection__(cmd_line, *index, &end, &type, &bit_mask);
 	else if (cmd_line[*index] == '|' || cmd_line[*index] == '&')
 		symbol = parse_pipe_or_orif_or_andif(cmd_line, cmd_line[*index], &end);
 	else if (cmd_line[*index] == '(' || cmd_line[*index] == ')')
 		symbol = parse_branket(cmd_line[*index], &end);
 	else
-		symbol = parse_word(cmd_line, &end);
+		symbol = parse_word(cmd_line, &end, &bit_mask);
 	value = make_value(cmd_line, *index, end);
-	new_token = make_token(symbol, value);
+	new_token = make_token(symbol, value, type, &bit_mask);
 	*index = end;
 	return (make_node(new_token));
 }

@@ -23,6 +23,7 @@ SRCS = srcs/main.c	\
 	srcs/lexer_free_list.c \
 	srcs/lexer_node.c \
 	srcs/lexer_check_character_symbol.c \
+	srcs/check_is_close_quote.c \
 	srcs/lexer_parse_pipe_or_orif_or_andif.c \
 	srcs/lexer_tokenize_utils.c \
 	srcs/lexer_make_value.c \

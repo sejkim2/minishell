@@ -12,20 +12,22 @@
 
 #include "../includes/minishell.h"
 
-void	init_token(t_token *token, t_symbol symbol, char *value)
+void	init_token(t_token *token, t_symbol symbol, char *value, t_redir type)
 {
 	token->symbol = symbol;
 	token->value = value;
+	token->redir_type = type;
 }
 
-t_token	*make_token(t_symbol symbol, char *value)
+t_token	*make_token(t_symbol symbol, char *value, t_redir type, int **bit_mask)
 {
 	t_token	*new_token;
 
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (new_token == 0)
 		return (0);
-	init_token(new_token, symbol, value);
+	init_token(new_token, symbol, value, type);
+	new_token->bit_mask = *bit_mask;
 	return (new_token);
 }
 

@@ -49,10 +49,19 @@ typedef enum e_symbol
     ROOT
 }   t_symbol;
 
+typedef enum s_redir_type
+{
+    NO_REDIR = 0,
+    SINGLE_REDIR,
+    DOUBLE_REDIR
+}   t_redir;
+
 typedef struct s_token
 {
     t_symbol symbol;
+    t_redir redir_type;
     char *value;
+    int  *bit_mask;
 }   t_token;
 
 typedef struct s_token_node
@@ -89,20 +98,24 @@ void	push_back_list(t_linked_list *list, t_token_node *node);
 t_token_node *pop_list(t_linked_list *list);
 
 /*node*/
-void	init_token(t_token *token, t_symbol symbol, char *value);
-t_token	*make_token(t_symbol symbol, char *value);
+void	init_token(t_token *token, t_symbol symbol, char *value, t_redir type);
+t_token	*make_token(t_symbol symbol, char *value, t_redir type, int **bit_mask);
 t_token_node	*make_node(t_token *token);
 
 /*tokenize*/
 t_token_node	*tokenize(char *cmd_line, int *index);
 
-t_symbol parse_redirection(char *cmd_line, int *end);
-t_symbol parse_word(char *cmd_line, int *end);
+t_symbol parse_redirection(char *cmd_line, int *end, int **bit_mask);
+t_symbol parse_word(char *cmd_line, int *end, int **bit_mask);
 t_symbol parse_branket(char ch, int *end);
 t_symbol parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end);
 char *make_value(char *cmd_line, int start, int end);
 void parse_single_quote_string(char *cmd_line, int *end);
 void parse_double_quote_string(char *cmd_line, int *end);
+
+/*bit_mask*/
+int count_dollor_sign(char *cmd_line, int start, int end);
+int *make_bit_mask(char *cmd_line, int start, int end);
 
 /*check_character_symbol*/
 int check_is_single_quote(char ch);
@@ -110,6 +123,10 @@ int check_is_double_quote(char ch);
 int check_is_white_space(char ch);
 int check_is_meta_character(char ch);
 int check_is_seperator(char ch);
+
+/*check_close_quote*/
+int check_is_close_quote(char *cmd_line, int index, char quote);
+
 
 /*error*/
 void malloc_error();
@@ -122,7 +139,7 @@ char *free_token(t_token *token);
 
 /*signal*/
 void	set_shell_signal(void);
-void	ctrl_c(int signum);
+// void	ctrl_c(int signum);
 int		ctrl_d(void);
 void	set_terminal_print_off(void);
 void	set_terminal_print_on(void);

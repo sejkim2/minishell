@@ -40,8 +40,26 @@ static	void	print_list(t_linked_list *list)
 	cur = list->head;
 	while (cur)
 	{
-		printf("[ symbol : %d value : %s]\n", \
+		printf("[ symbol : %d value : %s]", \
 		cur->token->symbol, cur->token->value);
+		if (cur->token->bit_mask != 0)
+		{
+			int i = 0;
+			printf("[");
+			while (cur->token->bit_mask[i] > -1)
+			{
+				printf("bit : %d ", cur->token->bit_mask[i]);
+				i++;
+			}
+			printf("]");
+		}
+		else
+			printf("[bit is null]");
+		if (cur->token->redir_type == SINGLE_REDIR)
+			printf("[single redir]");
+		else if(cur->token->redir_type == DOUBLE_REDIR)
+			printf("[double redir]");
+		printf("\n");
 		cur = cur->next;
 	}
 }

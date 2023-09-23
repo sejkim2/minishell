@@ -15,12 +15,7 @@
 static	void	make_string_single_quote(char *cmd_line, \
 char *new_string, int *start, int *index)
 {
-	int i;
-
-	i = *start + 1;
-	while (cmd_line[i] && !check_is_single_quote(cmd_line[i]))
-		i++;
-	if (check_is_single_quote(cmd_line[i]))
+	if (check_is_close_quote(cmd_line, *start, '\''))
 	{
 		(*start)++;
 		while (!check_is_single_quote(cmd_line[*start]))
@@ -29,7 +24,8 @@ char *new_string, int *start, int *index)
 	}
 	else
 	{
-		while (cmd_line[*start] && (!check_is_white_space(cmd_line[*start]) && !check_is_double_quote(cmd_line[*start])))
+		while (cmd_line[*start] && (!check_is_seperator(cmd_line[*start]) \
+		&& !check_is_double_quote(cmd_line[*start])))
 			new_string[(*index)++] = cmd_line[(*start)++];
 		if (check_is_white_space(cmd_line[*start]))
 			(*start)++;
@@ -39,12 +35,7 @@ char *new_string, int *start, int *index)
 static	void	make_string_double_quote(char *cmd_line, \
 char *new_string, int *start, int *index)
 {
-	int i;
-
-	i = *start + 1;
-	while (cmd_line[i] && !check_is_double_quote(cmd_line[i]))
-		i++;
-	if (check_is_double_quote(cmd_line[i]))
+	if (check_is_close_quote(cmd_line, *start, '\"'))
 	{
 		(*start)++;
 		while (!check_is_double_quote(cmd_line[*start]))
@@ -53,7 +44,8 @@ char *new_string, int *start, int *index)
 	}
 	else
 	{
-		while (cmd_line[*start] && (!check_is_white_space(cmd_line[*start]) && !check_is_single_quote(cmd_line[*start])))
+		while (cmd_line[*start] && (!check_is_seperator(cmd_line[*start]) \
+		&& !check_is_single_quote(cmd_line[*start])))
 			new_string[(*index)++] = cmd_line[(*start)++];
 		if (check_is_white_space(cmd_line[*start]))
 			(*start)++;
