@@ -42,19 +42,19 @@ static	void	print_list(t_linked_list *list)
 	{
 		printf("[ symbol : %d value : %s]", \
 		cur->token->symbol, cur->token->value);
-		if (cur->token->bit_mask != 0)
+		if (cur->token->str_info != 0)
 		{
 			int i = 0;
 			printf("[");
-			while (cur->token->bit_mask[i] > -1)
+			while (cur->token->str_info[i].str_type != NUL)
 			{
-				printf("bit : %d ", cur->token->bit_mask[i]);
+				printf("str : %s , type : %d ", cur->token->str_info[i].str, cur->token->str_info[i].str_type);
 				i++;
 			}
 			printf("]");
 		}
 		else
-			printf("[bit is null]");
+			printf("[str is meta]");
 		if (cur->token->redir_type == SINGLE_REDIR)
 			printf("[single redir]");
 		else if(cur->token->redir_type == DOUBLE_REDIR)

@@ -56,12 +56,27 @@ typedef enum s_redir_type
     DOUBLE_REDIR
 }   t_redir;
 
+typedef enum s_string_type
+{
+    NUL = 0,
+    STRING,
+    SINGLE_QUOTE,
+    DOUBLE_QUOTE
+}   t_str_type;
+
+typedef struct s_string_info
+{
+    char *str;
+    int str_len;
+    t_str_type str_type;
+}   s_str_info;
+
 typedef struct s_token
 {
     t_symbol symbol;
     t_redir redir_type;
     char *value;
-    int  *bit_mask;
+    s_str_info *str_info;
 }   t_token;
 
 typedef struct s_token_node
@@ -99,23 +114,28 @@ t_token_node *pop_list(t_linked_list *list);
 
 /*node*/
 void	init_token(t_token *token, t_symbol symbol, char *value, t_redir type);
-t_token	*make_token(t_symbol symbol, char *value, t_redir type, int **bit_mask);
+t_token	*make_token(t_symbol symbol, char *value, t_redir type, s_str_info **str_info);
 t_token_node	*make_node(t_token *token);
 
 /*tokenize*/
 t_token_node	*tokenize(char *cmd_line, int *index);
 
-t_symbol parse_redirection(char *cmd_line, int *end, int **bit_mask);
-t_symbol parse_word(char *cmd_line, int *end, int **bit_mask);
+t_symbol parse_redirection(char *cmd_line, int *end, s_str_info **str_info);
+t_symbol parse_word(char *cmd_line, int *end, s_str_info **str_info);
 t_symbol parse_branket(char ch, int *end);
 t_symbol parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end);
 char *make_value(char *cmd_line, int start, int end);
 void parse_single_quote_string(char *cmd_line, int *end);
 void parse_double_quote_string(char *cmd_line, int *end);
 
+/*make_str_info*/
+char *make_str(char *cmd_line, int start, int end);
+int count_quote_string(char *cmd_line, int start, int end);
+s_str_info *make_quote_string(char *cmd_line, int start, int end);
+
 /*bit_mask*/
-int count_dollor_sign(char *cmd_line, int start, int end);
-int *make_bit_mask(char *cmd_line, int start, int end);
+// int count_dollor_sign(char *cmd_line, int start, int end);
+// int *make_bit_mask(char *cmd_line, int start, int end);
 
 /*check_character_symbol*/
 int check_is_single_quote(char ch);

@@ -12,7 +12,7 @@
 
 #include "../includes/minishell.h"
 
-t_symbol	parse_redirection(char *cmd_line, int *end, int **bit_mask)
+t_symbol	parse_redirection(char *cmd_line, int *end, s_str_info **str_info)
 {
 	int start;
 
@@ -36,105 +36,130 @@ t_symbol	parse_redirection(char *cmd_line, int *end, int **bit_mask)
 		else
 			(*end)++;
 	}
-	*bit_mask = make_bit_mask(cmd_line, start, *end);
+	*str_info = make_quote_string(cmd_line, start, *end);
 	return (REDIRECTION);
 }
 
-int count_dollor_sign(char *cmd_line, int start, int end)
+char *make_str(char *cmd_line, int start, int end)
 {
-	int cnt_dollor;
-
-	cnt_dollor = 0;
-	while (start < end)
-	{
-		if (cmd_line[start] == '$')
-		{
-			cnt_dollor++;
-			while (start < end && (cmd_line[start] == '$'))
-				start++;
-		}
-		else
-			start++;
-	}
-	return (cnt_dollor);
-}
-
-int *make_bit_mask(char *cmd_line, int start, int end)
-{
-	int cnt_dollor;
-	int *dollor_bit_mask;
+	char *new_str;
 	int i;
 
-	cnt_dollor = count_dollor_sign(cmd_line, start, end);
+	new_str = malloc(sizeof(char) * (end - start + 2));
 	i = 0;
-	if (cnt_dollor == 0)
-		return (0);
-	dollor_bit_mask = malloc(sizeof(int) * (cnt_dollor + 1));
-	while (i < cnt_dollor)
-		dollor_bit_mask[i++] = 0;
-	dollor_bit_mask[i] = -1;
-	i = 0;
+	while (start <= end)
+	{
+		new_str[i] = cmd_line[start];
+		i++;
+		start++;
+	}
+	new_str[i] = '\0';
+	return (new_str);
+}
+
+int count_quote_string(char *cmd_line, int start, int end)
+{
+	int cnt_string;
+
+	cnt_string = 0;
 	while (start < end)
 	{
 		if (check_is_single_quote(cmd_line[start]) && check_is_close_quote(cmd_line, start, '\''))
 		{
 			start++;
 			while (start < end && !check_is_single_quote(cmd_line[start]))
-			{
-				if (cmd_line[start] == '$')
-				{
-					while (start < end && !check_is_white_space(cmd_line[start]) && !check_is_single_quote(cmd_line[start]))
-						start++;
-					i++;
-				}
-				else
-					start++;
-			}
+				start++;
 			start++;
 		}
 		else if (check_is_double_quote(cmd_line[start]) && check_is_close_quote(cmd_line, start, '\"'))
 		{
 			start++;
 			while (start < end && !check_is_double_quote(cmd_line[start]))
-			{
-				if (cmd_line[start] == '$')
-				{
-					while (start < end && !check_is_white_space(cmd_line[start]) && !check_is_double_quote(cmd_line[start]))
-					{
-						dollor_bit_mask[i] += 1;
-						start++;
-					}
-					i++;
-				}
-				else
-					start++;
-			}
+				start++;
 			start++;
 		}
 		else
 		{
-			if (cmd_line[start] == '$')
+			while (start < end)
 			{
-				while (start < end)
-				{
-					if (check_is_single_quote(cmd_line[start]) && check_is_close_quote(cmd_line, start, '\''))
-						break ;
-					if (check_is_double_quote(cmd_line[start]) && check_is_close_quote(cmd_line, start, '\"'))
-						break ;
-					dollor_bit_mask[i] += 1;
-					start++;
-				}
-				i++;
-			}
-			else
+				if (check_is_single_quote(cmd_line[start]) && check_is_close_quote(cmd_line, start, '\''))
+					break ;
+				if (check_is_double_quote(cmd_line[start]) && check_is_close_quote(cmd_line, start, '\"'))
+					break ;
 				start++;
+			}
 		}
+		cnt_string++;
 	}
-	return (dollor_bit_mask);
+	return (cnt_string);
+}
+
+s_str_info *make_quote_string(char *cmd_line, int start, int end)
+{
+	int len_string;
+	int i;
+	s_str_info *str_info;
+
+	len_string = count_quote_string(cmd_line, start, end);
+	i = 0;
+	str_info = malloc(sizeof(s_str_info) * (len_string + 1));
+	if (str_info == 0)
+	{
+		printf("malloc error");
+		exit(1);
+	}
+	str_info[len_string].str = 0;
+	str_info[len_string].str_len = 0;
+	str_info[len_string].str_type = NUL;
+	while (start < end)
+	{
+		if (check_is_single_quote(cmd_line[start]) && check_is_close_quote(cmd_line, start, '\''))
+		{
+			int j;
+			start++;
+			j = start;
+			while (start < end && !check_is_single_quote(cmd_line[start]))
+				start++;
+			str_info[i].str = make_str(cmd_line, j, start - 1);
+			start++;
+			str_info[i].str_len = ft_strlen(str_info[i].str);
+			str_info[i].str_type = SINGLE_QUOTE;
+		}
+		else if (check_is_double_quote(cmd_line[start]) && check_is_close_quote(cmd_line, start, '\"'))
+		{
+			int j;
+			start++;
+			j = start;
+			while (start < end && !check_is_double_quote(cmd_line[start]))
+				start++;
+			str_info[i].str = make_str(cmd_line, j, start - 1);
+			start++;
+			str_info[i].str_len = ft_strlen(str_info[i].str);
+			str_info[i].str_type = DOUBLE_QUOTE;
+		}
+		else
+		{
+			int j;
+			j = start;
+			while (start < end)
+			{
+				if (check_is_single_quote(cmd_line[start]) && check_is_close_quote(cmd_line, start, '\''))
+					break ;
+				if (check_is_double_quote(cmd_line[start]) && check_is_close_quote(cmd_line, start, '\"'))
+					break ;
+				start++;
+			}
+			str_info[i].str = make_str(cmd_line, j, start - 1);
+			str_info[i].str_len = ft_strlen(str_info[i].str);
+			str_info[i].str_type = STRING;
+		}
+		i++;
+	}
+	return (str_info);
 }
 
 // word + (redi, pipe, andif, orif, equal, lbra, rbra, whitespace)
-t_symbol	parse_word(char *cmd_line, int *end, int **bit_mask)
+t_symbol	parse_word(char *cmd_line, int *end, s_str_info **str_info)
 {
 	int start;
 
@@ -150,7 +175,7 @@ t_symbol	parse_word(char *cmd_line, int *end, int **bit_mask)
 		else
 			(*end)++;
 	}
-	*bit_mask = make_bit_mask(cmd_line, start, *end);
+	*str_info = make_quote_string(cmd_line, start, *end);
 	return (WORD);
 }
 

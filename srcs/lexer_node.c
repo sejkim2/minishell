@@ -19,7 +19,7 @@ void	init_token(t_token *token, t_symbol symbol, char *value, t_redir type)
 	token->redir_type = type;
 }
 
-t_token	*make_token(t_symbol symbol, char *value, t_redir type, int **bit_mask)
+t_token	*make_token(t_symbol symbol, char *value, t_redir type, s_str_info **str_info)
 {
 	t_token	*new_token;
 
@@ -27,7 +27,7 @@ t_token	*make_token(t_symbol symbol, char *value, t_redir type, int **bit_mask)
 	if (new_token == 0)
 		return (0);
 	init_token(new_token, symbol, value, type);
-	new_token->bit_mask = *bit_mask;
+	new_token->str_info = *str_info;
 	return (new_token);
 }
 
