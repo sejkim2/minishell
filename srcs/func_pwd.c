@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   block_signal.c                                     :+:      :+:    :+:   */
+/*   func_pwd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/06 20:17:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/06 20:19:10 by jaehyji          ###   ########.fr       */
+/*   Created: 2023/09/12 16:04:23 by jaehyji           #+#    #+#             */
+/*   Updated: 2023/09/14 19:00:32 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	set_block_signal(void)
-// 현재 프로세스가 시그널 동작을 기본 설정대로 동작하도록 원상복귀시켜줌
+/*
+	옵션없는 pwd구현.
+	pwd는 인자를 받지 않음. 인자 개수의 상관없이 pwd는 출력을 진행함.
+*/
+
+int	main(int argc, char **argv)
 {
-	signal(SIGINT, SIG_DFL); // ctrl+c 시그널 입력시 동작을 기본 시그널 설정으로 되돌림
-	signal(SIGQUIT, SIG_DFL); // ctrl+\ 시그널 입력시 동작을 기본 시그널 설정으로 되돌림
+	char	buff[PATH_MAX];
+
+	if (argc != 2 || strcmp("pwd", argv[1]))
+		return (printf("error\n"));
+	getcwd(buff, PATH_MAX);
+	printf("%s\n", buff);
 }
