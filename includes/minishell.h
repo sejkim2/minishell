@@ -129,9 +129,11 @@ void parse_single_quote_string(char *cmd_line, int *end);
 void parse_double_quote_string(char *cmd_line, int *end);
 
 /*make_str_info*/
-char *make_str(char *cmd_line, int start, int end);
 int count_quote_string(char *cmd_line, int start, int end);
 s_str_info *make_quote_string(char *cmd_line, int start, int end);
+void single_close_quote(char *cmd_line, int *start, int end);
+void double_close_quote(char *cmd_line, int *start, int end);
+void normal_string(char *cmd_line, int *start, int end);
 
 /*bit_mask*/
 // int count_dollor_sign(char *cmd_line, int start, int end);
@@ -146,6 +148,7 @@ int check_is_seperator(char ch);
 
 /*check_close_quote*/
 int check_is_close_quote(char *cmd_line, int index, char quote);
+
 
 
 /*error*/

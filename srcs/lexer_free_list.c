@@ -12,9 +12,24 @@
 
 #include "../includes/minishell.h"
 
+static char	*free_str_info(s_str_info *str_info)
+{
+	int i;
+
+	i = 0;
+	while (str_info[i].str_type != NUL)
+	{
+		free(str_info[i].str);
+		i++;
+	}
+	free(str_info);
+	return (0);
+}
+
 char	*free_token(t_token *token)
 {
 	free(token->value);
+	free_str_info(token->str_info);
 	free(token);
 	return (0);
 }

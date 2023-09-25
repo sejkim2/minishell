@@ -50,7 +50,6 @@ static	t_symbol	parse_redirection__(char *cmd_line, int cur_index, int *end, t_r
 
 t_token_node	*tokenize(char *cmd_line, int *index)
 {
-	char		*value;
 	t_token		*new_token;
 	int			end;
 	t_symbol	symbol;
@@ -68,8 +67,7 @@ t_token_node	*tokenize(char *cmd_line, int *index)
 		symbol = parse_branket(cmd_line[*index], &end);
 	else
 		symbol = parse_word(cmd_line, &end, &str_info);
-	value = make_value(cmd_line, *index, end);
-	new_token = make_token(symbol, value, type, &str_info);
+	new_token = make_token(symbol, make_value(cmd_line, *index, end), type, &str_info);
 	*index = end;
 	return (make_node(new_token));
 }

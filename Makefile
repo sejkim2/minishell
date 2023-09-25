@@ -27,6 +27,8 @@ SRCS = srcs/main.c	\
 	srcs/lexer_parse_pipe_or_orif_or_andif.c \
 	srcs/lexer_tokenize_utils.c \
 	srcs/lexer_make_value.c \
+	srcs/lexer_count_quote_string.c \
+	srcs/lexer_make_quote_string.c \
 	srcs/shell_signal.c	\
 	srcs/block_signal.c \
 	srcs/parser.c \
