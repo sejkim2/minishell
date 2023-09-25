@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:09:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/21 16:27:20 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/25 17:49:00 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@
 */
 
 // <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
-static	t_symbol	parse_redirection__(char *cmd_line, int cur_index, int *end, t_redir *type, s_str_info **str_info)
+static	t_symbol	parse_redirection__(char *cmd_line, int cur_index, int *end, t_token *token)
 {
 	(*end)++;
-	*type = SINGLE_REDIR;
+	token->redir_type = SINGLE_REDIR;
 	if (!cmd_line[*end])
 		print_unexpected_token_syntax_error('\n');
 	if (cmd_line[cur_index] == '<' && cmd_line[*end] == '>')
@@ -43,31 +43,27 @@ static	t_symbol	parse_redirection__(char *cmd_line, int cur_index, int *end, t_r
 	if (cmd_line[cur_index] == cmd_line[cur_index + 1])
 	{
 		(*end)++;
-		*type = DOUBLE_REDIR;
+		token->redir_type = DOUBLE_REDIR;
 	}
-	return (parse_redirection(cmd_line, end, str_info));
+	return (parse_redirection(cmd_line, end, &(token->str_info)));
 }
 
 t_token_node	*tokenize(char *cmd_line, int *index)
 {
-	t_token		*new_token;
+	t_token		*token;
 	int			end;
-	t_symbol	symbol;
-	t_redir		type;
-	s_str_info	*str_info;
 
+	token = make_token();
 	end = *index;
-	type = NO_REDIR;
-	str_info = 0;
 	if (cmd_line[*index] == '<' || cmd_line[*index] == '>')
-		symbol = parse_redirection__(cmd_line, *index, &end, &type, &str_info);
+		token->symbol = parse_redirection__(cmd_line, *index, &end, token);
 	else if (cmd_line[*index] == '|' || cmd_line[*index] == '&')
-		symbol = parse_pipe_or_orif_or_andif(cmd_line, cmd_line[*index], &end);
+		token->symbol = parse_pipe_or_orif_or_andif(cmd_line, cmd_line[*index], &end);
 	else if (cmd_line[*index] == '(' || cmd_line[*index] == ')')
-		symbol = parse_branket(cmd_line[*index], &end);
+		token->symbol = parse_branket(cmd_line[*index], &end);
 	else
-		symbol = parse_word(cmd_line, &end, &str_info);
-	new_token = make_token(symbol, make_value(cmd_line, *index, end), type, &str_info);
+		token->symbol = parse_word(cmd_line, &end, &(token->str_info));
+	token->value = make_value(cmd_line, *index, end);
 	*index = end;
-	return (make_node(new_token));
+	return (make_node(token));
 }

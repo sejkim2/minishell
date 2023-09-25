@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/25 15:56:14 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/25 17:49:39 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,8 +120,7 @@ void	push_back_list(t_linked_list *list, t_token_node *node);
 t_token_node *pop_list(t_linked_list *list);
 
 /*node*/
-void	init_token(t_token *token, t_symbol symbol, char *value, t_redir type);
-t_token	*make_token(t_symbol symbol, char *value, t_redir type, s_str_info **str_info);
+t_token *make_token(void);
 t_token_node	*make_node(t_token *token);
 
 /*tokenize*/
@@ -141,10 +140,6 @@ s_str_info *make_quote_string(char *cmd_line, int start, int end);
 void single_close_quote(char *cmd_line, int *start, int end);
 void double_close_quote(char *cmd_line, int *start, int end);
 void normal_string(char *cmd_line, int *start, int end);
-
-/*bit_mask*/
-// int count_dollor_sign(char *cmd_line, int start, int end);
-// int *make_bit_mask(char *cmd_line, int start, int end);
 
 /*check_character_symbol*/
 int check_is_single_quote(char ch);
