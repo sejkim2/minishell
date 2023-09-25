@@ -6,41 +6,51 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/25 15:57:27 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/25 21:00:31 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
 # C_FLAGS = -Wall -Werror -Wextra
-C_FLAGS =
+HEADER = includes
+C_FLAGS = -I$(HEADER)
+LEXER_DIR = srcs/lexer_dir
+PARSER_DIR = srcs/parser_dir
+OTHER_DIR = srcs/other_dir
 
-SRCS = srcs/main.c	\
-	srcs/lexer.c \
-	srcs/lexer_error.c \
-	srcs/lexer_tokenize.c \
-	srcs/lexer_list.c \
-	srcs/lexer_free_list.c \
-	srcs/lexer_node.c \
-	srcs/lexer_check_character_symbol.c \
-	srcs/check_is_close_quote.c \
-	srcs/lexer_parse_pipe_or_orif_or_andif.c \
-	srcs/lexer_tokenize_utils.c \
-	srcs/lexer_make_value.c \
-	srcs/lexer_count_quote_string.c \
-	srcs/lexer_make_quote_string.c \
-	srcs/shell_signal.c	\
-	srcs/terminal_option.c \
-	srcs/blocking_signal.c \
-	srcs/parser.c \
-	srcs/parser_error.c \
-	srcs/parser_function_1.c \
-	srcs/parser_function_2.c \
-	srcs/parser_tree_node.c \
-	srcs/parser_free_tree.c
+LEXER_SRCS = lexer.c \
+	lexer_error.c \
+	lexer_tokenize.c \
+	lexer_list.c \
+	lexer_free_list.c \
+	lexer_node.c \
+	lexer_check_character_symbol.c \
+	lexer_check_is_close_quote.c \
+	lexer_parse_pipe_or_orif_or_andif.c \
+	lexer_tokenize_utils.c \
+	lexer_make_value.c \
+	lexer_count_quote_string.c \
+	lexer_make_quote_string.c
 
-OBJS = $(SRCS:%.c=%.o)
-HEADER = includes/minishell.h
+PARSER_SRCS = parser.c \
+	parser_error.c \
+	parser_function_1.c \
+	parser_function_2.c \
+	parser_tree_node.c \
+	parser_free_tree.c
+
+OTHER_SRCS = main.c	\
+	shell_signal.c	\
+	terminal_option.c \
+	blocking_signal.c
+
+LEXER_OBJS = $(addprefix $(LEXER_DIR)/,$(LEXER_SRCS:.c=.o))
+PARSER_OBJS = $(addprefix $(PARSER_DIR)/,$(PARSER_SRCS:.c=.o))
+OTHER_OBJS = $(addprefix $(OTHER_DIR)/,$(OTHER_SRCS:.c=.o))
+
+OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(OTHER_OBJS)
+# OBJS = $(SRCS:%.c=%.o)
 
 %.o : %.c $(HEADER)
 	$(CC) $(C_FLAGS) -c $< -o $@
@@ -54,7 +64,7 @@ all : $(NAME)
 
 clean :
 # make clean -C ./mylib
-	rm -rf $(SRCS:%.c=%.o)
+	rm -rf $(OBJS)
 
 fclean : clean
 # make fclean -C ./mylib
