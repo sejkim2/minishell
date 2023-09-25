@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
+#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/22 11:46:39 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/09/25 15:57:27 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,8 @@ SRCS = srcs/main.c	\
 	srcs/lexer_count_quote_string.c \
 	srcs/lexer_make_quote_string.c \
 	srcs/shell_signal.c	\
-	srcs/block_signal.c \
+	srcs/terminal_option.c \
+	srcs/blocking_signal.c \
 	srcs/parser.c \
 	srcs/parser_error.c \
 	srcs/parser_function_1.c \

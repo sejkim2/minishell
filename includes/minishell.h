@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/21 19:44:06 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/25 15:56:14 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ char *free_token(t_token *token);
 /*signal*/
 void	set_shell_signal(void);
 void	ctrl_c(int signum);
-int		ctrl_d(void);
+int		shell_ctrl_d(void);
 void	set_terminal_print_off(void);
 void	set_terminal_print_on(void);
 
@@ -225,7 +225,7 @@ int				list_export(char **envp);
 int				set_env(char **argv, char **env);
 void			func_unset(char **argv, char **env);
 void			free_2str(char *s1, char *s2);
-void			make_str(int i, int j, char **av, char **str);
+void			make_strings(int i, int j, char **av, char **str);
 void			matrix_cpy(char **src, char **dst);
 void			sort_ascii(char **envp, int cnt);
 int				cnt_line(char **str_arr);

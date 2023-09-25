@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/22 15:29:56 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/25 15:56:32 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	main(void)
 	pid_t pid;
 	int status;
 
-	origin = terminal_option();
 	while (1)
 	{
 		pid = fork();
@@ -71,7 +70,7 @@ int	main(void)
 				line = 0;
 			}
 			else
-				return (ctrl_d());
+				return (shell_ctrl_d());
 		}
 		waitpid(pid, &status, 0);
 		if (WIFEXITED(status)) {
