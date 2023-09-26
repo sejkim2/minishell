@@ -114,9 +114,6 @@ int	main(void);
 /*lexer*/
 t_linked_list *lexer(char *cmd_line);
 
-/*error*/
-void lexer_error();
-
 /*list*/
 t_linked_list	*make_list();
 void	push_back_list(t_linked_list *list, t_token_node *node);
@@ -129,10 +126,10 @@ t_token_node	*make_node(t_token *token);
 /*tokenize*/
 t_token_node	*tokenize(char *cmd_line, int *index);
 
-t_symbol parse_redirection(char *cmd_line, int *end, s_str_info **str_info);
-t_symbol parse_word(char *cmd_line, int *end, s_str_info **str_info);
-t_symbol parse_branket(char ch, int *end);
-t_symbol parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end);
+int parse_redirection(char *cmd_line, int *end, s_str_info **str_info);
+int parse_word(char *cmd_line, int *end, t_token *token);
+int parse_branket(char ch, int *end, t_token *token);
+int parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end, t_token *token);
 char *make_value(char *cmd_line, int start, int end);
 void parse_single_quote_string(char *cmd_line, int *end);
 void parse_double_quote_string(char *cmd_line, int *end);
@@ -172,7 +169,7 @@ void			set_terminal_print_on(void);
 
 /*error*/
 void malloc_error();
-void	print_unexpected_token_syntax_error(char ch);
+int	print_unexpected_token_syntax_error(char ch);
 
 /*free*/
 char *free_list(t_linked_list *list);

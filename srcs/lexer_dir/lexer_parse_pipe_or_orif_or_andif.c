@@ -12,37 +12,39 @@
 
 #include "minishell.h"
 
-static	void	parse_if_one_token(char *cmd_line, int *end)
+static	int	parse_if_one_token(char *cmd_line, int *end)
 {
 	(*end)++;
 	if (!cmd_line[*end])
-		print_unexpected_token_syntax_error('\n');
+		return (print_unexpected_token_syntax_error('\n'));
+	else
+		return (1);
 }
 
-t_symbol	parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end)
+int	parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end, t_token *token)
 {
 	(*end)++;
 	if (!cmd_line[*end])
-		print_unexpected_token_syntax_error('|');
+		return (print_unexpected_token_syntax_error('|'));
 	if (ch == '|')
 	{
 		if (ch == cmd_line[*end])
 		{	
-			parse_if_one_token(cmd_line, end);
-			return (OR_IF);
+			token->symbol = OR_IF;
+			return (parse_if_one_token(cmd_line, end));
 		}
 		else
-			return (PIPE);
+			token->symbol = PIPE;
 	}
 	else
 	{
 		if (ch == cmd_line[*end])
 		{
-			parse_if_one_token(cmd_line, end);
-			return (AND_IF);
+			token->symbol = AND_IF;
+			return (parse_if_one_token(cmd_line, end));
 		}
 		else
-			print_unexpected_token_syntax_error('&');
+			return (print_unexpected_token_syntax_error('&'));
 	}
-	return (WORD);
+	return (1);
 }

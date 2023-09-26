@@ -12,19 +12,13 @@
 
 #include "minishell.h"
 
-void	print_unexpected_token_syntax_error(char ch)
+int	print_unexpected_token_syntax_error(char ch)
 {
 	if (ch == '\n')
 		printf("minishell: syntax error near unexpected token `newline\'\n");	
 	else
 		printf("minishell: syntax error near unexpected token `%c\'\n", ch);
-	exit(258);
-}
-
-void	lexer_error(void)
-{
-	printf("lexer error!\n");
-	exit(1);
+	return (-1);
 }
 
 void	malloc_error(void)

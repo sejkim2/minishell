@@ -32,51 +32,44 @@ static void print_ascii_banner(void)
 	printf("******************************************************\n");
 }
 
-int	main(void)
+int main(void)
 {
 	print_ascii_banner();
-	char			*line;
-	t_linked_list	*list;
-	t_tree_node		*root;
-	pid_t pid;
-	int status;
+	char *line;
+	t_linked_list *list;
+	t_tree_node *root;
 
 	while (1)
 	{
-		pid = fork();
-		if (pid == 0)
+		line = readline("minishell$ ");
+		if (line[0] == '\0')
 		{
-			line = readline("minishell$ ");
-			if (line[0] == '\0')
-			{
-				free(line);
-				continue;
-			}
-			if (line)
-			{
-				add_history(line);
-				list = lexer(line);
-				if (list->num_of_node == 0)
-				{
-					free_list(list);
-					free(line);
-					continue;
-				}
-				free(line);
-				root = parser(list); // check_syntax_errror
-				// execve()
-				free_list(list);
-				free_tree(root);
-				line = 0;
-			}
-			else
-				return (shell_ctrl_d());
+			free(line);
+			continue;
 		}
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status)) {
-            int exit_code =  WEXITSTATUS(status); // 종료 코드를 확인
-            printf("자식 프로세스가 종료 코드 %d로 종료되었습니다.\n", exit_code);
-        }
+		if (line)
+		{
+			add_history(line);
+			list = lexer(line);
+			if (list == 0)
+			{
+				free(line);
+				continue ;
+			}
+			if (list->num_of_node == 0)
+			{
+				free_list(list);
+				free(line);
+				continue ;
+			}
+			free(line);
+			root = parser(list); // check_syntax_errror
+			// execve()
+			free_list(list);
+			free_tree(root);
+			line = 0;
+		}
+		else
+			return (shell_ctrl_d());
 	}
 }
-

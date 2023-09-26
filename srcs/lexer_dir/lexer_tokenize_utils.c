@@ -12,18 +12,18 @@
 
 #include "minishell.h"
 
-t_symbol	parse_redirection(char *cmd_line, int *end, s_str_info **str_info)
+int	parse_redirection(char *cmd_line, int *end, s_str_info **str_info)
 {
 	int start;
 
 	while (cmd_line[*end] && check_is_white_space(cmd_line[*end]))
 		(*end)++;
 	if (!cmd_line[*end])
-		print_unexpected_token_syntax_error('\n');
+		return (print_unexpected_token_syntax_error('\n'));
 	if (cmd_line[*end] == '(' || cmd_line[*end] == ')' \
 	|| cmd_line[*end] == '<' || cmd_line[*end] == '>' \
 	|| cmd_line[*end] == '&' || cmd_line[*end] == '|')
-		print_unexpected_token_syntax_error(cmd_line[*end]);
+		return (print_unexpected_token_syntax_error(cmd_line[*end]));
 	start = *end;
 	while (cmd_line[*end])
 	{
@@ -37,11 +37,11 @@ t_symbol	parse_redirection(char *cmd_line, int *end, s_str_info **str_info)
 			(*end)++;
 	}
 	*str_info = make_quote_string(cmd_line, start, *end);
-	return (REDIRECTION);
+	return (1);
 }
 
 // word + (redi, pipe, andif, orif, equal, lbra, rbra, whitespace)
-t_symbol	parse_word(char *cmd_line, int *end, s_str_info **str_info)
+int	parse_word(char *cmd_line, int *end, t_token *token)
 {
 	int start;
 
@@ -57,17 +57,19 @@ t_symbol	parse_word(char *cmd_line, int *end, s_str_info **str_info)
 		else
 			(*end)++;
 	}
-	*str_info = make_quote_string(cmd_line, start, *end);
-	return (WORD);
+	token->str_info = make_quote_string(cmd_line, start, *end);
+	token->symbol = WORD;
+	return (1);
 }
 
-t_symbol	parse_branket(char ch, int *end)
+int	parse_branket(char ch, int *end, t_token *token)
 {
 	(*end)++;
 	if (ch == '(')
-		return (L_BRA);
+		token->symbol = L_BRA;
 	else
-		return (R_BRA);
+		token->symbol = R_BRA;
+	return (1);
 }
 
 void	parse_single_quote_string(char *cmd_line, int *end)

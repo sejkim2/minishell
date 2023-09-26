@@ -30,39 +30,44 @@
 */
 
 // <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
-static	t_symbol	parse_redirection__(char *cmd_line, int cur_index, int *end, t_token *token)
+static	int	parse_redirection__(char *cmd_line, int cur_index, int *end, t_token *token)
 {
 	(*end)++;
 	token->redir_type = SINGLE_REDIR;
 	if (!cmd_line[*end])
-		print_unexpected_token_syntax_error('\n');
+		return (print_unexpected_token_syntax_error('\n'));
 	if (cmd_line[cur_index] == '<' && cmd_line[*end] == '>')
-		print_unexpected_token_syntax_error('\n');
+		return (print_unexpected_token_syntax_error('\n'));
 	if (cmd_line[cur_index] == '>' && cmd_line[*end] == '<')
-		print_unexpected_token_syntax_error('<');
+		return (print_unexpected_token_syntax_error('<'));
 	if (cmd_line[cur_index] == cmd_line[cur_index + 1])
 	{
 		(*end)++;
 		token->redir_type = DOUBLE_REDIR;
 	}
-	return (parse_redirection(cmd_line, end, &(token->str_info)));
+	parse_redirection(cmd_line, end, &(token->str_info));
+	token->symbol = REDIRECTION;
+	return (1);
 }
 
 t_token_node	*tokenize(char *cmd_line, int *index)
 {
 	t_token		*token;
 	int			end;
+	int			syntax_error;
 
 	token = make_token();
 	end = *index;
 	if (cmd_line[*index] == '<' || cmd_line[*index] == '>')
-		token->symbol = parse_redirection__(cmd_line, *index, &end, token);
+		syntax_error = parse_redirection__(cmd_line, *index, &end, token);
 	else if (cmd_line[*index] == '|' || cmd_line[*index] == '&')
-		token->symbol = parse_pipe_or_orif_or_andif(cmd_line, cmd_line[*index], &end);
+		syntax_error = parse_pipe_or_orif_or_andif(cmd_line, cmd_line[*index], &end, token);
 	else if (cmd_line[*index] == '(' || cmd_line[*index] == ')')
-		token->symbol = parse_branket(cmd_line[*index], &end);
+		syntax_error = parse_branket(cmd_line[*index], &end, token);
 	else
-		token->symbol = parse_word(cmd_line, &end, &(token->str_info));
+		syntax_error = parse_word(cmd_line, &end, token);
+	if (syntax_error == -1)
+		return (0);
 	token->value = make_value(cmd_line, *index, end);
 	*index = end;
 	return (make_node(token));

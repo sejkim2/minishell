@@ -26,7 +26,7 @@ t_token	*make_token(void)
 
 	new_token = (t_token *)malloc(sizeof(t_token));
 	if (new_token == 0)
-		return (0);
+		malloc_error();
 	init_new_token(new_token);
 	return (new_token);
 }
@@ -39,7 +39,7 @@ t_token_node	*make_node(t_token *token)
 	i = 0;
 	new_node = (t_token_node *)malloc(sizeof(t_token_node));
 	if (new_node == 0)
-		return (0);
+		malloc_error();
 	new_node->token = token;
 	new_node->next = 0;
 	return (new_node);

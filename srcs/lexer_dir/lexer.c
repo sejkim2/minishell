@@ -30,7 +30,7 @@ static	void	check_blank_error(t_linked_list *list)
 		cur = cur->next;
 	}
 	if (cnt_l_bra != cnt_r_bra)
-		lexer_error();
+		print_unexpected_token_syntax_error('\n');	//message 수정 필요
 }
 
 static	void	print_list(t_linked_list *list)
@@ -81,6 +81,8 @@ t_linked_list	*lexer(char *cmd_line)
 		if (!cmd_line[i])
 			break ;
 		node = tokenize(cmd_line, &i);
+		if (node == 0)
+			return (0);
 		push_back_list(list, node);
 	}
 	check_blank_error(list);
