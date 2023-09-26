@@ -45,9 +45,13 @@ OTHER_SRCS = main.c	\
 	terminal_option.c \
 	blocking_signal.c
 
-LEXER_OBJS = $(addprefix $(LEXER_DIR)/,$(LEXER_SRCS:.c=.o))
-PARSER_OBJS = $(addprefix $(PARSER_DIR)/,$(PARSER_SRCS:.c=.o))
-OTHER_OBJS = $(addprefix $(OTHER_DIR)/,$(OTHER_SRCS:.c=.o))
+SRCS1 = $(addprefix $(LEXER_DIR)/,$(LEXER_SRCS))
+SRCS2 = $(addprefix $(PARSER_DIR)/,$(PARSER_SRCS))
+SRCS3 = $(addprefix $(OTHER_DIR)/,$(OTHER_SRCS))
+
+LEXER_OBJS = $(SRCS1:.c=.o)
+PARSER_OBJS = $(SRCS2:.c=.o)
+OTHER_OBJS = $(SRCS3:.c=.o)
 
 OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(OTHER_OBJS)
 # OBJS = $(SRCS:%.c=%.o)
@@ -58,7 +62,7 @@ OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(OTHER_OBJS)
 $(NAME) : $(OBJS)
 # @make -C ./mylib
 # $(CC) $(C_FLAGS) $(SRCS) -o $@ -L ./readline/lib -lreadline -lncurses
-	$(CC) $(C_FLAGS) $(SRCS) -o $@ -lreadline -lncurses mylib/mylib.a
+	$(CC) $(C_FLAGS) $(SRCS1) $(SRCS2) $(SRCS3) -o $@ -lreadline -lncurses mylib/mylib.a
 
 all : $(NAME)
 
