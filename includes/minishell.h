@@ -194,15 +194,15 @@ void init_tree_node(t_linked_list *list, t_tree_node *node, t_symbol symbol);
 t_tree_node *make_tree_node(t_linked_list *list, t_symbol symbol);
 void addchild(t_tree_node *parent, t_tree_node *child);
 
-void parse_error(void);
+int parse_error(void);
 
-void parse_simple_command(t_linked_list *list, t_tree_node *parent);
-void parse_simple_command_element(t_linked_list *list, t_tree_node *parent);
-void parse_subshell(t_linked_list *list, t_tree_node *parent);
-void parse_list(t_linked_list *list, t_tree_node *parent);
-void parse_pipeline(t_linked_list *list, t_tree_node *parent);
-void parse_command(t_linked_list *list, t_tree_node *parent);
-void parse_redirection_list(t_linked_list *list, t_tree_node *parent);
+int parse_simple_command(t_linked_list *list, t_tree_node *parent);
+int parse_simple_command_element(t_linked_list *list, t_tree_node *parent);
+int parse_subshell(t_linked_list *list, t_tree_node *parent);
+int parse_list(t_linked_list *list, t_tree_node *parent);
+int parse_pipeline(t_linked_list *list, t_tree_node *parent);
+int parse_command(t_linked_list *list, t_tree_node *parent);
+int parse_redirection_list(t_linked_list *list, t_tree_node *parent);
 
 char *free_tree_node(t_tree_node *node);
 char *free_tree(t_tree_node *parent);

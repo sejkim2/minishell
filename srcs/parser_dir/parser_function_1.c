@@ -12,64 +12,73 @@
 
 #include "minishell.h"
 
-void	parse_pipeline(t_linked_list *list, t_tree_node *parent)
+int	parse_pipeline(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
 
 	node = make_tree_node(list, COMMAND);
 	addchild(parent, node);
-	parse_command(list, node);
+	if (parse_command(list, node) == -1)
+		return (-1);
 	if (accept(list, PIPE))
 	{
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
 		if (list->num_of_node == 0)
-			parse_error();
+			return (parse_error());
 		addchild(parent, node);
 		node = make_tree_node(list, PIPELINE);
 		addchild(parent, node);
-		parse_pipeline(list, node);
+		if (parse_pipeline(list, node) == -1)
+			return (-1);
 	}
+	return (1);
 }
 
-void	parse_list(t_linked_list *list, t_tree_node *parent)
+int	parse_list(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
 	t_symbol	symbol;
 
+
 	node = make_tree_node(list, PIPELINE);
 	addchild(parent, node);
-	parse_pipeline(list, node);
+	if (parse_pipeline(list, node) == -1)
+		return (-1);
 	if (accept(list, AND_IF) || accept(list, OR_IF))
 	{
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
 		if (list->num_of_node == 0)
-			parse_error();
+			return (parse_error());
 		addchild(parent, node);
 		symbol = list->head->token->symbol;
 		if (symbol == PIPE || symbol == AND_IF || \
 		symbol == OR_IF || symbol == R_BRA)
-			parse_error();
+			return (parse_error());
 		node = make_tree_node(list, LIST);
 		addchild(parent, node);
-		parse_list(list, node);
+		return (parse_list(list, node));
 	}
+	return (1);
 }
 
-void	parse_subshell(t_linked_list *list, t_tree_node *parent)
+int	parse_subshell(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
 	t_symbol	symbol;
 
-	expect(list, L_BRA);
+	if (expect(list, L_BRA) == -1)
+		return (-1);
 	node = make_tree_node(list, list->head->token->symbol);
 	next_symbol(list);
 	addchild(parent, node);
 	node = make_tree_node(list, LIST);
 	addchild(parent, node);
-	parse_list(list, node);
-	expect(list, R_BRA);
+	if (parse_list(list, node) == -1)
+		return (-1);
+	if (expect(list, R_BRA) == -1)
+		return (-1);
 	node = make_tree_node(list, list->head->token->symbol);
 	next_symbol(list);
 	addchild(parent, node);
@@ -77,6 +86,7 @@ void	parse_subshell(t_linked_list *list, t_tree_node *parent)
 	{
 		symbol = list->head->token->symbol;
 		if (symbol == L_BRA || symbol == WORD)
-			parse_error();
+			return (parse_error());
 	}
+	return (1);
 }

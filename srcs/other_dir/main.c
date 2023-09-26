@@ -58,15 +58,21 @@ int main(void)
 			}
 			if (list->num_of_node == 0)
 			{
-				free_list(list);
+				// free_list(list);
 				free(line);
 				continue ;
 			}
 			free(line);
 			root = parser(list); // check_syntax_errror
+			if (root == 0)
+			{
+				// free_list(list);
+				free(line);
+				continue ;
+			}
 			// execve()
-			free_list(list);
-			free_tree(root);
+			// free_list(list);
+			// free_tree(root);
 			line = 0;
 		}
 		else

@@ -113,8 +113,8 @@ int	expect(t_linked_list *list, t_symbol symbol)
 {
 	if (!accept(list, symbol))
 	{
-		parse_error();
-		return (0);
+		return (parse_error());
+		// return (0);
 	}
 	else
 		return (1);
@@ -126,20 +126,28 @@ t_tree_node	*parser(t_linked_list *list)
 	t_tree_node		*node;
 	t_token_node	*head;
     int num_of_node;
+    int syntax_error;
 
 	head = list->head;
     num_of_node = list->num_of_node;
 	root = make_tree_node(list, ROOT);
 	root->token = 0;
+    syntax_error = 1;
 	if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) \
 	|| accept(list, REDIRECTION) || accept(list, L_BRA))
 	{
 		node = make_tree_node(list, LIST);
 		addchild(root, node);
-		parse_list(list, node);
+		syntax_error = parse_list(list, node);
 	}
 	else
-		parse_error();
+		syntax_error = parse_error();
+    if (syntax_error == -1)
+    {
+        list->head = head;
+        list->num_of_node = num_of_node;    
+        return (0);
+    }
 	tree_traverse(root, 0);
 	list->head = head;
     list->num_of_node = num_of_node;

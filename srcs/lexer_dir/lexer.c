@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-static	void	check_blank_error(t_linked_list *list)
+static	int	check_blank_error(t_linked_list *list)
 {
 	int				cnt_l_bra;
 	int				cnt_r_bra;
@@ -30,7 +30,9 @@ static	void	check_blank_error(t_linked_list *list)
 		cur = cur->next;
 	}
 	if (cnt_l_bra != cnt_r_bra)
-		print_unexpected_token_syntax_error('\n');	//message 수정 필요
+		return (print_unexpected_token_syntax_error('\n'));	//message 수정 필요
+	else
+		return (1);
 }
 
 static	void	print_list(t_linked_list *list)
@@ -40,8 +42,7 @@ static	void	print_list(t_linked_list *list)
 	cur = list->head;
 	while (cur)
 	{
-		printf("[ symbol : %d value : %s]", \
-		cur->token->symbol, cur->token->value);
+		printf("[ symbol : %d value : %s]", cur->token->symbol, cur->token->value);
 		if (cur->token->str_info != 0)
 		{
 			int i = 0;
@@ -59,6 +60,8 @@ static	void	print_list(t_linked_list *list)
 			printf("[single redir]");
 		else if(cur->token->redir_type == DOUBLE_REDIR)
 			printf("[double redir]");
+		else if (cur->token->redir_type == NO_REDIR)
+			printf("[no redir]");
 		printf("\n");
 		cur = cur->next;
 	}
@@ -85,7 +88,8 @@ t_linked_list	*lexer(char *cmd_line)
 			return (0);
 		push_back_list(list, node);
 	}
-	check_blank_error(list);
+	if (check_blank_error(list) == -1)
+		return (0);
 	print_list(list);
 	return (list);
 }

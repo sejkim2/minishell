@@ -12,8 +12,8 @@
 
 #include "minishell.h"
 
-void	parse_error(void)
+int	parse_error(void)
 {
 	printf("parse error\n");
-	exit(1);
+	return (-1);
 }

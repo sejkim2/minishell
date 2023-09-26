@@ -14,6 +14,9 @@
 
 void	init_tree_node(t_linked_list *list, t_tree_node *node, t_symbol symbol)
 {
+	node->num_of_child = 0;
+	node->next = 0;
+	node->child_list = 0;
 	node->token = list->head->token;
 	node->symbol = symbol;
 }
@@ -23,9 +26,8 @@ t_tree_node	*make_tree_node(t_linked_list *list, t_symbol symbol)
 	t_tree_node	*node;
 
 	node = (t_tree_node *)malloc(sizeof(t_tree_node));
-	node->num_of_child = 0;
-	node->next = 0;
-	node->child_list = 0;
+	if (node == 0)
+		malloc_error();
 	init_tree_node(list, node, symbol);
 	return (node);
 }

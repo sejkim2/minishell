@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
+int	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
 	t_symbol	symbol;
@@ -26,15 +26,16 @@ void	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 		{
 			symbol = list->head->token->symbol;
 			if (symbol == L_BRA)
-				parse_error();
+				return (parse_error());
 		}
 		addchild(parent, node);
+		return (1);
 	}
 	else
-		parse_error();
+		return (parse_error());
 }
 
-void	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
+int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
 	t_symbol	symbol;
@@ -50,15 +51,16 @@ void	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 			{
 				symbol = list->head->token->symbol;
 				if (symbol == L_BRA)
-					parse_error();
+					return (parse_error());
 			}
 		}
 		else
 			break ;
 	}
+	return (1);
 }
 
-void	parse_simple_command(t_linked_list *list, t_tree_node *parent)
+int	parse_simple_command(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
 
@@ -71,43 +73,49 @@ void	parse_simple_command(t_linked_list *list, t_tree_node *parent)
 			{
 				node = make_tree_node(list, REDIRECTION_LIST);
 				addchild(parent, node);
-				parse_redirection_list(list, node);
+				if (parse_redirection_list(list, node) == -1)
+					return (-1);
 			}
 			else
 			{
 				node = make_tree_node(list, SIMPLE_COMMAND_ELEMENT);
 				addchild(parent, node);
-				parse_simple_command_element(list, node);
+				if (parse_simple_command_element(list, node) == -1)
+					return (-1);
 			}
 		}
 		else
 			break ;
 	}
+	return (1);
 }
 
-void	parse_command(t_linked_list *list, t_tree_node *parent)
+int	parse_command(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
+	int syntax_error;
 
 	if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) \
 	|| accept(list, REDIRECTION))
 	{
 		node = make_tree_node(list, SIMPLE_COMMAND);
 		addchild(parent, node);
-		parse_simple_command(list, node);
+		return (parse_simple_command(list, node));
 	}
 	else if (accept(list, L_BRA))
 	{
 		node = make_tree_node(list, SUBSHELL);
 		addchild(parent, node);
-		parse_subshell(list, node);
+		if (parse_subshell(list, node) == -1)
+			return (-1);
 		if (accept(list, REDIRECTION))
 		{
 			node = make_tree_node(list, REDIRECTION_LIST);
 			addchild(parent, node);
-			parse_redirection_list(list, node);
+			return (parse_redirection_list(list, node));
 		}
+		return (1);
 	}
 	else
-		parse_error();
+		return (parse_error());
 }
