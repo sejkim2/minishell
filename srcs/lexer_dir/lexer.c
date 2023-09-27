@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 15:40:31 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 18:04:09 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,12 @@ static	int	check_blank_error(t_linked_list *list)
 		cur = cur->next;
 	}
 	if (cnt_l_bra != cnt_r_bra)
-		return (print_unexpected_token_syntax_error('\n'));	//message 수정 필요
+	{
+		if (cnt_l_bra > cnt_r_bra)
+			return (print_unexpected_token_syntax_error(0, '('));	//message 수정 필요
+		else
+			return (print_unexpected_token_syntax_error(0, ')'));	//message 수정 필요
+	}
 	else
 		return (1);
 }

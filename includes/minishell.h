@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 16:26:30 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 18:55:08 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void			set_terminal_print_on(void);
 
 /*error*/
 void malloc_error();
-int	print_unexpected_token_syntax_error(char ch);
+int	print_unexpected_token_syntax_error(char *error_string, char error_ch);
 
 /*free*/
 char *free_list(t_linked_list *list);

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:31:05 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 16:06:07 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 18:56:53 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ int	parse_pipeline(t_linked_list *list, t_tree_node *parent)
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
 		if (list->num_of_node == 0)
-		{
-			free_tree_node(node);
 			return (parse_error());
-		}
 		addchild(parent, node);
 		node = make_tree_node(list, PIPELINE);
 		addchild(parent, node);
@@ -53,10 +50,7 @@ int	parse_list(t_linked_list *list, t_tree_node *parent)
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
 		if (list->num_of_node == 0)
-		{
-			free_tree_node(node);
 			return (parse_error());
-		}
 		addchild(parent, node);
 		symbol = list->head->token->symbol;
 		if (symbol == PIPE || symbol == AND_IF || \

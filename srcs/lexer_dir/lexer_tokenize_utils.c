@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/25 20:36:31 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 17:48:26 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@ int	parse_redirection(char *cmd_line, int *end, s_str_info **str_info)
 	while (cmd_line[*end] && check_is_white_space(cmd_line[*end]))
 		(*end)++;
 	if (!cmd_line[*end])
-		return (print_unexpected_token_syntax_error('\n'));
+		return (print_unexpected_token_syntax_error(0, '\n'));
 	if (cmd_line[*end] == '(' || cmd_line[*end] == ')' \
 	|| cmd_line[*end] == '<' || cmd_line[*end] == '>' \
 	|| cmd_line[*end] == '&' || cmd_line[*end] == '|')
-		return (print_unexpected_token_syntax_error(cmd_line[*end]));
+		return (print_unexpected_token_syntax_error(0, cmd_line[*end]));
 	start = *end;
 	while (cmd_line[*end])
 	{

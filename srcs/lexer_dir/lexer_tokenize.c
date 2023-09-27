@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:09:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 15:27:17 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 17:47:43 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,11 @@ static	int	parse_redirection__(char *cmd_line, int cur_index, int *end, t_token 
 	(*end)++;
 	token->redir_type = SINGLE_REDIR;
 	if (!cmd_line[*end])
-		return (print_unexpected_token_syntax_error('\n'));
+		return (print_unexpected_token_syntax_error(0, '\n'));
 	if (cmd_line[cur_index] == '<' && cmd_line[*end] == '>')
-		return (print_unexpected_token_syntax_error('\n'));
+		return (print_unexpected_token_syntax_error(0, '\n'));
 	if (cmd_line[cur_index] == '>' && cmd_line[*end] == '<')
-		return (print_unexpected_token_syntax_error('<'));
+		return (print_unexpected_token_syntax_error("<", '\0'));
 	if (cmd_line[cur_index] == cmd_line[cur_index + 1])
 	{
 		(*end)++;
