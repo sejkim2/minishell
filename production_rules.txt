@@ -15,7 +15,4 @@
 <WORD_LIST> ::= <WORD> | <WORD_LIST><WORD>
 <SIMPLE_COMMAND_ELEMENT> ::= <WORD> | <ASSIGNMENT_WORD> | <REDIRECTION>
 
-
->'>'a
 >""
-ls>|hi

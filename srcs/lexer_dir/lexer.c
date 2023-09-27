@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/25 20:36:39 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:40:31 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ t_linked_list	*lexer(char *cmd_line)
 
 	i = 0;
 	list = make_list();
-	if (list == 0)
-		malloc_error();
 	while (cmd_line[i])
 	{
 		while (cmd_line[i] && check_is_white_space(cmd_line[i]))
@@ -85,11 +83,22 @@ t_linked_list	*lexer(char *cmd_line)
 			break ;
 		node = tokenize(cmd_line, &i);
 		if (node == 0)
+		{
+			free_list(list);
 			return (0);
+		}
 		push_back_list(list, node);
 	}
-	if (check_blank_error(list) == -1)
+	if (list->num_of_node == 0)
+	{
+		free_list(list);
 		return (0);
+	}
+	if (check_blank_error(list) == -1)
+	{
+		free_list(list);
+		return (0);
+	}
 	print_list(list);
 	return (list);
 }

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:13:44 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/25 20:36:12 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 14:46:08 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_linked_list	*make_list(void)
 
 	new_list = (t_linked_list *)malloc(sizeof(t_linked_list));
 	if (new_list == 0)
-		return (0);
+		malloc_error();
 	new_list->num_of_node = 0;
 	new_list->head = 0;
 	new_list->tail = 0;

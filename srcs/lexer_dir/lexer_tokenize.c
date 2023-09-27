@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:09:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/25 20:36:35 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:27:17 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,8 @@ static	int	parse_redirection__(char *cmd_line, int cur_index, int *end, t_token 
 		(*end)++;
 		token->redir_type = DOUBLE_REDIR;
 	}
-	parse_redirection(cmd_line, end, &(token->str_info));
 	token->symbol = REDIRECTION;
-	return (1);
+	return (parse_redirection(cmd_line, end, &(token->str_info)));
 }
 
 t_token_node	*tokenize(char *cmd_line, int *index)
@@ -67,7 +66,10 @@ t_token_node	*tokenize(char *cmd_line, int *index)
 	else
 		syntax_error = parse_word(cmd_line, &end, token);
 	if (syntax_error == -1)
+	{
+		free_token(token);
 		return (0);
+	}
 	token->value = make_value(cmd_line, *index, end);
 	*index = end;
 	return (make_node(token));

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:55:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/25 20:36:09 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 14:49:42 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ static char	*free_str_info(s_str_info *str_info)
 
 char	*free_token(t_token *token)
 {
-	free(token->value);
-	free_str_info(token->str_info);
+	if (token->value)
+		free(token->value);
+	if (token->str_info)
+		free_str_info(token->str_info);
 	free(token);
 	return (0);
 }

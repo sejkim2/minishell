@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 12:56:03 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/27 16:26:30 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef unsigned long long	t_ull;
 typedef enum e_symbol
 {
 	WORD = 0,
-	ASSIGNMENT_WORD,
 	REDIRECTION,
     REDIRECTION_LIST,
 	PIPE,

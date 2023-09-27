@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/25 20:38:19 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 16:28:03 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,6 @@ static void print_symbol(t_symbol symbol)
         break;
     case REDIRECTION_LIST:
         printf("REDIRECTION_LIST");
-        break;
-    case ASSIGNMENT_WORD:
-        printf("ASSIGNMENT_WORD");
         break;
     case REDIRECTION:
         printf("REDIRECTION");
@@ -133,8 +130,7 @@ t_tree_node	*parser(t_linked_list *list)
 	root = make_tree_node(list, ROOT);
 	root->token = 0;
     syntax_error = 1;
-	if (accept(list, WORD) || accept(list, ASSIGNMENT_WORD) \
-	|| accept(list, REDIRECTION) || accept(list, L_BRA))
+	if (accept(list, WORD) || accept(list, REDIRECTION) || accept(list, L_BRA))
 	{
 		node = make_tree_node(list, LIST);
 		addchild(root, node);
@@ -145,7 +141,9 @@ t_tree_node	*parser(t_linked_list *list)
     if (syntax_error == -1)
     {
         list->head = head;
-        list->num_of_node = num_of_node;    
+        list->num_of_node = num_of_node;
+        free_list(list);
+        free_tree(root);
         return (0);
     }
 	tree_traverse(root, 0);
