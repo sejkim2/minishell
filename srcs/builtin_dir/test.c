@@ -1,32 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/21 17:57:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 17:01:55 by jaehyji          ###   ########.fr       */
+/*   Created: 2023/09/27 13:21:43 by jaehyji           #+#    #+#             */
+/*   Updated: 2023/09/27 17:23:54 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../includes/libft.h"
-#include <stdio.h>
+#include "minishell.h"
 
-char	*ft_strdup(const char *s1)
+extern char** environ;
+
+int	main(void)
 {
-	char	*dest;
-	int		i;
+	char	*line;
+	char	**ptr;
+	char	**rptr;
 
-	dest = (char *)malloc((ft_strlen(s1) + 1) * sizeof(char));
-	if (dest == 0)
-		return (0);
-	i = 0;
-	while (s1[i])
+	while (1)
 	{
-		dest[i] = s1[i];
-		i++;
+		line = readline("input> ");
+		ptr = ft_split(line, ' ');
+		rptr = change_env(ptr, environ);
+
 	}
-	dest[i] = '\0';
-	return (dest);
 }

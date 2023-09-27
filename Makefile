@@ -6,7 +6,7 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/27 12:53:08 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/09/27 15:37:54 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ LEXER_DIR = srcs/lexer_dir
 PARSER_DIR = srcs/parser_dir
 UTILS_DIR = srcs/utils_dir
 SIGNAL_DIR = srcs/signal_dir
-BUILTIN_DIR= srcs/builtin_dir
+BUILTIN_DIR = srcs/builtin_dir
 
 LEXER_SRCS = lexer.c \
 	lexer_error.c \
@@ -50,17 +50,16 @@ SIGNAL_SRCS = shell_signal.c \
 	blocking_signal.c \
 	heredoc_signal.c
 
-BUILTIN_SRCS= check_env_utils.c \
-	get_exit_code.c \
-	func_cd.c \
-	func_echo.c \
-	func_env.c \
-	func_exit.c \
-	func_export.c \
-	func_pwd.c \
-	func_unset.c \
-	func_utils.c \
-	make_env_utils.c
+BUILTIN_SRCS = builtin_cd.c \
+	builtin_echo.c \
+	builtin_env.c \
+	builtin_exit.c \
+	builtin_export.c \
+	builtin_pwd.c \
+	builtin_unset.c \
+	utils_check.c \
+	utils_env.c \
+	utils_etc.c \
 
 SRCS1 = $(addprefix $(LEXER_DIR)/,$(LEXER_SRCS))
 SRCS2 = $(addprefix $(PARSER_DIR)/,$(PARSER_SRCS))

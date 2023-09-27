@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_utils.c                                       :+:      :+:    :+:   */
+/*   utils_etc.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:27:46 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/27 12:35:53 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:39:08 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	free_2str(char *s1, char *s2)
 
 void	make_strings(int i, int j, char **av, char **str)
 {
-	str[0] = ft_substr(av[i], 0, j - 1);
-	str[1] = ft_substr(av[i], j + 1, ft_strlen(av[i] - ft_strlen(str[0]) - 1));
+	str[0] = ft_substr(av[i], 0, j);
+	str[1] = ft_substr(av[i], j + 1, ft_strlen(av[i]) - ft_strlen(str[0]));
 }
 
 void	matrix_cpy(char **src, char **dst)

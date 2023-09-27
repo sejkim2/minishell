@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_exit.c                                        :+:      :+:    :+:   */
+/*   builtin_exit.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:13:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/25 21:02:41 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:56:08 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 						출력문이 발생하고 <bash가 종료됨.> error코드는 255로 고정.
 	flag는 어떤 에러문을 출력할지 말지 판별하는 플래그.
 */
-char	*skip_space_get_sign(char *str, int *sign)
+static char	*skip_space_get_sign(char *str, int *sign)
 {
 	while (*str == 32)
 		str++;
@@ -39,7 +39,7 @@ char	*skip_space_get_sign(char *str, int *sign)
 	return (str);
 }
 
-void	init_val(t_ull *n, int *sign, int *cnt, int *flag)
+static void	init_val(t_ull *n, int *sign, int *cnt, int *flag)
 {
 	*n = 0;
 	*sign = 1;
@@ -47,7 +47,7 @@ void	init_val(t_ull *n, int *sign, int *cnt, int *flag)
 	*flag = 0;
 }
 
-unsigned char	ft_atol(char *str, int *flag)
+static unsigned char	ft_atol(char *str, int *flag)
 {
 	t_ull	n;
 	int		s;

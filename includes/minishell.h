@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 12:56:03 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:57:08 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,6 @@ typedef struct s_tree_node
 }   t_tree_node;
 
 /*main*/
-int	main(void);
 
 /*lexer*/
 t_linked_list *lexer(char *cmd_line);
@@ -209,27 +208,23 @@ char *free_tree(t_tree_node *parent);
 
 
 /*	built-in	*/
-char			**init_environ(char **envp);
-char			**change_env(char **av, char **env);
-char			**rearrange_env(int cnt, char **env);
-int				list_env(char **envp);
-char			*skip_space_get_sign(char *str, int *sign);
-void			init_val(t_ull *n, int *sign, int *cnt, int *flag);
-unsigned char	ft_atol(char *str, int *flag);
-int				list_export(char **envp);
-int				set_env2(char **argv, char **env);
-void			func_unset(char **argv, char **env);
-void			free_2str(char *s1, char *s2);
-void			make_strings(int i, int j, char **av, char **str);
-void			matrix_cpy(char **src, char **dst);
-void			sort_ascii(char **envp, int cnt);
-int				cnt_line(char **str_arr);
-char			*get_envname(char *av);
-char			*get_envval(char *env_name, char **env);
-int				check_key_string(char *av);
-char			**add_env(char *av, char **env);
-char			**check_equation(char *av, char **env);
-int				check_dup(char *av, char *env_name, char **env);
-int				check_key_rule(char **av, char ***env);
-int				is_equal(char *str);
+int 	func_cd(char **argv);
+
+/*	built-in utils	*/
+int		check_key_string(char *av);
+int		is_equal(char *str);
+char	**check_equation(char *av, char **env);
+int		check_dup(char *av, char *env_name, char **env);
+int		check_key_rule(char **av, char ***env);
+char	**init_environ(char **envp);
+char	*get_envname(char *av);
+char	*get_envval(char *env_name, char **env);
+char	**make_new_env(int i, int j, char **av, char **env);
+char	**change_env(char **av, char **env);
+void	free_2str(char *s1, char *s2);
+void	make_strings(int i, int j, char **av, char **str);
+void	matrix_cpy(char **src, char **dst);
+void	sort_ascii(char **envp, int cnt);
+int		cnt_line(char **str_arr);
+char	**add_export(char *av, char **env);
 #endif

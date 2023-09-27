@@ -1,16 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_env_utils.c                                  :+:      :+:    :+:   */
+/*   utils_check.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:28:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/25 20:36:49 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:55:28 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	check_key_rule(char **av, char ***env)
+{
+	int		idx;
+	int		flag;
+	char	let;
+
+	idx = 0;
+	while (av[idx])
+	{
+		flag = 0;
+		let = av[idx][0];
+		if (!(let == '_' \
+		|| ('A' <= let && let <= 'Z') || ('a' <= let && let <= 'z')))
+			flag = 1;
+		if (!check_key_string(av[idx]))
+			flag = 1;
+		if (flag == 1)
+			printf("minishell: export: `%s': not a valid identifier\n", av[idx]);
+		else
+			*env = check_equation(av[idx], *env);
+		idx++;
+	}
+	return (flag);
+}
 
 int	check_key_string(char *av)
 {
@@ -50,7 +75,7 @@ char	**check_equation(char *av, char **env)
 	if (!check_dup(av, env_name, env))
 	{
 		free_2str(env_name, env_val);
-		return (add_env(av, env));
+		return (add_export(av, env));
 	}
 	return (env);
 }
@@ -75,29 +100,4 @@ int	check_dup(char *av, char *env_name, char **env)
 		i++;
 	}
 	return (0);
-}
-
-int	check_key_rule(char **av, char ***env)
-{
-	int		idx;
-	int		flag;
-	char	let;
-
-	idx = 0;
-	while (av[idx])
-	{
-		flag = 0;
-		let = av[idx][0];
-		if (!(let == '_' \
-		|| ('A' <= let && let <= 'Z') || ('a' <= let && let <= 'z')))
-			flag = 1;
-		if (!check_key_string(av[idx]))
-			flag = 1;
-		if (flag == 1)
-			printf("minishell: export: `%s': not a valid identifier\n", av[idx]);
-		else
-			*env = check_equation(av[idx], *env);
-		idx++;
-	}
-	return (flag);
 }
