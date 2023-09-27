@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   func_export.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:32:26 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/25 21:02:46 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 12:56:15 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	list_export(char **envp)
 	return (0);
 }
 
-int	set_env(char **argv, char **env)
+int	set_env2(char **argv, char **env)
 {
 	int		error_code;
 

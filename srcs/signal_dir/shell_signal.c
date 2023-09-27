@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   shell_signal.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:54:42 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/25 20:37:45 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 12:51:18 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,9 @@ void	ctrl_c(int signum)
 {
 	(void)signum;
 	printf("\n"); // 줄바꿈출력
-	// rl_on_new_line(); // 커서가 다음줄로 옮겨간것을 readline에 적용
-	// rl_replace_line("", 0); // 현재 버퍼를 비워줌
-	// rl_redisplay(); // readline 메시지를 다시 출력
-	//change_exit_status(1);
+	rl_on_new_line(); // 커서가 다음줄로 옮겨간것을 readline에 적용
+	rl_replace_line("", 0); // 현재 버퍼를 비워줌
+	rl_redisplay(); // readline 메시지를 다시 출력
     // 저장중이던 최근 반환값을 1로 수정해줌 (ctrl+c 시그널을 작동할때 1의 반환값을 가져야함)
 }
 

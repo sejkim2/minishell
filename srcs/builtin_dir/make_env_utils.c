@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_env_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/25 20:37:42 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 12:37:12 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char	**change_env(char **av, char **env)
 			j++;
 		if (av[i][j] == '$')
 		{
-			make_str(i, j, av, str);
+			make_strings(i, j, av, str);
 			env_val = get_envval(str[1], env);
 			if (env_val)
 				str[2] = env_val;
