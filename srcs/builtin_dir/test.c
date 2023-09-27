@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 13:21:43 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/27 17:23:54 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/27 18:54:01 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,21 @@
 
 extern char** environ;
 
-int	main(void)
+// int	main(void)
+// {
+// 	char	*line;
+// 	char	**ptr;
+// 	char	**rptr;
+
+// 	while (1)
+// 	{
+// 		line = readline("input> ");
+// 		ptr = ft_split(line, ' ');
+// 		rptr = change_env(ptr, environ);
+// 	}
+// }
+
+int main()
 {
-	char	*line;
-	char	**ptr;
-	char	**rptr;
-
-	while (1)
-	{
-		line = readline("input> ");
-		ptr = ft_split(line, ' ');
-		rptr = change_env(ptr, environ);
-
-	}
+	
 }
