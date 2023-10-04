@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 15:57:08 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/27 19:48:15 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <curses.h>
+# include <dirent.h>
 // # include "../readline_dir/include/readline/readline.h"
 // # include "../readline_dir/include/readline/history.h"
 # include <readline/readline.h>
