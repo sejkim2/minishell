@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_cd.c                                          :+:      :+:    :+:   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:28:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/25 21:02:23 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 17:33:31 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,25 @@
 	Done.
 */
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	char	buff[PATH_MAX];
-// 	int		error_code;
+int	func_cd(char **argv)
+{
+	char	buff[PATH_MAX];
+	int		error_code;
+	int		cnt;
 
-// 	error_code = 0;
-// 	if (argc == 1)
-// 		return (printf("error\n"));
-// 	change_env(argv, envp);
-// 	getcwd(buff, PATH_MAX);
-// 	printf("현재 경로: %s\n", buff);
-// 	if (!strcmp(argv[1], "cd"))
-// 	{
-// 		if (argc == 2)
-// 			chdir(getenv("HOME"));
-// 		else
-// 			error_code = chdir(argv[2]);
-// 		if (error_code == -1)
-// 		{
-// 			printf("minishell: cd: %s: No such file or directory\n", argv[2]);
-// 			exit(1);
-// 		}
-// 		getcwd(buff, PATH_MAX);
-// 		printf("이동 경로: %s\n", buff);
-// 	}
-// 	exit(0);
-// }
+	cnt = cnt_line(argv);
+	error_code = 0;
+	getcwd(buff, PATH_MAX);
+	printf("현재 경로: %s\n", buff);
+	if (cnt == 0)
+		chdir(getenv("HOME"));
+	else
+		error_code = chdir(argv[0]);
+	if (error_code == -1)
+	{
+		printf("minishell: cd: %s: No such file or directory\n", argv[0]);
+		exit(1);
+	}
+	getcwd(buff, PATH_MAX);
+	return (0);
+}

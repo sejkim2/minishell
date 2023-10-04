@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_signal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:55:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/25 20:37:27 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/04 16:23:46 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,23 +20,24 @@
 			입력버퍼가 존재하면 동작하지 않음. shell_signal보다 2칸 밀어 exit를 적어야 함.
 */
 
-void	set_heredoc_signal(void)
-// 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
+static void	heredoc_ctrl_c(int signum)
 {
-	set_terminal_print_off();
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_IGN);
+	(void)signum;
+	printf("\n");
+	exit(1);
 }
 
-void	check_heredoc_signal(int *cursor)
+void	set_fork_heredoc_signal(void)
+// 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
 {
-	*cursor = 17;
 	signal(SIGINT, heredoc_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 }
 
-void	heredoc_ctrl_c(int signum)
+void	set_heredoc_signal(void)
+// 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
 {
-	(void)signum;
-	printf("\n");
+	set_terminal_print_off();
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_export.c                                      :+:      :+:    :+:   */
+/*   builtin_export.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:32:26 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/27 12:56:15 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:55:45 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,18 +36,35 @@ int	list_export(char **envp)
 	return (0);
 }
 
-int	set_env2(char **argv, char **env)
+char	**add_export(char *av, char **env)
+{
+	int		i;
+	int		j;
+	int		cnt;
+	char	**renv;
+
+	i = 0;
+	j = 0;
+	cnt = cnt_line(env);
+	renv = (char **)malloc(sizeof(char *) * (cnt + 2));
+	while (i < cnt)
+	{
+		renv[j] = env[i];
+		i++;
+		j++;
+	}
+	renv[j] = av;
+	renv[j + 1] = NULL;
+	return (renv);
+}
+
+int	set_export(char **argv, char **env)
 {
 	int		error_code;
 
 	error_code = check_key_rule(argv, &env);
 	list_export(env);
 	return (error_code);
-}
-
-void	f()
-{
-	system("leaks a.out");
 }
 
 // int	main(int argc, char **argv, char **envp)

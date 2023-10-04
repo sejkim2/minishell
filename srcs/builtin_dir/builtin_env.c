@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   func_env.c                                         :+:      :+:    :+:   */
+/*   builtin_env.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:06:44 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/25 21:02:34 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:47:32 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	list_env(char **envp)
+static int	list_env(char **envp)
 {
 	int		idx;
 
@@ -25,7 +25,7 @@ int	list_env(char **envp)
 	return (0);
 }
 
-int	set_env(char **argv, char **envp)
+static int	set_env(char **argv, char **envp)
 {
 	int		i;
 	int		j;

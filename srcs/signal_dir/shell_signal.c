@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:54:42 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/27 12:51:18 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/04 17:10:31 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,8 @@ void	ctrl_c(int signum)
 }
 
 int	shell_ctrl_d(void)
-// ctrl+d를 눌렀을때 작동
+// ctrl+d를 눌렀을때 작동,
 {
-	printf("\033[1A");
 	printf("exit\n");
 	return (0);
 }

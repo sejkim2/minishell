@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   make_env_utils.c                                   :+:      :+:    :+:   */
+/*   utils_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/27 12:37:12 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:50:37 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,53 +62,45 @@ char	*get_envval(char *env_name, char **env)
 	return (NULL);
 }
 
+char	**make_new_env(int i, int j, char **av, char **env)
+{
+	int		status;
+	char	*str[3];
+	char	*env_val;
+
+	make_strings(i, j, av, str);
+	if (av[i][j + 1] && av[i][j + 1] == '?')
+		str[2] = ft_strdup(ft_itoa(WEXITSTATUS(status)));
+	else
+	{
+		env_val = get_envval(str[1], env);
+		if (env_val)
+			str[2] = env_val;
+		else
+			str[2] = ft_strdup("");
+	}
+	av[i] = ft_strjoin(str[0], str[2]);
+	free_2str(str[0], str[2]);
+	return (av);
+}
+
 char	**change_env(char **av, char **env)
 {
 	int		i;
 	int		j;
-	char	*env_val;
-	char	*str[3];
 
 	i = 0;
 	while (av[i])
 	{
 		j = 0;
-		while (av[i][j] && av[i][j] != '$')
-			j++;
-		if (av[i][j] == '$')
+		while (av[i][j])
 		{
-			make_strings(i, j, av, str);
-			env_val = get_envval(str[1], env);
-			if (env_val)
-				str[2] = env_val;
+			if (av[i][j] != '$')
+				j++;
 			else
-				str[2] = ft_strdup("");
-			av[i] = ft_strjoin(str[0], str[2]);
-			free_2str(str[0], str[2]);
+				av = make_new_env(i, j, av, env);
 		}
 		i++;
 	}
 	return (av);
-}
-
-char	**add_env(char *av, char **env)
-{
-	int		i;
-	int		j;
-	int		cnt;
-	char	**renv;
-
-	i = 0;
-	j = 0;
-	cnt = cnt_line(env);
-	renv = (char **)malloc(sizeof(char *) * (cnt + 2));
-	while (i < cnt)
-	{
-		renv[j] = env[i];
-		i++;
-		j++;
-	}
-	renv[j] = av;
-	renv[j + 1] = NULL;
-	return (renv);
 }

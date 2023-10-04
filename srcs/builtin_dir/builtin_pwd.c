@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_exit_code.c                                    :+:      :+:    :+:   */
+/*   builtin_pwd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/25 20:36:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 12:50:21 by jaehyji          ###   ########.fr       */
+/*   Created: 2023/09/12 16:04:23 by jaehyji           #+#    #+#             */
+/*   Updated: 2023/09/27 15:39:12 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// void	main(int exit_code)
-// {
-// 	pid_t c;
-// 	int	status;
+/*
+	옵션없는 pwd구현.
+	pwd는 인자를 받지 않음. 인자 개수의 상관없이 pwd는 출력을 진행함.
+*/
 
-// 	c = fork();
-// 	if (c == 0)
-// 		exit(exit_code);
-// 	else
-// 	{
-// 		waitpid(c, &status, 0);
-// 		printf("%d\n", WEXITSTATUS(status));
-// 	}
+// int	main(int argc, char **argv)
+// {
+// 	char	buff[PATH_MAX];
+
+// 	if (argc != 2 || strcmp("pwd", argv[1]))
+// 		return (printf("error\n"));
+// 	getcwd(buff, PATH_MAX);
+// 	printf("%s\n", buff);
 // }
