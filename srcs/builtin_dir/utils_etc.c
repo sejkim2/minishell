@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:27:46 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/27 15:39:08 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/04 19:37:34 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	free_2str(char *s1, char *s2)
 		free(s2);
 }
 
-void	make_strings(int i, int j, char **av, char **str)
+void	make_strings(int i, char **str, char **str_arr)
 {
-	str[0] = ft_substr(av[i], 0, j);
-	str[1] = ft_substr(av[i], j + 1, ft_strlen(av[i]) - ft_strlen(str[0]));
+	str_arr[0] = ft_substr(*str, 0, i);
+	str_arr[1] = ft_substr(*str, i + 1, ft_strlen(*str) - ft_strlen(str_arr[0]));
 }
 
 void	matrix_cpy(char **src, char **dst)

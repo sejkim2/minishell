@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/04 17:44:20 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/04 19:58:34 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,8 @@ char *free_tree(t_tree_node *parent);
 
 /*	built-in	*/
 int 	func_cd(char **argv);
+int	builtin_exit(int argc, char **argv, char **envp);
+
 
 /*	built-in utils	*/
 int		check_key_string(char *av);
@@ -216,10 +218,10 @@ int		check_key_rule(char **av, char ***env);
 char	**init_environ(char **envp);
 char	*get_envname(char *av);
 char	*get_envval(char *env_name, char **env);
-char	**make_new_env(int i, int j, char **av, char **env);
-char	**change_env(char **av, char **env);
+void	make_new_env(int i, char **string, char **env);
+void	change_env(t_tree_node *parent, char **env);
 void	free_2str(char *s1, char *s2);
-void	make_strings(int i, int j, char **av, char **str);
+void	make_strings(int i, char **str, char **str_arr);
 void	matrix_cpy(char **src, char **dst);
 void	sort_ascii(char **envp, int cnt);
 int		cnt_line(char **str_arr);

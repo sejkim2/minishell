@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/04 18:46:37 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/04 20:06:35 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,27 @@ static void print_banner(void)
 	printf("**⠀⠀⠀⢸⣿⣿⠀⠀⠀⠀⠀⠘⢿⣿⣷⣿⡿⢿⣿⣷⣿⡿⠋⠀⠀⢸⣿⣿⡇⠀⢸⣿⣿⡇⠀⠈⢻⣿⣿⣿⠀⠀⣤⣤⣤⣤⣤⣿⣿⣿**\n");
 	printf("**⠀⠀⠀⠸⠿⠿⠀⠀⠀⠀⠀⠀⠀⠻⠿⠟⠁⠀⠻⠿⠟⠁⠀⠀⠀⠸⠿⠿⠃⠀⠸⠿⠿⠃⠀⠀⠀⠙⠿⠿⠀⠀⠿⠿⠿⠿⠿⠿⠿ **\n");
 	printf("******************************************************\n");
+}
+
+extern char **environ;
+
+static void run_builtin(t_tree_node *root, int depth)
+{
+	if (root->symbol == SIMPLE_COMMAND)
+		change_env(root, environ);
+	else
+	{
+		t_tree_node *child;
+		child = root->child_list;
+		if (child)
+		{
+			while (child)
+			{
+				run_builtin(child, depth + 1);
+				child = child->next;
+			}
+		}
+	}
 }
 
 int main(void)
@@ -60,36 +81,37 @@ int main(void)
 			root = parser(list); // check_syntax_errror
 			if (root == 0)
 				continue ;
-			free_list(list);
+			// free_list(list);
+			run_builtin(root, 0);
 			// execve();
-			free_tree(root);
-			if (!strcmp(line, "cat"))
-			{
-				set_blocking_signal();
-				child = fork();
-				if (child == 0)
-					execve("cat", 0, 0);
-				else
-					wait(0);
-			}
-			else if (!strcmp(line, "heredoc"))
-			{
-				set_heredoc_signal();
-				child = fork();
-				if (child == 0)
-				{
-					set_fork_heredoc_signal();
-					heredoc = readline("> ");
-					while (heredoc)
-					{
-						free(heredoc);
-						heredoc = readline("> ");
-					}
-					exit(0);
-				}
-				else
-					wait(0);
-			}
+			// free_tree(root);
+			// if (!strcmp(line, "cat"))
+			// {
+			// 	set_blocking_signal();
+			// 	child = fork();
+			// 	if (child == 0)
+			// 		execve("cat", 0, 0);
+			// 	else
+			// 		wait(0);
+			// }
+			// else if (!strcmp(line, "heredoc"))
+			// {
+			// 	set_heredoc_signal();
+			// 	child = fork();
+			// 	if (child == 0)
+			// 	{
+			// 		set_fork_heredoc_signal();
+			// 		heredoc = readline("> ");
+			// 		while (heredoc)
+			// 		{
+			// 			free(heredoc);
+			// 			heredoc = readline("> ");
+			// 		}
+			// 		exit(0);
+			// 	}
+			// 	else
+			// 		wait(0);
+			// }
 			free(line);
 			line = 0;
 		}

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:13:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/27 15:56:08 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/04 19:58:59 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,30 +73,28 @@ static unsigned char	ft_atol(char *str, int *flag)
 	return (n * s);
 }
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	unsigned char	error_code;
-// 	int				flag;
+int	builtin_exit(int argc, char **argv, char **envp)
+{
+	unsigned char	error_code;
+	int				flag;
 
-// 	if (argc == 1 || strcmp(argv[1], "exit"))
-// 		return (printf("error\n"));
-// 	change_env(argv, envp);
-// 	if (argc == 2)
-// 	{
-// 		printf("exit\n");
-// 		exit(0);
-// 	}
-// 	error_code = ft_atol(argv[2], &flag);
-// 	if (argc >= 3)
-// 	{
-// 		printf("exit\n");
-// 		if (flag == 1)
-// 			printf("minishell: exit: %s: numeric argument required\n", argv[2]);
-// 		else if (argc > 3 && flag == 0)
-// 		{
-// 			printf("minishell: exit: too many arguments\n");
-// 			error_code = 1;
-// 		}
-// 	}
-// 	exit(error_code);
-// }
+	// change_env(argv, envp);
+	if (argc == 2)
+	{
+		printf("exit\n");
+		exit(0);
+	}
+	error_code = ft_atol(argv[2], &flag);
+	if (argc >= 3)
+	{
+		printf("exit\n");
+		if (flag == 1)
+			printf("minishell: exit: %s: numeric argument required\n", argv[2]);
+		else if (argc > 3 && flag == 0)
+		{
+			printf("minishell: exit: too many arguments\n");
+			error_code = 1;
+		}
+	}
+	exit(error_code);
+}
