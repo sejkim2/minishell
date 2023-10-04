@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   blocking_signal.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 20:17:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/25 20:36:44 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/04 16:00:53 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,28 +21,22 @@
 			 입력버퍼가 존재하면 입력버퍼를 1번 반복하고, 버퍼를 지움. 입력버퍼의 길이만큼 프롬프트를 밀어야 함.
 */
 
-void	set_blocking_signal(void)
-// 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
-{
-	set_terminal_print_on();
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
-}
-
-void	check_blocking_signal(void)
-{
-	signal(SIGINT, blocking_ctrl_c);
-	signal(SIGQUIT, blocking_ctrl_backslash);
-}
-
-void	blocking_ctrl_c(int signum)
+static void	blocking_ctrl_c(int signum)
 {
 	(void)signum;
 	printf("\n");
 }
 
-void	blocking_ctrl_backslash(int signum)
+static void	blocking_ctrl_backslash(int signum)
 {
 	(void)signum;
 	printf("Quit: 3\n");
+}
+
+void	set_blocking_signal(void)
+// 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
+{
+	set_terminal_print_on();
+	signal(SIGINT, blocking_ctrl_c);
+	signal(SIGQUIT, blocking_ctrl_backslash);
 }

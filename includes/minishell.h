@@ -6,13 +6,14 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 19:48:15 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/04 16:56:47 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
 
+#include <sys/ioctl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <signal.h>
@@ -153,13 +154,9 @@ int check_is_close_quote(char *cmd_line, int index, char quote);
 
 /* blocking signal */
 void			set_blocking_signal(void);
-void			check_blocking_signal(void);
-void			blocking_ctrl_c(int signum);
-void			blocking_ctrl_backslash(int signum);
 /* heredoc signal */
 void			set_heredoc_signal(void);
-void			check_heredoc_signal(int *cursor);
-void			heredoc_ctrl_c(int signum);
+void			set_fork_heredoc_signal(void);
 /* terminal option */
 struct termios	terminal_option(void);
 void			set_origin_signal(void);

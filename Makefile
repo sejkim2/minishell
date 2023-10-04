@@ -6,7 +6,7 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/27 15:37:54 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/04 14:52:45 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ HEADER = includes
 C_FLAGS = -I$(HEADER)
 LEXER_DIR = srcs/lexer_dir
 PARSER_DIR = srcs/parser_dir
+ENTRY_DIR = srcs/entry_dir
 UTILS_DIR = srcs/utils_dir
 SIGNAL_DIR = srcs/signal_dir
 BUILTIN_DIR = srcs/builtin_dir
@@ -42,8 +43,10 @@ PARSER_SRCS = parser.c \
 	parser_tree_node.c \
 	parser_free_tree.c
 
+ENTRY_SRCS = temp_file.c \
+	wild_card.c
+
 UTILS_SRCS = main.c	\
-	temp_file.c
 	
 SIGNAL_SRCS = shell_signal.c \
 	terminal_option.c \
@@ -66,32 +69,34 @@ SRCS2 = $(addprefix $(PARSER_DIR)/,$(PARSER_SRCS))
 SRCS3 = $(addprefix $(UTILS_DIR)/,$(UTILS_SRCS))
 SRCS4 = $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_SRCS))
 SRCS5 = $(addprefix $(BUILTIN_DIR)/,$(BUILTIN_SRCS))
+SRCS6 = $(addprefix $(ENTRY_DIR)/,$(ENTRY_SRCS))
 
 LEXER_OBJS = $(SRCS1:.c=.o)
 PARSER_OBJS = $(SRCS2:.c=.o)
 UTILS_OBJS = $(SRCS3:.c=.o)
 SIGNAL_OBJS = $(SRCS4:.c=.o)
 BUILTIN_OBJS = $(SRCS5:.c=.o)
+ENTRY_OBJS = $(SRCS6:.c=.o)
 
-OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(UTILS_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS)
+OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(UTILS_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS) $(ENTRY_OBJS)
 # OBJS = $(SRCS:%.c=%.o)
 
 %.o : %.c $(HEADER)
 	$(CC) $(C_FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJS)
-# @make -C ./mylib
+	@make -C ./mylib
 # $(CC) $(C_FLAGS) $(SRCS) -o $@ -L ./readline/lib -lreadline -lncurses
-	$(CC) $(C_FLAGS) $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4) $(SRCS5) -o $@ -lreadline -lncurses mylib/mylib.a
+	$(CC) $(C_FLAGS) $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4) $(SRCS5) $(SRCS6) -o $@ -lreadline -lncurses mylib/mylib.a
 
 all : $(NAME)
 
 clean :
-# make clean -C ./mylib
+	make clean -C ./mylib
 	rm -rf $(OBJS)
 
 fclean : clean
-# make fclean -C ./mylib
+	make fclean -C ./mylib
 	rm -rf $(NAME)
 
 re :

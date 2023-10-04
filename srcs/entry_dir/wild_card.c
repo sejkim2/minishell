@@ -6,11 +6,11 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/27 19:46:30 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/04 14:40:14 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/04 14:53:42 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/minishell.h"
+#include "minishell.h"
 
 /*
 	directory는 4번, file은 8번.
@@ -69,21 +69,21 @@ int	wild_card(char *input, char *file)
 	return (1);
 }
 
-int	main(void)
-{
-	DIR *dir;
-	char *input;
-	struct dirent *entry;
+// int	main(void)
+// {
+// 	DIR *dir;
+// 	char *input;
+// 	struct dirent *entry;
 
-	input = readline(0);
-	if ((dir = opendir(".")) == NULL)
-	{
-		perror("디렉토리 열기 실패");
-		return (1);
-	}
-	while ((entry = readdir(dir)) != NULL)
-		if (wild_card(input, entry->d_name))
-			printf("wild: %s\n", entry->d_name);
-	closedir(dir);
-	return (0);
-}
+// 	input = readline(0);
+// 	if ((dir = opendir(".")) == NULL)
+// 	{
+// 		perror("디렉토리 열기 실패");
+// 		return (1);
+// 	}
+// 	while ((entry = readdir(dir)) != NULL)
+// 		if (wild_card(input, entry->d_name))
+// 			printf("wild: %s\n", entry->d_name);
+// 	closedir(dir);
+// 	return (0);
+// }
