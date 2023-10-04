@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 18:55:53 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/04 15:10:02 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,13 @@ int	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 		{
 			symbol = list->head->token->symbol;
 			if (symbol == L_BRA)
-				return (parse_error());
+				return (parse_error(list->head->token->value));
 		}
 		addchild(parent, node);
 		return (1);
 	}
 	else
-		return (parse_error());
+		return (parse_error(list->head->token->value));
 }
 
 int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
@@ -50,7 +50,7 @@ int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 			{
 				symbol = list->head->token->symbol;
 				if (symbol == L_BRA)
-					return (parse_error());
+					return (parse_error(list->head->token->value));
 			}
 		}
 		else
@@ -114,5 +114,5 @@ int	parse_command(t_linked_list *list, t_tree_node *parent)
 		return (1);
 	}
 	else
-		return (parse_error());
+		return (parse_error(list->head->token->value));
 }

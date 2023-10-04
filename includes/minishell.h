@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 18:55:08 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/04 15:07:11 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ void init_tree_node(t_linked_list *list, t_tree_node *node, t_symbol symbol);
 t_tree_node *make_tree_node(t_linked_list *list, t_symbol symbol);
 void addchild(t_tree_node *parent, t_tree_node *child);
 
-int parse_error(void);
+int parse_error(char *error_string);
 
 int parse_simple_command(t_linked_list *list, t_tree_node *parent);
 int parse_simple_command_element(t_linked_list *list, t_tree_node *parent);

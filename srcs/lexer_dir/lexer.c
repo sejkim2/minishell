@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 18:04:09 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/04 16:51:02 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,22 @@ static	int	check_blank_error(t_linked_list *list)
 			cnt_l_bra++;
 		else if (cur->token->symbol == R_BRA)
 			cnt_r_bra++;
+		if (cnt_l_bra < cnt_r_bra)
+		{
+			printf("minishell: syntax error unmatched parentheses\n");
+			return (-1);
+		}
+		if (cur->next)
+		{
+			if (cur->token->symbol == L_BRA && cur->next->token->symbol == R_BRA)
+				return (print_unexpected_token_syntax_error(0, ')'));
+		}
 		cur = cur->next;
 	}
 	if (cnt_l_bra != cnt_r_bra)
 	{
-		if (cnt_l_bra > cnt_r_bra)
-			return (print_unexpected_token_syntax_error(0, '('));	//message 수정 필요
-		else
-			return (print_unexpected_token_syntax_error(0, ')'));	//message 수정 필요
+		printf("minishell: syntax error unmatched parentheses\n");
+		return (-1);
 	}
 	else
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:44:19 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 18:05:48 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/04 16:55:54 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 static	int	parse_if_one_token(char *cmd_line, int *end, t_symbol symbol)
 {
 	(*end)++;
+	while (cmd_line[*end] && check_is_white_space(cmd_line[*end]))
+		(*end)++;
 	if (!cmd_line[*end])
 	{
 		if (symbol == OR_IF)

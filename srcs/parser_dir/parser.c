@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/27 18:54:18 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/04 16:50:27 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	expect(t_linked_list *list, t_symbol symbol)
 {
 	if (!accept(list, symbol))
 	{
-		return (parse_error());
+		return (parse_error(list->head->token->value));
 		// return (0);
 	}
 	else
@@ -137,7 +137,7 @@ t_tree_node	*parser(t_linked_list *list)
 		syntax_error = parse_list(list, node);
 	}
 	else
-		syntax_error = parse_error();
+		syntax_error = parse_error(list->head->token->value);
     if (syntax_error == -1)
     {
         list->head = head;
