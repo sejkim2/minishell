@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/04 15:07:11 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/05 20:28:09 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,9 @@ char *free_tree_node(t_tree_node *node);
 char *free_tree(t_tree_node *parent);
 
 
+/*exec*/
+// void run_exec(t_tree_node *node);
+
 /*	built-in	*/
 char			**init_environ(char **envp);
 char			**change_env(char **av, char **env);
@@ -231,4 +234,5 @@ char			**check_equation(char *av, char **env);
 int				check_dup(char *av, char *env_name, char **env);
 int				check_key_rule(char **av, char ***env);
 int				is_equal(char *str);
+
 #endif

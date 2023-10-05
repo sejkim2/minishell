@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/04 16:50:27 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/05 16:46:23 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,7 @@ t_tree_node	*parser(t_linked_list *list)
 		addchild(root, node);
 		syntax_error = parse_list(list, node);
 	}
+    /*   pipe, and, or + cmd --> parse error */
 	else
 		syntax_error = parse_error(list->head->token->value);
     if (syntax_error == -1)

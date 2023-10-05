@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
+#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/09/27 12:53:08 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/05 20:28:04 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,8 @@ PARSER_SRCS = parser.c \
 	parser_free_tree.c
 
 UTILS_SRCS = main.c	\
-	temp_file.c
+	temp_file.c 
+# exec.c
 	
 SIGNAL_SRCS = shell_signal.c \
 	terminal_option.c \

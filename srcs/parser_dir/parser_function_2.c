@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/04 15:10:02 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/05 15:57:16 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,14 @@ int	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 	{
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
+		/*
+		ex) cmd (cmd2)
+		*/
 		if (list->num_of_node > 0)
 		{
 			symbol = list->head->token->symbol;
 			if (symbol == L_BRA)
-				return (parse_error(list->head->token->value));
+				return (parse_error(list->head->next->token->value));
 		}
 		addchild(parent, node);
 		return (1);
@@ -46,6 +49,9 @@ int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 			node = make_tree_node(list, list->head->token->symbol);
 			next_symbol(list);
 			addchild(parent, node);
+			/*
+			ex1) >re1 (<re3)
+			*/
 			if (list->num_of_node > 0)
 			{
 				symbol = list->head->token->symbol;
@@ -113,6 +119,12 @@ int	parse_command(t_linked_list *list, t_tree_node *parent)
 		}
 		return (1);
 	}
+	/*
+	list && list == command && command
+	if command != simple_command(redir, word) or subshell --> parse error
+	
+	ex) (cmd1 && )
+	*/
 	else
 		return (parse_error(list->head->token->value));
 }
