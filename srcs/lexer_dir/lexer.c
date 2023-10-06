@@ -6,13 +6,13 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/04 16:51:02 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 13:53:52 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	check_blank_error(t_linked_list *list)
+int	check_blank_error(t_linked_list *list)
 {
 	int				cnt_l_bra;
 	int				cnt_r_bra;
@@ -28,56 +28,17 @@ static	int	check_blank_error(t_linked_list *list)
 		else if (cur->token->symbol == R_BRA)
 			cnt_r_bra++;
 		if (cnt_l_bra < cnt_r_bra)
-		{
-			printf("minishell: syntax error unmatched parentheses\n");
-			return (-1);
-		}
+			return (print_unmatched_parentheses_syntax_error());
 		if (cur->next)
-		{
-			if (cur->token->symbol == L_BRA && cur->next->token->symbol == R_BRA)
+			if (cur->token->symbol == L_BRA && \
+			cur->next->token->symbol == R_BRA)
 				return (print_unexpected_token_syntax_error(0, ')'));
-		}
 		cur = cur->next;
 	}
 	if (cnt_l_bra != cnt_r_bra)
-	{
-		printf("minishell: syntax error unmatched parentheses\n");
-		return (-1);
-	}
+		return (print_unmatched_parentheses_syntax_error());
 	else
 		return (1);
-}
-
-static	void	print_list(t_linked_list *list)
-{
-	t_token_node	*cur;
-
-	cur = list->head;
-	while (cur)
-	{
-		printf("[ symbol : %d value : %s]", cur->token->symbol, cur->token->value);
-		if (cur->token->str_info != 0)
-		{
-			int i = 0;
-			printf("[");
-			while (cur->token->str_info[i].str_type != NUL)
-			{
-				printf("str : %s , type : %d ", cur->token->str_info[i].str, cur->token->str_info[i].str_type);
-				i++;
-			}
-			printf("]");
-		}
-		else
-			printf("[str is meta]");
-		if (cur->token->redir_type == SINGLE_REDIR)
-			printf("[single redir]");
-		else if(cur->token->redir_type == DOUBLE_REDIR)
-			printf("[double redir]");
-		else if (cur->token->redir_type == NO_REDIR)
-			printf("[no redir]");
-		printf("\n");
-		cur = cur->next;
-	}
 }
 
 t_linked_list	*lexer(char *cmd_line)
@@ -102,12 +63,7 @@ t_linked_list	*lexer(char *cmd_line)
 		}
 		push_back_list(list, node);
 	}
-	if (list->num_of_node == 0)
-	{
-		free_list(list);
-		return (0);
-	}
-	if (check_blank_error(list) == -1)
+	if (list->num_of_node == 0 || check_blank_error(list) == -1)
 	{
 		free_list(list);
 		return (0);

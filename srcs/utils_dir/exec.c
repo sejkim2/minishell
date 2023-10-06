@@ -6,13 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/05 20:03:46 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 11:54:03 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
 
 void	run_exec(t_tree_node *root)
 {

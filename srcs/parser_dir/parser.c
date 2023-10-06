@@ -6,88 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/05 16:46:23 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 13:48:27 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void print_symbol(t_symbol symbol)
-{
-    switch (symbol)
-    {
-    case WORD:
-        printf("WORD");
-        break;
-    case REDIRECTION_LIST:
-        printf("REDIRECTION_LIST");
-        break;
-    case REDIRECTION:
-        printf("REDIRECTION");
-        break;
-    case PIPE:
-        printf("PIPE");
-        break;
-    case AND_IF:
-        printf("AND_IF");
-        break;
-    case OR_IF:
-        printf("OR_IF");
-        break;
-    case L_BRA:
-        printf("L_BRA");
-        break;
-    case R_BRA:
-        printf("R_BRA");
-        break;
-    case SIMPLE_COMMAND:
-        printf("SIMPLE_COMMAND");
-        break;
-    case SIMPLE_COMMAND_ELEMENT:
-        printf("SIMPLE_COMMAND_ELEMENT");
-        break;
-    case COMMAND:
-        printf("COMMAND");
-        break;
-    case PIPELINE:
-        printf("PIPELINE");
-        break;
-    case SUBSHELL:
-        printf("SUBSHELL");
-        break;
-    case LIST:
-        printf("LIST");
-        break;
-    case ROOT:
-        printf("ROOT");
-        break;
-    default:
-        break;
-    }
-}
-
-static  void    tree_traverse(t_tree_node *node, int depth)
-{
-    for(int i = 0; i<depth; i++)
-        printf("\t");
-    printf("symbol : ");
-    print_symbol(node->symbol);
-    if (node->token != 0)
-        printf(" value : %s\n", node->token->value);
-    else
-        printf(" value : root\n");
-
-    t_tree_node *child;
-    child = node->child_list;
-    if (child)
-    {
-        while (child)
-        {
-            tree_traverse(child, depth + 1);
-            child = child->next;
-        }
-    }
-}
 
 t_symbol	next_symbol(t_linked_list *list)
 {

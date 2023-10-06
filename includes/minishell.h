@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/05 20:28:09 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 13:53:33 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,6 +169,7 @@ void			set_terminal_print_on(void);
 /*error*/
 void malloc_error();
 int	print_unexpected_token_syntax_error(char *error_string, char error_ch);
+int print_unmatched_parentheses_syntax_error(void);
 
 /*free*/
 char *free_list(t_linked_list *list);
@@ -206,6 +207,9 @@ int parse_redirection_list(t_linked_list *list, t_tree_node *parent);
 char *free_tree_node(t_tree_node *node);
 char *free_tree(t_tree_node *parent);
 
+/*test*/
+void	print_list(t_linked_list *list);
+void    tree_traverse(t_tree_node *node, int depth);
 
 /*exec*/
 // void run_exec(t_tree_node *node);

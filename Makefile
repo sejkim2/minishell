@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/05 20:28:04 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/10/06 13:52:47 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,20 +20,20 @@ PARSER_DIR = srcs/parser_dir
 UTILS_DIR = srcs/utils_dir
 SIGNAL_DIR = srcs/signal_dir
 BUILTIN_DIR= srcs/builtin_dir
+TEST_DIR = srcs/test_dir
 
 LEXER_SRCS = lexer.c \
 	lexer_error.c \
-	lexer_tokenize.c \
-	lexer_list.c \
-	lexer_free_list.c \
-	lexer_node.c \
-	lexer_check_character_symbol.c \
-	lexer_check_is_close_quote.c \
-	lexer_parse_pipe_or_orif_or_andif.c \
-	lexer_tokenize_utils.c \
-	lexer_make_value.c \
-	lexer_count_quote_string.c \
-	lexer_make_quote_string.c
+	tokenize.c \
+	list_utils.c \
+	free_list.c \
+	list_node_utils.c \
+	check_character_symbol_utils.c \
+	parse_pipe_or_orif_or_andif.c \
+	tokenize_utils.c \
+	make_value.c \
+	quote_utils.c \
+	make_quote_string.c
 
 PARSER_SRCS = parser.c \
 	parser_error.c \
@@ -51,7 +51,7 @@ SIGNAL_SRCS = shell_signal.c \
 	blocking_signal.c \
 	heredoc_signal.c
 
-BUILTIN_SRCS= check_env_utils.c \
+BUILTIN_SRCS = check_env_utils.c \
 	get_exit_code.c \
 	func_cd.c \
 	func_echo.c \
@@ -63,19 +63,23 @@ BUILTIN_SRCS= check_env_utils.c \
 	func_utils.c \
 	make_env_utils.c
 
+TEST_SRCS = test.c
+
 SRCS1 = $(addprefix $(LEXER_DIR)/,$(LEXER_SRCS))
 SRCS2 = $(addprefix $(PARSER_DIR)/,$(PARSER_SRCS))
 SRCS3 = $(addprefix $(UTILS_DIR)/,$(UTILS_SRCS))
 SRCS4 = $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_SRCS))
 SRCS5 = $(addprefix $(BUILTIN_DIR)/,$(BUILTIN_SRCS))
+SRCS6 = $(addprefix $(TEST_DIR)/,$(TEST_SRCS))
 
 LEXER_OBJS = $(SRCS1:.c=.o)
 PARSER_OBJS = $(SRCS2:.c=.o)
 UTILS_OBJS = $(SRCS3:.c=.o)
 SIGNAL_OBJS = $(SRCS4:.c=.o)
 BUILTIN_OBJS = $(SRCS5:.c=.o)
+TEST_OBJS = $(SRCS6:.c=.o)
 
-OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(UTILS_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS)
+OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(UTILS_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS) $(TEST_OBJS)
 # OBJS = $(SRCS:%.c=%.o)
 
 %.o : %.c $(HEADER)
@@ -84,7 +88,7 @@ OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(UTILS_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS)
 $(NAME) : $(OBJS)
 # @make -C ./mylib
 # $(CC) $(C_FLAGS) $(SRCS) -o $@ -L ./readline/lib -lreadline -lncurses
-	$(CC) $(C_FLAGS) $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4) $(SRCS5) -o $@ -lreadline -lncurses mylib/mylib.a
+	$(CC) $(C_FLAGS) $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4) $(SRCS5) $(SRCS6) -o $@ -lreadline -lncurses mylib/mylib.a
 
 all : $(NAME)
 

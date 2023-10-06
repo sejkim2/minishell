@@ -1,35 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_make_quote_string.c                          :+:      :+:    :+:   */
+/*   make_quote_string.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 19:30:04 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/09/25 20:36:16 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 13:31:26 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-static char *make_str(char *cmd_line, int start, int end)
-{
-	char *new_str;
-	int i;
-
-	new_str = malloc(sizeof(char) * (end - start + 2));
-	i = 0;
-	while (start <= end)
-	{
-		new_str[i] = cmd_line[start];
-		i++;
-		start++;
-	}
-	new_str[i] = '\0';
-	return (new_str);
-}
-*/
 
 static s_str_info *make_and_init_str_info(char *cmd_line, int start, int end)
 {
@@ -53,7 +34,6 @@ static void set_single_quote(char *cmd_line, int *start, int end, s_str_info *st
 	i = *start + 1;
 	single_close_quote(cmd_line, start, end);
 	str_info->str = ft_substr(cmd_line, i, *start - i - 1);
-	/*str_info->str = make_str(cmd_line, i, *start - 2);*/
 	str_info->str_len = ft_strlen(str_info->str);
 	str_info->str_type = SINGLE_QUOTE;
 }
@@ -65,7 +45,6 @@ static void set_double_quote(char *cmd_line, int *start, int end, s_str_info *st
 	i = *start + 1;
 	double_close_quote(cmd_line, start, end);
 	str_info->str = ft_substr(cmd_line, i, *start - i - 1);
-	/*str_info->str = make_str(cmd_line, i, *start - 2);*/
 	str_info->str_len = ft_strlen(str_info->str);
 	str_info->str_type = DOUBLE_QUOTE;
 }
@@ -77,7 +56,6 @@ static void set_normal_string(char *cmd_line, int *start, int end, s_str_info *s
 	i = *start;
 	normal_string(cmd_line, start, end);
 	str_info->str = ft_substr(cmd_line, i, *start - i);
-	/*str_info->str = make_str(cmd_line, i, *start - 1);*/
 	str_info->str_len = ft_strlen(str_info->str);
 	str_info->str_type = STRING;
 }
