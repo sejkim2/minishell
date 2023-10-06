@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/05 19:37:43 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 16:40:23 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ int main(void)
 			root = parser(list); // check_syntax_errror
 			if (root == 0)
 				continue ;
-			// free_list(list);
+			free_list(list);
 			// run_exec(root);
-			// free_tree(root);
+			free_tree(root);
 		}
 		else
 			return (shell_ctrl_d());

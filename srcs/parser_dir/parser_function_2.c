@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/05 15:57:16 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 16:39:58 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ int	parse_simple_command(t_linked_list *list, t_tree_node *parent)
 int	parse_command(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
-	int syntax_error;
+	int			syntax_error;
 
 	if (accept(list, WORD) || accept(list, REDIRECTION))
 	{
