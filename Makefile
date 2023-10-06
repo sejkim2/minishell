@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/06 16:20:48 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/10/06 20:06:53 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,8 +46,8 @@ PARSER_SRCS = parser.c \
 	parser_utils.c
 
 UTILS_SRCS = main.c	\
-	temp_file.c 
-# exec.c
+	temp_file.c \
+	exec.c
 	
 SIGNAL_SRCS = shell_signal.c \
 	terminal_option.c \

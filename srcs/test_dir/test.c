@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_list.c                                       :+:      :+:    :+:   */
+/*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 13:46:39 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 13:48:17 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 19:20:22 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void print_symbol(t_symbol symbol)
+void print_symbol(t_symbol symbol)
 {
     switch (symbol)
     {

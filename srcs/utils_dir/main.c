@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/06 16:40:23 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:10:46 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,9 @@ int main(void)
 			root = parser(list); // check_syntax_errror
 			if (root == 0)
 				continue ;
+			// tree_traverse(root, 0);
 			free_list(list);
-			// run_exec(root);
+			run_exec(root);
 			free_tree(root);
 		}
 		else

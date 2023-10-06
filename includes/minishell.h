@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 13:53:33 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 20:06:40 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,9 +210,11 @@ char *free_tree(t_tree_node *parent);
 /*test*/
 void	print_list(t_linked_list *list);
 void    tree_traverse(t_tree_node *node, int depth);
+void print_symbol(t_symbol symbol);
+
 
 /*exec*/
-// void run_exec(t_tree_node *node);
+void run_exec(t_tree_node *node);
 
 /*	built-in	*/
 char			**init_environ(char **envp);
