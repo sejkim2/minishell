@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/06 13:52:47 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/10/06 16:20:48 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,9 @@ LEXER_SRCS = lexer.c \
 	list_node_utils.c \
 	check_character_symbol_utils.c \
 	parse_pipe_or_orif_or_andif.c \
-	tokenize_utils.c \
+	parse_redirection.c \
+	parse_quote_string.c \
+	parse_word_or_branket.c \
 	make_value.c \
 	quote_utils.c \
 	make_quote_string.c
@@ -39,8 +41,9 @@ PARSER_SRCS = parser.c \
 	parser_error.c \
 	parser_function_1.c \
 	parser_function_2.c \
-	parser_tree_node.c \
-	parser_free_tree.c
+	tree_node_utils.c \
+	free_tree.c \
+	parser_utils.c
 
 UTILS_SRCS = main.c	\
 	temp_file.c 

@@ -6,38 +6,24 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 13:48:27 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 16:33:41 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_symbol	next_symbol(t_linked_list *list)
+static void reset_list_info(t_linked_list *list, t_token_node *head, int num_of_node)
 {
-	t_token_node	*node;
-	t_symbol		symbol;
-
-	node = pop_list(list);
-	symbol = node->token->symbol;
-	return (symbol);
+	list->head = head;
+	list->num_of_node = num_of_node;
 }
 
-int	accept(t_linked_list *list, t_symbol symbol)
+static t_tree_node *free_tree_and_list(t_linked_list *list, t_tree_node *root, t_token_node *head, int num_of_node)
 {
-	if (list->num_of_node == 0)
-		return (0);
-	return (list->head->token->symbol == symbol);
-}
-
-int	expect(t_linked_list *list, t_symbol symbol)
-{
-	if (!accept(list, symbol))
-	{
-		return (parse_error(list->head->token->value));
-		// return (0);
-	}
-	else
-		return (1);
+	reset_list_info(list, head, num_of_node);
+	free_list(list);
+	free_tree(root);
+	return (0);
 }
 
 t_tree_node	*parser(t_linked_list *list)
@@ -45,8 +31,8 @@ t_tree_node	*parser(t_linked_list *list)
 	t_tree_node		*root;
 	t_tree_node		*node;
 	t_token_node	*head;
-    int num_of_node;
-    int syntax_error;
+    int				num_of_node;
+    int				syntax_error;
 
 	head = list->head;
     num_of_node = list->num_of_node;
@@ -59,19 +45,12 @@ t_tree_node	*parser(t_linked_list *list)
 		addchild(root, node);
 		syntax_error = parse_list(list, node);
 	}
-    /*   pipe, and, or + cmd --> parse error */
+	/*   pipe, and, or + cmd --> parse error */
 	else
 		syntax_error = parse_error(list->head->token->value);
-    if (syntax_error == -1)
-    {
-        list->head = head;
-        list->num_of_node = num_of_node;
-        free_list(list);
-        free_tree(root);
-        return (0);
-    }
-	tree_traverse(root, 0);
-	list->head = head;
-    list->num_of_node = num_of_node;
+	if (syntax_error == -1)
+		return (free_tree_and_list(list, root, head, num_of_node));
+	tree_traverse(root, 0);		//remove
+	reset_list_info(list, head, num_of_node);
 	return (root);
 }
