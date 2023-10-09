@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 16:39:58 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/09 16:09:10 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,12 @@ int	parse_command(t_linked_list *list, t_tree_node *parent)
 		{
 			node = make_tree_node(list, REDIRECTION_LIST);
 			addchild(parent, node);
-			return (parse_redirection_list(list, node));
+			syntax_error = parse_redirection_list(list, node);
+			/*추가된 부분 -> (ls) >out1 pwd >out2*/
+			if (accept(list, WORD))
+				return (parse_error(list->head->token->value));
+			else
+				return (syntax_error);
 		}
 		return (1);
 	}

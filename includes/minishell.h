@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 20:06:40 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/09 20:00:45 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,6 +215,15 @@ void print_symbol(t_symbol symbol);
 
 /*exec*/
 void run_exec(t_tree_node *node);
+void run_list(t_tree_node *node);
+void run_pipeline(t_tree_node *node);
+void run_command(t_tree_node *node);
+// void run_subshell(t_tree_node *node);
+void run_simple_command(t_tree_node *node);
+void run_simple_command_element(t_tree_node *node);
+void run_redirection_list(t_tree_node *node, t_tree_node **read_redir, t_tree_node **write_redir);
+void run_word(t_tree_node *node);
+
 
 /*	built-in	*/
 char			**init_environ(char **envp);
