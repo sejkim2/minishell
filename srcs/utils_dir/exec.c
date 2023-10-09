@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/09 20:02:19 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/09 20:18:15 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,26 @@ void run_simple_command(t_tree_node *node)
 
 	child = node->child_list;
 	read_redir = 0;
-	write_redir = 0;	
+	write_redir = 0;
 	while (child)
 	{
 		if (child->symbol == REDIRECTION_LIST)
 			run_redirection_list(child, &read_redir, &write_redir);
-		else //child->symbol == SIMPLE_COMMAND_ELEMENT
+		child = child->next;
+	}
+	child = node->child_list;
+	printf("-------simple_command---------\n");
+	while (child)
+	{
+		if (child->symbol == SIMPLE_COMMAND_ELEMENT)
 			run_simple_command_element(child);
 		child = child->next;
 	}
-	/*print redir*/
-	// if (read_redir)
-	// 	printf("[read_redir : %s]", read_redir->token->value);
-	// if (write_redir)
-	// 	printf("[write_redir : %s]", write_redir->token->value);
-	// printf("\n");
+	if (read_redir)
+		printf("[read_redir : %s]\n", read_redir->token->value);
+	if (write_redir)
+		printf("[write_redir : %s]\n", write_redir->token->value);
+	printf("-------simple_command end---------\n");
 }
 
 // void run_subshell(t_tree_node *node)
