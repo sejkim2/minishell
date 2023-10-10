@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:32:26 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/05 15:09:30 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/10 11:52:11 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	print_export(int i, char *env_name, char *env_val, char **envp)
 		write(1, "=\"", 2);
 		while (env_val[j])
 		{
-			if (env_val[j] == '\"')
+			if (env_val[j] == '\"' || env_val[j] == '$')
 				write(1, "\\", 1);
 			write(1, &env_val[j], 1);
 			j++;
@@ -55,7 +55,7 @@ int	list_export(char **envp)
 	return (0);
 }
 
-char	**add_export(char *av, char **env)
+char	**add_export(char *str, char **env)
 {
 	int		i;
 	int		j;
@@ -72,30 +72,28 @@ char	**add_export(char *av, char **env)
 		i++;
 		j++;
 	}
-	renv[j] = av;
+	renv[j] = str;
 	renv[j + 1] = NULL;
 	return (renv);
 }
 
-int	set_export(char **argv, char **env)
+int	set_export(t_tree_node *child, char **env)
 {
 	int		error_code;
 
-	error_code = check_key_rule(argv, &env);
+	error_code = check_key_rule(child, &env);
 	list_export(env);
 	return (error_code);
 }
 
-int	main(int argc, char **argv, char **envp)
+void	builtin_export(t_tree_node *parent, char **env)
 {
-	char	**env;
+	t_tree_node	*child;
 
-	env = init_environ(envp);
-	if (argc == 1 || strcmp(argv[1], "export"))
-		return (printf("error\n"));
-	if (argc == 2)
+	child = parent->child_list;
+	if (child->num_of_child == 1)
 		list_export(env);
 	else
-		set_export(argv + 2, env);
+		set_export(child->next, env);
 	exit(0);
 }

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 14:42:03 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/27 15:49:21 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/10 10:22:43 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,34 +33,33 @@ static char	**rearrange_env(int cnt, char **env)
 		j++;
 	}
 	renv[j] = NULL;
+	free(env);
 	return (renv);
 }
 
-void	func_unset(char **argv, char **env)
+void	builtin_unset(t_tree_node *parent, char **env)
 {
-	int		i;
-	int		j;
-	int		cnt;
-	char	*env_name[2];
+	int			i;
+	int			cnt;
+	char		*env_name[2];
+	t_tree_node	*child;
 
-	i = 0;
 	cnt = cnt_line(env);
-	while (argv[i])
+	child = parent->child_list;
+	child = child->next;
+	while (child)
 	{
-		j = 0;
-		while (env[j])
+		i = 0;
+		while (env[i])
 		{
-			env_name[0] = get_envname(argv[i]);
-			env_name[1] = get_envname(env[j]);
+			env_name[0] = get_envname(child->token->value);
+			env_name[1] = get_envname(env[i]);
 			if (!strcmp(env_name[0], env_name[1]))
-			{
-				env[j] = 0;
-				break ;
-			}
-			j++;
+				env[i] = 0;
+			i++;
 		}
 		free_2str(env_name[0], env_name[1]);
-		i++;
+		child = child->next;
 	}
 	env = rearrange_env(cnt, env);
 }

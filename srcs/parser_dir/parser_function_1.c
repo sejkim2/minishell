@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:31:05 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/04 16:40:05 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 15:50:44 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,10 @@ int	parse_pipeline(t_linked_list *list, t_tree_node *parent)
 	{
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
+		/*remove*/
+		/*| or ls |*/
 		if (list->num_of_node == 0)
-			return (parse_error(0));
+			return (parse_error(node->token->value));
 		addchild(parent, node);
 		node = make_tree_node(list, PIPELINE);
 		addchild(parent, node);
@@ -48,13 +50,15 @@ int	parse_list(t_linked_list *list, t_tree_node *parent)
 	{
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
-		// if (list->num_of_node == 0)
-		// 	return (parse_error(node->token->value));
+		/*remove*/
+		if (list->num_of_node == 0)
+			return (parse_error(node->token->value));
 		addchild(parent, node);
 		symbol = list->head->token->symbol;
-		// if (symbol == PIPE || symbol == AND_IF || \
-		// symbol == OR_IF || symbol == R_BRA)
-		// 	return (parse_error(list->head->token->value));
+		/*remove*/
+		if (symbol == PIPE || symbol == AND_IF || \
+		symbol == OR_IF || symbol == R_BRA)
+			return (parse_error(list->head->token->value));
 		node = make_tree_node(list, LIST);
 		addchild(parent, node);
 		return (parse_list(list, node));
@@ -81,6 +85,10 @@ int	parse_subshell(t_linked_list *list, t_tree_node *parent)
 	node = make_tree_node(list, list->head->token->symbol);
 	next_symbol(list);
 	addchild(parent, node);
+	/*
+	ex1) (cmd1) cmd2
+	ex2) (cmd1) (cmd2)
+	*/
 	if (list->num_of_node > 0)
 	{
 		symbol = list->head->token->symbol;

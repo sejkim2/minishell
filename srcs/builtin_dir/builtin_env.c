@@ -6,13 +6,13 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:06:44 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/27 15:47:32 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/10 09:48:34 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	list_env(char **envp)
+static void	list_env(char **envp)
 {
 	int		idx;
 
@@ -22,41 +22,52 @@ static int	list_env(char **envp)
 		printf("%s\n", envp[idx]);
 		idx++;
 	}
-	return (0);
 }
 
-static int	set_env(char **argv, char **envp)
+static void	list_shv(t_tree_node *child)
 {
-	int		i;
-	int		j;
-
-	i = 0;
-	while (argv[i])
+	while (child)
 	{
-		j = 0;
-		if (argv[i][j] == '=')
+		printf("%s\n", child->token->value);
+		child = child->next;
+	}
+}
+
+static void	set_env(t_tree_node *child, char **envp)
+{
+	t_tree_node	*head;
+	int			i;
+
+	head = child;
+	while (child->token->value)
+	{
+		i = 0;
+		if (child->token->value[i] == '=')
 		{
-			printf("env: setenv %s: Invalid argument\n", argv[i]);
+			printf("env: setenv %s: Invalid argument\n", child->token->value);
 			exit(1);
 		}
-		while (argv[i][j] && argv[i][j] != '=')
-			j++;
-		if (argv[i][j] == '\0')
+		while (child->token->value[i] && child->token->value[i] != '=')
+			i++;
+		if (child->token->value[i] == '\0')
 		{
-			printf("env: %s: No such file or directory\n", argv[i]);
+			printf("env: %s: No such file or directory\n", child->token->value);
 			exit(127);
 		}
-		i++;
+		child = child->next;
 	}
-	return (list_env(envp), list_env(argv));
+	list_env(envp);
+	list_shv(head);
 }
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	if (argc == 1 || strcmp(argv[1], "env"))
-// 		return (printf("error\n"));
-// 	if (argc == 2)
-// 		return (list_env(envp));
-// 	else
-// 		return (set_env(argv + 2, envp));
-// }
+void	builtin_env(t_tree_node *parent, char **env)
+{
+	t_tree_node	*child;
+
+	child = parent->child_list;
+	if (child->num_of_child == 1)
+		list_env(env);
+	else
+		set_env(child->next, env);
+	exit(0);
+}

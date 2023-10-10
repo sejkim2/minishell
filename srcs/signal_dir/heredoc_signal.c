@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:55:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/04 16:23:46 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/10 13:40:34 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 static void	heredoc_ctrl_c(int signum)
 {
 	(void)signum;
-	printf("\n");
 	exit(1);
 }
 
@@ -37,7 +36,6 @@ void	set_fork_heredoc_signal(void)
 void	set_heredoc_signal(void)
 // 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
 {
-	set_terminal_print_off();
 	signal(SIGINT, SIG_IGN);
 	signal(SIGQUIT, SIG_IGN);
 }

@@ -1,36 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_tokenize.c                                   :+:      :+:    :+:   */
+/*   tokenize.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 17:09:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/04 17:19:15 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/06 13:34:52 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// < in1
-//1. redir	: redir(<, <<, >, >>) + remove_white_space() + word
-//2. pipe	: pipe(|)
-//3. and_if : and_if(&&)
-//4. or_if	: or_if(||)
-//5. equal	: equal(=)
-//6. l_bra	: l_bra(()
-//7. r_bra	: r_bra())
-//8. word : case1 : single_quote or double_quote
-//			case2 : other
-
-/*
-	<
-	<""
-	구별
-*/
-
-// <<here + (redir, pipe, andif, orif, lbra, rbra, whitespace)
-static	int	parse_redirection__(char *cmd_line, int cur_index, int *end, t_token *token)
+static	int	parse_redirection__(char *cmd_line, int cur_index, \
+int *end, t_token *token)
 {
 	(*end)++;
 	token->redir_type = SINGLE_REDIR;
@@ -47,7 +30,7 @@ static	int	parse_redirection__(char *cmd_line, int cur_index, int *end, t_token 
 	{
 		if (cmd_line[*end + 1] && cmd_line[*end + 1] == '<')
 			return (print_unexpected_token_syntax_error("<<", 0));
-		else	
+		else
 			return (print_unexpected_token_syntax_error("<", '\0'));
 	}
 	if (cmd_line[cur_index] == cmd_line[cur_index + 1])
@@ -70,7 +53,8 @@ t_token_node	*tokenize(char *cmd_line, int *index)
 	if (cmd_line[*index] == '<' || cmd_line[*index] == '>')
 		syntax_error = parse_redirection__(cmd_line, *index, &end, token);
 	else if (cmd_line[*index] == '|' || cmd_line[*index] == '&')
-		syntax_error = parse_pipe_or_orif_or_andif(cmd_line, cmd_line[*index], &end, token);
+		syntax_error = parse_pipe_or_orif_or_andif(cmd_line, \
+	cmd_line[*index], &end, token);
 	else if (cmd_line[*index] == '(' || cmd_line[*index] == ')')
 		syntax_error = parse_branket(cmd_line[*index], &end, token);
 	else

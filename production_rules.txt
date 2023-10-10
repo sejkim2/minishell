@@ -12,8 +12,7 @@
 <LIST> ::= <LIST>'&&'<LIST> | <LIST>'||'<LIST> | <PIPELINE>
 <SUBSHELL> ::= '('<LIST>')'
 
-<WORD_LIST> ::= <WORD> | <WORD_LIST><WORD>
-<SIMPLE_COMMAND_ELEMENT> ::= <WORD> | <ASSIGNMENT_WORD> | <REDIRECTION>
-
-(hi))(
-(hi))(
+parse error
+&&&
+(ls) >out1 pwd >out2
+(())

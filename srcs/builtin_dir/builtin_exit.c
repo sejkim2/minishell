@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:13:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/04 19:58:59 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/10 15:41:06 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,27 +73,41 @@ static unsigned char	ft_atol(char *str, int *flag)
 	return (n * s);
 }
 
-int	builtin_exit(int argc, char **argv, char **envp)
+static void	exit_fork(void)
 {
+	pid_t	child;
+
+	child = fork();
+	if (child == 0)
+		exit(1);
+	else
+		if (wait(0) == -1)
+			exit(1);
+}
+
+void	builtin_exit(t_tree_node *parent, char **env)
+{
+	t_tree_node		*child;
 	unsigned char	error_code;
 	int				flag;
 
-	// change_env(argv, envp);
-	if (argc == 2)
-	{
-		printf("exit\n");
+	child = parent->child_list;
+	printf("exit\n");
+	if (child->num_of_child == 1)
 		exit(0);
-	}
-	error_code = ft_atol(argv[2], &flag);
-	if (argc >= 3)
+	error_code = ft_atol(child->next->token->value, &flag);
+	if (child->num_of_child >= 2)
 	{
-		printf("exit\n");
 		if (flag == 1)
-			printf("minishell: exit: %s: numeric argument required\n", argv[2]);
-		else if (argc > 3 && flag == 0)
+		{
+			printf("minishell: exit: %s: numeric argument required\n", \
+			child->next->token->value);
+			exit(255);
+		}
+		else if (child->num_of_child > 2 && flag == 0)
 		{
 			printf("minishell: exit: too many arguments\n");
-			error_code = 1;
+			return (exit_fork());
 		}
 	}
 	exit(error_code);

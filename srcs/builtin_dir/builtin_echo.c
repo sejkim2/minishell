@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:36:27 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/27 15:39:15 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/10 09:44:42 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 	-n 옵션은 줄바꿈을 붙이지 않음. 따라서 프롬프트가 출력문에 바로 붙어서 들어오게 됨. 
 */
 
-static void	echo_no_opt_print(int argc, char **argv)
+static void	echo_no_opt_print(int argc, t_tree_node *child)
 {
 	int		idx;
 
-	if (!*argv)
+	if (argc == 0)
 	{
 		printf("\n");
 		return ;
@@ -30,78 +30,84 @@ static void	echo_no_opt_print(int argc, char **argv)
 	idx = 0;
 	while (idx < argc)
 	{
-		printf("%s", argv[idx]);
+		printf("%s", child->token->value);
 		if (idx < argc - 1)
 			printf(" ");
 		idx++;
+		child = child->next;
 	}
 	printf("\n");
 	return ;
 }
 
-static void	echo_opt_print(int argc, char **argv)
+static void	echo_opt_print(int argc, t_tree_node *child)
 {
 	int		idx;
 
 	idx = 0;
 	while (idx < argc)
 	{
-		printf("%s", argv[idx]);
+		printf("%s", child->token->value);
 		if (idx < argc - 1)
 			printf(" ");
 		idx++;
+		child = child->next;
 	}
 	return ;
 }
 
-static int	echo_opt_flag(char *argv)
+static int	echo_opt_flag(char *str)
 {
 	int		idx;
 
 	idx = 1;
-	while (argv[idx] && argv[idx] == 'n')
+	if (str[idx] == '\0')
+		return (0);
+	while (str[idx] && str[idx] == 'n')
 		idx++;
-	if (argv[idx] != '\0')
+	if (str[idx] != '\0')
 		return (0);
 	return (1);
 }
 
-static void	echo_opt(int argc, char **argv)
+static void	echo_opt(int argc, t_tree_node *child)
 {
 	int		i;
 	int		j;
 
-	if (echo_opt_flag(*argv))
+	i = 0;
+	if (echo_opt_flag(child->token->value))
 	{
-		i = 0;
-		while (argv[i] && *argv[i] == '-')
+		while (child->token->value[0] == '-')
 		{
 			j = 1;
-			if (!argv[i][j])
+			if (!child->token->value[j])
 				break ;
-			while (argv[i][j])
+			while (child->token->value[j])
 			{
-				if (argv[i][j] == 'n')
+				if (child->token->value[j] == 'n')
 					j++;
 				else
-					return (echo_opt_print(argc - i, argv + i));
+					return (echo_opt_print(argc - i, child));
 			}
+			child = child->next;
 			i++;
 		}
-		return (echo_opt_print(argc - i, argv + i));
+		return (echo_opt_print(argc - i, child));
 	}
 	else
-		return (echo_no_opt_print(argc, argv));
+		return (echo_no_opt_print(argc, child));
 }
 
-// int	main(int argc, char **argv, char **envp)
-// {
-// 	if (argc < 2 || strcmp(argv[1], "echo"))
-// 		return (printf("error\n"));
-// 	argv = change_env(argv, envp);
-// 	if (!argv[2] || argv[2][0] != '-' || !argv[2][1])
-// 		echo_no_opt_print(argc - 2, argv + 2);
-// 	else
-// 		echo_opt(argc - 2, argv + 2);
-// 	exit(0);
-// }
+void	builtin_echo(t_tree_node *parent, char **env)
+{
+	t_tree_node	*child;
+
+	child = parent->child_list;
+	child = child->next;
+	if (!child->next || child->token->value[0] != '-')
+		echo_no_opt_print(child->num_of_child - 1, child->next);
+	else
+		echo_opt(child->num_of_child - 1, child->next);
+	exit(0);
+}

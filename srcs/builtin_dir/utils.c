@@ -1,23 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser_error.c                                     :+:      :+:    :+:   */
+/*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 13:32:50 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 14:31:52 by sejkim2          ###   ########.fr       */
+/*   Created: 2023/10/05 16:58:29 by jaehyji           #+#    #+#             */
+/*   Updated: 2023/10/05 16:59:39 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	parse_error(char *error_string)
+void	free_2str(char *s1, char *s2)
 {
-	if (error_string == 0)
-		printf("minishell: parse error near unexpected token `newline\'\n");
-	else
-		printf("minishell: parse error near unexpected token `%s\'\n", \
-		error_string);
-	return (-1);
+	if (s1)
+		free(s1);
+	if (s2)
+		free(s2);
+}
+
+void	free_4str(char *s1, char *s2, char *s3, char *s4)
+{
+	if (s1)
+		free(s1);
+	if (s2)
+		free(s2);
+	if (s3)
+		free(s3);
+	if (s4)
+		free(s4);
 }
