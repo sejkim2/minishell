@@ -6,27 +6,11 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/10 16:09:02 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/10 17:53:23 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static	void	redirection(t_node *node, int read_dest_fd, int write_dest_fd)
-{
-	int	res1;
-	int	res2;
-
-	res1 = dup2(read_dest_fd, STDIN_FILENO);
-	close(read_dest_fd);
-	res2 = dup2(write_dest_fd, STDOUT_FILENO);
-	close(write_dest_fd);
-	if (res1 < 0 || res2 < 0)
-	{
-		printf("dup error\n");
-		exit(1);
-	}
-}
 
 void run_word(t_tree_node *node)
 {

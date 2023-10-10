@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/10 15:37:28 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/10 18:21:58 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ typedef struct s_tree_node
 int	main(void);
 
 /*lexer*/
-t_linked_list *lexer(char *cmd_line);
+t_linked_list   *lexer(char *cmd_line);
 
 /*list*/
 t_linked_list	*make_list();
@@ -153,13 +153,10 @@ int check_is_close_quote(char *cmd_line, int index, char quote);
 /* blocking signal */
 void			set_blocking_signal(void);
 void			check_blocking_signal(void);
-void			blocking_ctrl_c(int signum);
-void			blocking_ctrl_backslash(int signum);
 
 /* heredoc signal */
 void			set_heredoc_signal(void);
 void			check_heredoc_signal(int *cursor);
-void			heredoc_ctrl_c(int signum);
 
 /* terminal option */
 struct termios	terminal_option(void);
@@ -178,11 +175,16 @@ char *free_token_node(t_token_node *node);
 char *free_token(t_token *token);
 
 /*signal*/
+void	set_blocking_signal(void);
+void	set_fork_heredoc_signal(void);
+void	set_heredoc_signal(void);
 void	set_shell_signal(void);
 void	ctrl_c(int signum);
-int		shell_ctrl_d(void);
-void	set_terminal_print_off(void);
+int     shell_ctrl_d(void);
+struct termios	terminal_option(void);
+void	set_origin_signal(void);
 void	set_terminal_print_on(void);
+void	set_terminal_print_off(void);
 
 /*parser*/
 t_tree_node *parser(t_linked_list *list);
@@ -225,29 +227,40 @@ void run_simple_command_element(t_tree_node *node);
 void run_redirection_list(t_tree_node *node, t_tree_node **read_redir, t_tree_node **write_redir);
 void run_word(t_tree_node *node);
 
+/*entry*/
+char	*generate_temp_filename(char *mode);
+void	here_document(void);
+void	working_history(void);
+void	filecpy(int in_fd, int out_fd);
+
+/*wild_card*/
+int	wild_card(char *input, char *file);
+
 /*	built-in	*/
-char			**init_environ(char **envp);
-char			**change_env(char **av, char **env);
-char			**rearrange_env(int cnt, char **env);
-int				list_env(char **envp);
-char			*skip_space_get_sign(char *str, int *sign);
-void			init_val(t_ull *n, int *sign, int *cnt, int *flag);
-unsigned char	ft_atol(char *str, int *flag);
-int				list_export(char **envp);
-int				set_env2(char **argv, char **env);
-void			func_unset(char **argv, char **env);
-void			free_2str(char *s1, char *s2);
-void			make_strings(int i, int j, char **av, char **str);
-void			matrix_cpy(char **src, char **dst);
-void			sort_ascii(char **envp, int cnt);
-int				cnt_line(char **str_arr);
-char			*get_envname(char *av);
-char			*get_envval(char *env_name, char **env);
-int				check_key_string(char *av);
-char			**add_env(char *av, char **env);
-char			**check_equation(char *av, char **env);
-int				check_dup(char *av, char *env_name, char **env);
-int				check_key_rule(char **av, char ***env);
-int				is_equal(char *str);
+void	builtin_cd(t_tree_node *parent, char **env);
+void	builtin_echo(t_tree_node *parent, char **env);
+void	builtin_env(t_tree_node *parent, char **env);
+void	builtin_exit(t_tree_node *parent, char **env);
+int	list_export(char **envp);
+char	**add_export(char *str, char **env);
+int	set_export(t_tree_node *child, char **env);
+void	builtin_export(t_tree_node *parent, char **env);
+void	builtin_pwd(char **env);
+void	builtin_unset(t_tree_node *parent, char **env);
+void	change_env(t_tree_node *parent, char **env);
+int	check_key_rule(t_tree_node *child, char ***env);
+int	check_key_string(char *str);
+int	is_equal(char *str);
+char	**check_equation(char *str, char **env);
+int	check_dup(char *str, char *env_name, char **env);
+char	**init_environ(char **envp);
+char	*get_envname(char *av);
+char	*get_envval(char *env_name, char **env);
+void	make_strings(int *i, char **string, char **str);
+void	matrix_cpy(char **src, char **dst);
+void	sort_ascii(char **envp, int cnt);
+int	cnt_line(char **str_arr);
+void	free_2str(char *s1, char *s2);
+void	free_4str(char *s1, char *s2, char *s3, char *s4);
 
 #endif
