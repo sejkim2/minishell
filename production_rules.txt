@@ -12,5 +12,7 @@
 <LIST> ::= <LIST>'&&'<LIST> | <LIST>'||'<LIST> | <PIPELINE>
 <SUBSHELL> ::= '('<LIST>')'
 
+parse error
 &&&
 (ls) >out1 pwd >out2
+(())

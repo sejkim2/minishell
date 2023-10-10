@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/09 20:00:45 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/10 15:37:28 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,16 +155,17 @@ void			set_blocking_signal(void);
 void			check_blocking_signal(void);
 void			blocking_ctrl_c(int signum);
 void			blocking_ctrl_backslash(int signum);
+
 /* heredoc signal */
 void			set_heredoc_signal(void);
 void			check_heredoc_signal(int *cursor);
 void			heredoc_ctrl_c(int signum);
+
 /* terminal option */
 struct termios	terminal_option(void);
 void			set_origin_signal(void);
 void			set_terminal_print_off(void);
 void			set_terminal_print_on(void);
-
 
 /*error*/
 void malloc_error();
@@ -212,18 +213,17 @@ void	print_list(t_linked_list *list);
 void    tree_traverse(t_tree_node *node, int depth);
 void print_symbol(t_symbol symbol);
 
-
 /*exec*/
 void run_exec(t_tree_node *node);
 void run_list(t_tree_node *node);
 void run_pipeline(t_tree_node *node);
 void run_command(t_tree_node *node);
+
 // void run_subshell(t_tree_node *node);
 void run_simple_command(t_tree_node *node);
 void run_simple_command_element(t_tree_node *node);
 void run_redirection_list(t_tree_node *node, t_tree_node **read_redir, t_tree_node **write_redir);
 void run_word(t_tree_node *node);
-
 
 /*	built-in	*/
 char			**init_environ(char **envp);
