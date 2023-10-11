@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:06:44 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/10 09:48:34 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/11 11:32:02 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static void	list_shv(t_tree_node *child)
 {
 	while (child)
 	{
-		printf("%s\n", child->token->value);
+		if (ft_strchr(child->token->value, '='))
+			printf("%s\n", child->token->value);
 		child = child->next;
 	}
 }
