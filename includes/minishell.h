@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/10 18:21:58 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/11 14:25:34 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,12 @@ typedef struct s_tree_node
     struct s_tree_node *next;
     struct s_tree_node *child_list;
 }   t_tree_node;
+
+typedef struct s_fd
+{
+	int	iput[2];
+	int	oput[2];
+}	t_fd;
 
 /*main*/
 int	main(void);
@@ -262,5 +268,8 @@ void	sort_ascii(char **envp, int cnt);
 int	cnt_line(char **str_arr);
 void	free_2str(char *s1, char *s2);
 void	free_4str(char *s1, char *s2, char *s3, char *s4);
+
+/*	pipe	*/
+t_fd	init_fd_struct(void);
 
 #endif
