@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/11 14:21:04 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/11 14:22:00 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,59 +24,6 @@ void run_command(t_tree_node *node, t_fd *p_fd)
 		run_simple_command(child); // simple command에서 elements를 조합
 	else //SUBSHELL
 		run_list();
-}
-
-void run_pipeline(t_tree_node *node, t_fd *p_fd)
-{
-	t_tree_node *child;
-	pid_t	c_pro;
-
-	child = node->child_list; //COMMAND
-	if (child->num_of_child > 1)
-	{
-		pipe(p_fd->iput[2]);
-		pipe(p_fd->oput[2]);
-	}
-	while ()//next가 null로 도달할 때 까지 단, pipe는 넘김)
-	{
-		c_pro = fork();
-		if (c_pro)
-			run_command(child, p_fd);
-		else
-			child = child->next;
-	}
-}
-
-// void run_subshell(t_tree_node *node)
-// {
-// 	t_tree_node *child;
-
-// 	child = node->child_list;
-// 	run_list(child->next); //first child is '('
-
-// }
-
-void run_command(t_tree_node *node, t_fd *p_fd)
-{
-	t_tree_node *child;
-	t_tree_node *redirection_list;
-
-	child = node->child_list;
-	else if (child->symbol == SIMPLE_COMMAND)
-		run_simple_command(child); // simple command에서 elements를 조합
-	else //SUBSHELL
-		run_list();
-	// check redirection list
-	// 	if (child->num_of_child > 1)	//subshell + redirection list
-	// 	{
-	// 		redirection_list = child->child_list->next;
-	// 		while (redirection_list)
-	// 		{
-				
-	// 		}
-	// 	}
-	// 	run_subshell(child);
-	// }
 }
 
 void run_pipeline(t_tree_node *node, t_fd *p_fd)
