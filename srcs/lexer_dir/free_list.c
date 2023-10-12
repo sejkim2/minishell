@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:55:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 13:35:27 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/12 12:45:47 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ char	*free_token(t_token *token)
 {
 	if (token->value)
 		free(token->value);
+	if (token->file_name)
+		free(token->file_name);
 	if (token->str_info)
 		free_str_info(token->str_info);
 	free(token);

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/10 18:21:58 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/12 18:49:31 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ typedef struct s_token
 {
     t_symbol symbol;
     t_redir redir_type;
+    char *file_name;
     char *value;
     s_str_info *str_info;
 }   t_token;
@@ -168,6 +169,7 @@ void			set_terminal_print_on(void);
 void malloc_error();
 int	print_unexpected_token_syntax_error(char *error_string, char error_ch);
 int print_unmatched_parentheses_syntax_error(void);
+int print_arithmetic_expansion_syntax_error(void);
 
 /*free*/
 char *free_list(t_linked_list *list);

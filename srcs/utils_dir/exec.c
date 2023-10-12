@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/10 17:53:23 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/12 19:02:07 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,37 @@ void run_word(t_tree_node *node)
 	printf("exec %s\n", node->token->value);
 }
 
+static void print_redir(t_tree_node *read_redir, t_tree_node *write_redir)
+{
+	if (read_redir)
+		printf("[read_redir :%s]\n", read_redir->token->file_name);
+	else
+		printf("[no read redir]\n");
+	if (write_redir)
+		printf("[write_redir :%s]\n", write_redir->token->file_name);
+	else
+		printf("[no write redir]\n");
+}
+
+static char *set_redir_file_name(t_tree_node *node)
+{
+	char *file_name;
+	char *remove_str;
+	int i;
+
+	i = 0;
+	file_name = ft_strdup("");
+	while (node->token->str_info[i].str_type != NUL)
+	{
+		remove_str = file_name;
+		file_name = ft_strjoin(file_name, node->token->str_info[i].str);
+		free(remove_str);
+		i++;
+	}
+	node->token->file_name = file_name;
+	return (file_name);
+}
+
 void run_redirection_list(t_tree_node *node, t_tree_node **read_redir, t_tree_node **write_redir)
 {
 	t_tree_node *child;
@@ -25,6 +56,7 @@ void run_redirection_list(t_tree_node *node, t_tree_node **read_redir, t_tree_no
 	while (child)
 	{
 		//redirection
+		set_redir_file_name(child);
 		if (child->token->redir_type == SINGLE_REDIR)
 		{
 			if (child->token->value[0] == '<')	//read_redir
@@ -64,50 +96,49 @@ void run_simple_command(t_tree_node *node)
 		child = child->next;
 	}
 	child = node->child_list;
-	printf("-------simple_command---------\n");
 	while (child)
 	{
 		if (child->symbol == SIMPLE_COMMAND_ELEMENT)
 			run_simple_command_element(child);
 		child = child->next;
 	}
-	if (read_redir)
-		printf("[read_redir : %s]\n", read_redir->token->value);
-	if (write_redir)
-		printf("[write_redir : %s]\n", write_redir->token->value);
-	printf("-------simple_command end---------\n");
+	print_redir(read_redir, write_redir);
 }
 
-// void run_subshell(t_tree_node *node)
-// {
-// 	t_tree_node *child;
+void run_subshell(t_tree_node *node)
+{
+	t_tree_node *child;
 
-// 	child = node->child_list;
-// 	run_list(child->next); //first child is '('
+	child = node->child_list;
+	run_list(child->next); //first child is '('
+}
 
-// }
 
 void run_command(t_tree_node *node)
 {
 	t_tree_node *child;
 	t_tree_node *redirection_list;
+	t_tree_node *read_redir;
+	t_tree_node *write_redir;
 
 	child = node->child_list;
+	read_redir = 0;
+	write_redir = 0;
 	if (child->symbol == SIMPLE_COMMAND)
 		run_simple_command(child);
-	// else //node->child_list->symbol == SUBSHELL
-	// {
-	// 	// check redirection list
-	// 	if (child->num_of_child > 1)	//subshell + redirection list
-	// 	{
-	// 		redirection_list = child->child_list->next;
-	// 		while (redirection_list)
-	// 		{
-				
-	// 		}
-	// 	}
-	// 	run_subshell(child);
-	// }
+	else //node->child_list->symbol == SUBSHELL
+	{
+		// check redirection list
+		if (node->num_of_child > 1)	//subshell + redirection list
+		{
+			redirection_list = child->next;
+			run_redirection_list(redirection_list, &read_redir, &write_redir);
+		}
+		printf("------------after subshell------------------\n");
+		run_subshell(child);
+		print_redir(read_redir, write_redir);
+		printf("------------before subshell------------------\n");
+	}
 }
 
 void run_pipeline(t_tree_node *node)
@@ -122,7 +153,9 @@ void run_pipeline(t_tree_node *node)
 		pipe(read_pipe);
 		pipe(write_pipe);
 	}
+	printf("------------after pipe line------------------\n");
 	run_command(child);
+	printf("------------before pipe line-----------------\n");
 	/*	pipeline -> pipeline | command	*/
 	if (node->num_of_child > 1)
 		//child->next : symbol is pipe
@@ -135,6 +168,7 @@ void run_list(t_tree_node *node)
 
 	child = node->child_list;
 	run_pipeline(child);
+
 }
 
 void	run_exec(t_tree_node *root)

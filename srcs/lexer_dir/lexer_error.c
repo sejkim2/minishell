@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:47:00 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 14:30:35 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/12 18:50:54 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,12 @@ int	print_unexpected_token_syntax_error(char *error_string, char error_ch)
 int	print_unmatched_parentheses_syntax_error(void)
 {
 	printf("minishell: syntax error unmatched parentheses\n");
+	return (-1);
+}
+
+int print_arithmetic_expansion_syntax_error(void)
+{
+	printf("minishell: syntax error arithmetic expansion\n");
 	return (-1);
 }
 
