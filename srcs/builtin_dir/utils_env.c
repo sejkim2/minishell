@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/10 08:25:50 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/12 16:38:05 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,13 @@
 char	**init_environ(char **envp)
 {
 	int		cnt;
-	char	**environ;
+	char	**env;
 
 	cnt = cnt_line(envp);
-	environ = (char **)malloc(sizeof(char *) * (cnt + 1));
-	environ[cnt] = 0;
-	matrix_cpy(envp, environ);
-	return (environ);
+	env = (char **)malloc(sizeof(char *) * (cnt + 1));
+	env[cnt] = 0;
+	matrix_cpy(envp, env);
+	return (env);
 }
 
 char	*get_envname(char *av)

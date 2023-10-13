@@ -5,19 +5,51 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/11 11:43:32 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/11 14:24:48 by jaehyji          ###   ########.fr       */
+/*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
+/*   Updated: 2023/10/12 16:36:39 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_fd	init_fd_struct(void)
+static	char	**find_path_in_envp_and_split(char **envp)
 {
-	t_fd	ret;
+	int		i;
+	int		flag;
+	char	*p;
 
-	ret.iput[0] = 0;
-	ret.iput[1] = 0;
-	ret.oput[0] = 0;
-	ret.oput[1] = 0;
+	i = 0;
+	flag = 0;
+	while (envp[i])
+	{
+		p = ft_strnstr(envp[i], "PATH=", 5);
+		if (p != 0)
+		{
+			flag = 1;
+			break ;
+		}
+		else
+			i++;
+	}
+	if (flag == 0)
+		return (0);
+	return (ft_split(p + 5, ':'));
+}
+
+char	*get_path(char *exe);
+{
+	char	**path;
+	char *res;
+
+	path = find_path_in_envp_and_split(environ);
+	if (path == 0)
+	{
+		ft_printf("$PATH is not exist\n");
+		exit(1);
+	}
+	res = 0;
+	res = init_path_env(argv[1], path);
+	if (res)
+		printf("%s", res);
+	return (0);
 }

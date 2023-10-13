@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:28:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/10 14:47:11 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 17:36:04 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,13 @@
 	Done.
 */
 
-void	builtin_cd(t_tree_node *parent, char **env)
+void	builtin_cd(char **cmd_argv, char **env)
 {
-	char		buff[PATH_MAX];
-	t_tree_node	*child;
+	char	buff[PATH_MAX];
+	int		cmd_argc;
 
-	child = parent->child_list;
-	child = child->next;
-	if (child->num_of_child == 1)
+	cmd_argc = cnt_line(cmd_argv);
+	if (!cmd_argc)
 	{
 		if (chdir(get_envval("HOME", env)) == -1)
 		{
@@ -37,10 +36,10 @@ void	builtin_cd(t_tree_node *parent, char **env)
 	}
 	else
 	{
-		if (chdir(child->token->value) == -1)
+		if (chdir(*cmd_argv) == -1)
 		{
-			printf("minishell: cd: %s: No such file or directory\n", \
-			child->token->value);
+			printf("minishell: cd: %s: %s\n", \
+			*cmd_argv, strerror(errno));
 			exit(1);
 		}
 	}

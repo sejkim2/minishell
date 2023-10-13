@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:36:27 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/10 09:44:42 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 17:19:15 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,36 @@
 	-n 옵션은 줄바꿈을 붙이지 않음. 따라서 프롬프트가 출력문에 바로 붙어서 들어오게 됨. 
 */
 
-static void	echo_no_opt_print(int argc, t_tree_node *child)
+static void	echo_no_opt_print(int cmd_argc, char **cmd_argv)
 {
 	int		idx;
 
-	if (argc == 0)
+	if (cmd_argc == 0)
 	{
 		printf("\n");
 		return ;
 	}
 	idx = 0;
-	while (idx < argc)
+	while (idx < cmd_argc)
 	{
-		printf("%s", child->token->value);
-		if (idx < argc - 1)
+		printf("%s", cmd_argv[idx]);
+		if (idx < cmd_argc - 1)
 			printf(" ");
 		idx++;
-		child = child->next;
 	}
 	printf("\n");
 	return ;
 }
 
-static void	echo_opt_print(int argc, t_tree_node *child)
+static void	echo_opt_print(int cmd_argc, t_tree_node *child)
 {
 	int		idx;
 
 	idx = 0;
-	while (idx < argc)
+	while (idx < cmd_argc)
 	{
 		printf("%s", child->token->value);
-		if (idx < argc - 1)
+		if (idx < cmd_argc - 1)
 			printf(" ");
 		idx++;
 		child = child->next;
@@ -61,8 +60,6 @@ static int	echo_opt_flag(char *str)
 	int		idx;
 
 	idx = 1;
-	if (str[idx] == '\0')
-		return (0);
 	while (str[idx] && str[idx] == 'n')
 		idx++;
 	if (str[idx] != '\0')
@@ -70,44 +67,42 @@ static int	echo_opt_flag(char *str)
 	return (1);
 }
 
-static void	echo_opt(int argc, t_tree_node *child)
+static void	echo_opt(int cmd_argc, char **cmd_argv)
 {
 	int		i;
 	int		j;
 
-	i = 0;
-	if (echo_opt_flag(child->token->value))
+	if (echo_opt_flag(*cmd_argv)) // 첫 인자에서 일단, opt가 적용되는지를 확인.
 	{
-		while (child->token->value[0] == '-')
+		i = 1;
+		while (cmd_argv[i][0] == '-')
 		{
 			j = 1;
-			if (!child->token->value[j])
+			if (!cmd_argv[i][j])
 				break ;
-			while (child->token->value[j])
+			while (cmd_argv[i][j])
 			{
-				if (child->token->value[j] == 'n')
+				if (cmd_argv[i][j] == 'n')
 					j++;
 				else
-					return (echo_opt_print(argc - i, child));
+					return (echo_opt_print(cmd_argc - i, cmd_argv + i));
 			}
-			child = child->next;
 			i++;
 		}
-		return (echo_opt_print(argc - i, child));
+		return (echo_opt_print(cmd_argc - i, cmd_argv + i));
 	}
 	else
-		return (echo_no_opt_print(argc, child));
+		return (echo_no_opt_print(cmd_argc, cmd_argv));
 }
 
-void	builtin_echo(t_tree_node *parent, char **env)
+void	builtin_echo(char **cmd_argv, char **env)
 {
-	t_tree_node	*child;
+	int		cmd_argc;
 
-	child = parent->child_list;
-	child = child->next;
-	if (!child->next || child->token->value[0] != '-')
-		echo_no_opt_print(child->num_of_child - 1, child->next);
+	cmd_argc = cnt_line(cmd_argv);
+	if (!cmd_argc || *cmd_argv[0] != '-' || !*cmd_argv[1]) //인자가 없거나, 첫 인자가 '-'로 시작하지 않거나, 첫 인자가 '-'이기만 하다면 no opt
+		echo_no_opt_print(cmd_argc, cmd_argv);
 	else
-		echo_opt(child->num_of_child - 1, child->next);
+		echo_opt(cmd_argc, cmd_argv);
 	exit(0);
 }

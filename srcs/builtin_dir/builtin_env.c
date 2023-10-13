@@ -6,69 +6,72 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:06:44 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/11 14:22:54 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 17:36:14 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	list_env(char **envp)
+static void	list_env(char **env)
 {
 	int		idx;
 
 	idx = 0;
-	while (envp[idx])
+	while (env[idx])
 	{
-		printf("%s\n", envp[idx]);
+		printf("%s\n", env[idx]);
 		idx++;
 	}
 }
 
-static void	list_shv(t_tree_node *child)
+static void	list_shv(char **cmd_argv)
 {
-	while (child)
+	int		idx;
+
+	idx = 0;
+	while (cmd_argv[idx])
 	{
-		if (ft_strchr(child->token->value, '='))
-			printf("%s\n", child->token->value);
-		child = child->next;
+		if (ft_strchr(cmd_argv[idx], '='))
+			printf("%s\n", cmd_argv[idx]);
+		idx++;
 	}
 }
 
-static void	set_env(t_tree_node *child, char **envp)
+static void	set_env(char **cmd_argv, char **env)
 {
-	t_tree_node	*head;
-	int			i;
+	int		i;
+	int		j;
 
-	head = child;
-	while (child->token->value)
+	i = 0;
+	while (cmd_argv[i])
 	{
-		i = 0;
-		if (child->token->value[i] == '=')
+		j = 0;
+		if (cmd_argv[i][j] == '=')
 		{
-			printf("env: setenv %s: Invalid argument\n", child->token->value);
+			printf("env: setenv %s: Invalid argument\n", cmd_argv[i]);
 			exit(1);
 		}
-		while (child->token->value[i] && child->token->value[i] != '=')
-			i++;
-		if (child->token->value[i] == '\0')
+		while (cmd_argv[i][j] && cmd_argv[i][j] != '=')
+			j++;
+		if (cmd_argv[i][j] == '\0')
 		{
-			printf("env: %s: No such file or directory\n", child->token->value);
+			printf("env: %s: No such file or directory\n", cmd_argv[i]);
 			exit(127);
 		}
-		child = child->next;
+		i++;
 	}
-	list_env(envp);
-	list_shv(head);
+	list_env(env);
+	list_shv(cmd_argv);
 }
 
-void	builtin_env(t_tree_node *parent, char **env)
+void	builtin_env(char **cmd_argv, char **env)
 {
-	t_tree_node	*child;
+	int		cmd_argc;
 
-	child = parent->child_list;
-	if (child->num_of_child == 1)
+	cmd_argc = cnt_line(cmd_argv);
+	if (!cmd_argc)
 		list_env(env);
 	else
-		set_env(child->next, env);
+		set_env(cmd_argv, env);
 	exit(0);
 }

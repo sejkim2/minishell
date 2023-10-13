@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/10 18:10:42 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/13 18:43:20 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 static void print_banner(void)
 {
@@ -38,9 +37,11 @@ int main(void)
 	char *line;
 	t_linked_list *list;
 	t_tree_node *root;
+	char	**env;
 
 	while (1)
 	{
+		env = init_environ(environ);
 		set_shell_signal();
 		line = readline("minishell$ ");
 		if (line)
@@ -60,7 +61,7 @@ int main(void)
 				continue ;
 			tree_traverse(root, 0);
 			// free_list(list);
-			run_exec(root);
+			run_root(root, env);
 			// free_tree(root);
 		}
 		else
