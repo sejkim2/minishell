@@ -6,16 +6,16 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/12 18:48:51 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/13 17:21:49 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int check_arithmetic_expansion(t_linked_list *list)
+static	int	check_arithmetic_expansion(t_linked_list *list)
 {
-	int flag;
-	t_token_node *cur;
+	int				flag;
+	t_token_node	*cur;
 
 	flag = 0;
 	cur = list->head;

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/10 14:17:05 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/13 17:22:59 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ int	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 	{
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
+		addchild(parent, node);
 		/*
 		ex) cmd (cmd2)
 		*/
@@ -30,7 +31,6 @@ int	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 			if (symbol == L_BRA)
 				return (parse_error(list->head->next->token->value));
 		}
-		addchild(parent, node);
 		return (1);
 	}
 	else

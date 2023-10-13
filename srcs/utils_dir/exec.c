@@ -6,18 +6,18 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 12:33:20 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/13 18:48:26 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void run_word(t_tree_node *node)
+void	run_word(t_tree_node *node)
 {
 	printf("exec %s\n", node->token->value);
 }
 
-static void print_redir(t_tree_node *read_redir, t_tree_node *write_redir)
+static	void	print_redir(t_tree_node *read_redir, t_tree_node *write_redir)
 {
 	if (read_redir)
 		printf("[read_redir :%s]\n", read_redir->token->file_name);
@@ -29,7 +29,7 @@ static void print_redir(t_tree_node *read_redir, t_tree_node *write_redir)
 		printf("[no write redir]\n");
 }
 
-static char *set_redir_file_name(t_tree_node *node)
+static	char	*set_redir_file_name(t_tree_node *node)
 {
 	char *file_name;
 	char *remove_str;
@@ -114,7 +114,7 @@ void run_subshell(t_tree_node *node)
 }
 
 
-void run_command(t_tree_node *node, t_fd *p_fd)
+void run_command(t_tree_node *node)
 {
 	t_tree_node *child;
 	t_tree_node *redirection_list;
@@ -141,24 +141,14 @@ void run_command(t_tree_node *node, t_fd *p_fd)
 	}
 }
 
-void run_pipeline(t_tree_node *node, t_fd *p_fd)
+void run_pipeline(t_tree_node *node)
 {
 	t_tree_node *child;
-	pid_t	c_pro;
 
 	child = node->child_list; //COMMAND
 	if (child->num_of_child > 1)
 	{
-		pipe(p_fd->iput[2]);
-		pipe(p_fd->oput[2]);
-	}
-	while ()//next가 null로 도달할 때 까지 단, pipe는 넘김)
-	{
-		c_pro = fork();
-		if (c_pro)
-			run_command(child, p_fd);
-		else
-			child = child->next;
+		//pipe()
 	}
 	printf("------------after pipe line------------------\n");
 	run_command(child);
@@ -169,21 +159,23 @@ void run_pipeline(t_tree_node *node, t_fd *p_fd)
 		run_pipeline(child->next->next);
 }
 
-void run_list(t_tree_node *node, t_fd *p_pd)
+void run_list(t_tree_node *node)
 {
 	t_tree_node *child;
 
 	child = node->child_list;
 	run_pipeline(child);
-
+	if (child->next)
+	{
+		if (child->next->symbol == AND_IF || child->next->symbol == OR_IF)
+			run_list(child->next->next);
+	}
 }
 
 void	run_exec(t_tree_node *root)
 {
 	t_tree_node *child;
-	t_fd		p_fd;
 
-	p_fd = init_fd_struct();
 	child = root->child_list;
-	run_list(child, &p_fd);
+	run_list(child);
 }

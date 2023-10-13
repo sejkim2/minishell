@@ -1,9 +1,4 @@
-<DIGIT> ::= 0-9
-<LETTER> ::= a-zA-Z
-<WORD> ::= <LETTER> | <WORD><LETTER> | <WORD>'_'
-<ASSIGNMENT_WORD> ::= <WORD>'='<WORD>
 <REDIRECTION> ::= '<'<WORD> | '>'<WORD> | '<<'<WORD> | '>>'<WORD>
-
 <SIMPLE_COMMAND_ELEMENT> ::= <WORD> | <REDIRECTION>
 <REDIRECTION_LIST> ::= <REDIRECTION> | <REDIRECTION_LIST><REDIRECTION>
 <SIMPLE_COMMAND> ::= <SIMPLE_COMMAND_ELEMENT> | <SIMPLE_COMMAND><SIMPLE_COMMAND_ELEMENT>
@@ -15,6 +10,8 @@
 parse error
 &&&
 (ls) >out1 pwd >out2
+(ls |)
+ls |
 (())
-
-.
+>out1 (ls)
+(ls) ls
