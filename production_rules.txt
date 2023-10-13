@@ -16,3 +16,5 @@ parse error
 &&&
 (ls) >out1 pwd >out2
 (())
+
+.
