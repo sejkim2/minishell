@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/11 14:25:34 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:02:32 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,7 @@ void			set_terminal_print_on(void);
 void malloc_error();
 int	print_unexpected_token_syntax_error(char *error_string, char error_ch);
 int print_unmatched_parentheses_syntax_error(void);
+int print_arithmetic_expansion_syntax_error(void);
 
 /*free*/
 char *free_list(t_linked_list *list);
