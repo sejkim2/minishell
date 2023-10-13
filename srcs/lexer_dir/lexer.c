@@ -6,13 +6,41 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 14:00:22 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/12 18:48:51 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_blank_error(t_linked_list *list)
+static int check_arithmetic_expansion(t_linked_list *list)
+{
+	int flag;
+	t_token_node *cur;
+
+	flag = 0;
+	cur = list->head;
+	while (cur)
+	{
+		if (cur->token->symbol == L_BRA)
+		{
+			cur = cur->next;
+			if (cur && cur->token->symbol == L_BRA)
+				flag = 1;
+		}
+		else if (cur->token->symbol == R_BRA)
+		{
+			cur = cur->next;
+			if (cur && cur->token->symbol == R_BRA)
+				if (flag == 1)
+					return (print_arithmetic_expansion_syntax_error());
+		}
+		else
+			cur = cur->next;
+	}
+	return (1);
+}
+
+static int	check_blank_error(t_linked_list *list)
 {
 	int				cnt_l_bra;
 	int				cnt_r_bra;
@@ -43,7 +71,8 @@ int	check_blank_error(t_linked_list *list)
 
 static int	check_list_is_empty_or_blank_error(t_linked_list *list)
 {
-	if (list->num_of_node == 0 || check_blank_error(list) == -1)
+	if (list->num_of_node == 0 || check_blank_error(list) == -1 \
+	|| check_arithmetic_expansion(list) == -1)
 	{
 		free_list(list);
 		return (0);
