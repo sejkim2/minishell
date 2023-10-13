@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 17:33:14 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:36:11 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,15 @@ static	void	print_banner(void)
 
 int	main(void)
 {
-	char			*line;
-	t_linked_list	*list;
-	t_tree_node		*root;
-
 	print_banner();
+	char *line;
+	t_linked_list *list;
+	t_tree_node *root;
+	char	**env;
+
 	while (1)
 	{
+		env = init_environ(environ);
 		set_shell_signal();
 		line = readline("minishell$ ");
 		if (line)
@@ -58,8 +60,8 @@ int	main(void)
 			if (root == 0)
 				continue ;
 			tree_traverse(root, 0);
-			run_exec(root);
 			// free_list(list);
+			run_root(root, env);
 			// free_tree(root);
 		}
 		else

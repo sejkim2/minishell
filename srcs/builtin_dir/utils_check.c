@@ -6,34 +6,34 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:28:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/10 10:36:54 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 17:41:39 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_key_rule(t_tree_node *child, char ***env)
+int	check_key_rule(char **cmd_argv, char ***env)
 {
 	int		idx;
 	int		flag;
 	char	let;
 
 	idx = 0;
-	while (child)
+	while (cmd_argv[idx])
 	{
 		flag = 0;
-		let = child->token->value[0];
+		let = cmd_argv[idx][0];
 		if (!(let == '_' \
 		|| ('A' <= let && let <= 'Z') || ('a' <= let && let <= 'z')))
 			flag = 1;
-		if (!check_key_string(child->token->value))
+		if (!check_key_string(cmd_argv[idx]))
 			flag = 1;
 		if (flag == 1)
 			printf("minishell: export: `%s': not a valid identifier\n", \
-			child->token->value);
+			cmd_argv[idx]);
 		else
-			*env = check_equation(child->token->value, *env);
-		child = child->next;
+			*env = check_equation(cmd_argv[idx], *env);
+		idx++;
 	}
 	return (flag);
 }

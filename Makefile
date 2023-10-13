@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
+#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/10 18:20:28 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/10/13 20:11:49 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ C_FLAGS = -I$(HEADER)
 LEXER_DIR = srcs/lexer_dir
 PARSER_DIR = srcs/parser_dir
 ENTRY_DIR = srcs/entry_dir
-UTILS_DIR = srcs/utils_dir
+RUN_DIR = srcs/run_dir
 SIGNAL_DIR = srcs/signal_dir
 BUILTIN_DIR= srcs/builtin_dir
 TEST_DIR = srcs/test_dir
@@ -48,9 +48,6 @@ PARSER_SRCS = parser.c \
 
 ENTRY_SRCS = temp_file.c \
 	wild_card.c
-
-UTILS_SRCS = main.c	\
-	exec.c
 	
 SIGNAL_SRCS = shell_signal.c \
 	terminal_option.c \
@@ -70,11 +67,21 @@ BUILTIN_SRCS = builtin_cd.c \
 	utils_etc.c \
 	utils.c
 
+RUN_SRCS = init_path_env-1.c \
+	main.c \
+	path.c \
+	run_command.c \
+	run_exe.c \
+	run_fork.c \
+	run_redir.c \
+	run_root.c \
+	run_utils.c
+
 TEST_SRCS = test.c
 
 SRCS1 = $(addprefix $(LEXER_DIR)/,$(LEXER_SRCS))
 SRCS2 = $(addprefix $(PARSER_DIR)/,$(PARSER_SRCS))
-SRCS3 = $(addprefix $(UTILS_DIR)/,$(UTILS_SRCS))
+SRCS3 = $(addprefix $(RUN_DIR)/,$(RUN_SRCS))
 SRCS4 = $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_SRCS))
 SRCS5 = $(addprefix $(BUILTIN_DIR)/,$(BUILTIN_SRCS))
 SRCS6 = $(addprefix $(TEST_DIR)/,$(TEST_SRCS))
@@ -82,13 +89,13 @@ SRCS7 = $(addprefix $(ENTRY_DIR)/,$(ENTRY_SRCS))
 
 LEXER_OBJS = $(SRCS1:.c=.o)
 PARSER_OBJS = $(SRCS2:.c=.o)
-UTILS_OBJS = $(SRCS3:.c=.o)
+RUN_OBJS = $(SRCS3:.c=.o)
 SIGNAL_OBJS = $(SRCS4:.c=.o)
 BUILTIN_OBJS = $(SRCS5:.c=.o)
 TEST_OBJS = $(SRCS6:.c=.o)
 ENTRY_OBJS = $(SRCS6:.c=.o)
 
-OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(UTILS_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS) $(TEST_OBJS) $(ENTRY_OBJS)
+OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(RUN_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS) $(TEST_OBJS) $(ENTRY_OBJS)
 # OBJS = $(SRCS:%.c=%.o)
 
 %.o : %.c $(HEADER)

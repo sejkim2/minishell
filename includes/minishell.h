@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 20:02:32 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:38:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 # include "../mylib/includes/get_next_line.h"
 
 typedef unsigned long long	t_ull;
+extern char **environ;
 
 typedef enum e_symbol
 {
@@ -107,14 +108,11 @@ typedef struct s_tree_node
     struct s_tree_node *child_list;
 }   t_tree_node;
 
-typedef struct s_fd
+typedef struct s_cmd
 {
-	int	iput[2];
-	int	oput[2];
-}	t_fd;
-
-/*main*/
-int	main(void);
+	char	*cmd; //cmd_file이 들어갈 자리(아직 경로는 없음)
+	char	**cmd_line; //cmd_line이 들어간 자리
+}	t_cmd;
 
 /*lexer*/
 t_linked_list   *lexer(char *cmd_line);
@@ -162,7 +160,7 @@ void			check_blocking_signal(void);
 
 /* heredoc signal */
 void			set_heredoc_signal(void);
-void			check_heredoc_signal(int *cursor);
+void			check_heredoc_signal(void);
 
 /* terminal option */
 struct termios	terminal_option(void);
@@ -222,21 +220,36 @@ void	print_list(t_linked_list *list);
 void    tree_traverse(t_tree_node *node, int depth);
 void print_symbol(t_symbol symbol);
 
-/*exec*/
-void run_exec(t_tree_node *node);
-void run_list(t_tree_node *node);
-void run_pipeline(t_tree_node *node);
-void run_command(t_tree_node *node);
+/* run_root */
+void	run_root(t_tree_node *node, char **env);
+void	run_list(t_tree_node *node, char **env);
+void	run_pipeline(t_tree_node *node, int *iput, char **env, t_symbol last_symbol);
+void	run_command(t_tree_node *node, int *iput, int *oput, char **env);
+void	run_command_nonpipe(t_tree_node *node, char **env);
+void 	run_simple_command_nonpipe(t_tree_node *node, char **env);
 
 // void run_subshell(t_tree_node *node);
-void run_simple_command(t_tree_node *node);
-void run_simple_command_element(t_tree_node *node);
-void run_redirection_list(t_tree_node *node, t_tree_node **read_redir, t_tree_node **write_redir);
-void run_word(t_tree_node *node);
+void 	run_simple_command(t_tree_node *node, int *iput, int *oput, char **env);
+void 	run_simple_command_element(t_tree_node *node, char **env);
+void 	run_redirection_list(t_tree_node *node);
+void	run_word(t_cmd cmd_info, char **env);
+
+/*	run_utils */
+char	*init_path_env(char *cmd, char **path);
+char	*get_path(char *exe);
+
+int		cnt_cmd_element(t_tree_node *node);
+char	*set_redir_file_name(t_tree_node *node);
+void	check_single_redir(t_tree_node *child, char *redir_name);
+void	check_double_redir(t_tree_node *child, char *redir_name);
+t_cmd	make_cmd_info(t_tree_node *node, char **env);
+void	recover_std_fd(int *o_fd);
+int		run_builtin(t_cmd cmd_info, char **env);
+void	run_execve(t_cmd cmd_info, char **env);
 
 /*entry*/
 char	*generate_temp_filename(char *mode);
-void	here_document(void);
+int		here_document(void);
 void	working_history(void);
 void	filecpy(int in_fd, int out_fd);
 
@@ -244,18 +257,18 @@ void	filecpy(int in_fd, int out_fd);
 int	wild_card(char *input, char *file);
 
 /*	built-in	*/
-void	builtin_cd(t_tree_node *parent, char **env);
-void	builtin_echo(t_tree_node *parent, char **env);
-void	builtin_env(t_tree_node *parent, char **env);
-void	builtin_exit(t_tree_node *parent, char **env);
+void	builtin_cd(char **cmd_argv, char **env);
+void	builtin_echo(char **cmd_argv, char **env);
+void	builtin_env(char **cmd_argv, char **env);
+void	builtin_exit(char **cmd_argv, char **env);
 int	list_export(char **envp);
 char	**add_export(char *str, char **env);
-int	set_export(t_tree_node *child, char **env);
-void	builtin_export(t_tree_node *parent, char **env);
+int	set_export(char **cmd_argv, char **env);
+void	builtin_export(char **cmd_argv, char **env);
 void	builtin_pwd(char **env);
-void	builtin_unset(t_tree_node *parent, char **env);
+void	builtin_unset(char **cmd_argv, char **env);
 void	change_env(t_tree_node *parent, char **env);
-int	check_key_rule(t_tree_node *child, char ***env);
+int	check_key_rule(char **cmd_argv, char ***env);
 int	check_key_string(char *str);
 int	is_equal(char *str);
 char	**check_equation(char *str, char **env);
@@ -271,6 +284,5 @@ void	free_2str(char *s1, char *s2);
 void	free_4str(char *s1, char *s2, char *s3, char *s4);
 
 /*	pipe	*/
-t_fd	init_fd_struct(void);
 
 #endif

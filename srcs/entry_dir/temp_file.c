@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   temp_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:24:41 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/09/25 20:37:49 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/11 17:28:17 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,15 @@ char	*generate_temp_filename(char *mode)
 	return (str);
 }
 
-void	here_document(void)
+int	here_document(void)
 {
 	char	*tmp_name;
 	int		hd_fd;
 
 	tmp_name = generate_temp_filename("HD_Temp");
 	hd_fd = open(tmp_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	free(tmp_name);
+	return (hd_fd);
 }
 
 void	working_history(void)
@@ -63,7 +65,7 @@ void	working_history(void)
 
 	wh_fd = open(".minishell_history", O_RDWR | O_CREAT | O_APPEND, 0644);
 	tmp_name = generate_temp_filename("WH_Temp");
-	tp_fd = open(tmp_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
+	tp_fd = open(tmp_name, O_RDWR | O_CREAT | O_APPEND, 0644);
 	free(tmp_name);
 }
 

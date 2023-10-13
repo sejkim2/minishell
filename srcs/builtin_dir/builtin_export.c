@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:32:26 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/10 11:52:11 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 17:40:29 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,23 @@ char	**add_export(char *str, char **env)
 	return (renv);
 }
 
-int	set_export(t_tree_node *child, char **env)
+int	set_export(char **cmd_argv, char **env)
 {
 	int		error_code;
 
-	error_code = check_key_rule(child, &env);
+	error_code = check_key_rule(cmd_argv, &env);
 	list_export(env);
 	return (error_code);
 }
 
-void	builtin_export(t_tree_node *parent, char **env)
+void	builtin_export(char **cmd_argv, char **env)
 {
-	t_tree_node	*child;
+	int		cmd_argc;
 
-	child = parent->child_list;
-	if (child->num_of_child == 1)
+	cmd_argc = cnt_line(cmd_argv);
+	if (!cmd_argc)
 		list_export(env);
 	else
-		set_export(child->next, env);
+		set_export(cmd_argv, env);
 	exit(0);
 }
