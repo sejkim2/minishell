@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 19:55:31 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:33:28 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ void	run_simple_command(t_tree_node *node, int *iput, int *oput, char **env)
 			run_redirection_list(child);
 		child = child->next;
 	}
-	run_simple_command_element(node->child_list, env);
+	// run_simple_command_element(node->child_list, env);
 }
 
-void	run_simple_command_element(t_tree_node *node, char **env)
-{
-	run_word(cmd_info, env);
-}
+// void	run_simple_command_element(t_tree_node *node, char **env)
+// {
+// 	run_word(cmd_info, env);
+// }
 
 
 void	run_word(t_cmd cmd_info, char **env)

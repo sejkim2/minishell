@@ -6,13 +6,13 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 18:43:20 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:36:11 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void print_banner(void)
+static	void	print_banner(void)
 {
 	printf("******************************************************\n");
 	printf("**⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⢀⣠⣤⣤⣶⣶⣾⣿⣿⣿⣿⣿⣷⣶⣶⣶⣤⣀⣀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀**\n");
@@ -31,7 +31,7 @@ static void print_banner(void)
 	printf("******************************************************\n");
 }
 
-int main(void)
+int	main(void)
 {
 	print_banner();
 	char *line;
@@ -49,14 +49,14 @@ int main(void)
 			if (line[0] == '\0')
 			{
 				free(line);
-				continue;
+				continue ;
 			}
 			add_history(line);
 			list = lexer(line);
 			free(line);
 			if (list == 0)
 				continue ;
-			root = parser(list); // check_syntax_errror
+			root = parser(list);
 			if (root == 0)
 				continue ;
 			tree_traverse(root, 0);

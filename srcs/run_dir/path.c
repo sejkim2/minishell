@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipe.c                                             :+:      :+:    :+:   */
+/*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/12 16:36:39 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:15:45 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static	char	**find_path_in_envp_and_split(char **envp)
 	return (ft_split(p + 5, ':'));
 }
 
-char	*get_path(char *exe);
+char	*get_path(char *exe)
 {
 	char	**path;
 	char *res;
@@ -44,12 +44,10 @@ char	*get_path(char *exe);
 	path = find_path_in_envp_and_split(environ);
 	if (path == 0)
 	{
-		ft_printf("$PATH is not exist\n");
+		printf("$PATH is not exist\n");
 		exit(1);
 	}
 	res = 0;
-	res = init_path_env(argv[1], path);
-	if (res)
-		printf("%s", res);
+	res = init_path_env(exe, path);
 	return (0);
 }

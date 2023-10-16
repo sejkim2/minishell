@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 19:55:11 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:27:35 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	run_builtin(t_cmd cmd_info, char **env)
 {
+	cmd_info.cmd_line++;
 	if (!strcmp(cmd_info.cmd, "cd"))
 		builtin_cd(cmd_info.cmd_line, env);
 	else if (!strcmp(cmd_info.cmd, "echo"))

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:36:27 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 17:19:15 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:28:54 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,17 @@ static void	echo_no_opt_print(int cmd_argc, char **cmd_argv)
 	return ;
 }
 
-static void	echo_opt_print(int cmd_argc, t_tree_node *child)
+static void	echo_opt_print(int cmd_argc, char **cmd_argv)
 {
 	int		idx;
 
 	idx = 0;
 	while (idx < cmd_argc)
 	{
-		printf("%s", child->token->value);
+		printf("%s", cmd_argv[idx]);
 		if (idx < cmd_argc - 1)
 			printf(" ");
 		idx++;
-		child = child->next;
 	}
 	return ;
 }
@@ -104,5 +103,4 @@ void	builtin_echo(char **cmd_argv, char **env)
 		echo_no_opt_print(cmd_argc, cmd_argv);
 	else
 		echo_opt(cmd_argc, cmd_argv);
-	exit(0);
 }

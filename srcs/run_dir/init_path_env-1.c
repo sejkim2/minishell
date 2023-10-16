@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:54:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 19:57:55 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:15:17 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static	char	*check_cmd_is_availabe(char **path, char *input_cmd)
 		free(cmd_with_path);
 		i++;
 	}
-	ft_printf("pipex: command not found: %s\n", input_cmd);
+	printf("pipex: command not found: %s\n", input_cmd);
 	free(cmd_with_root);
 	return (0);
 }
@@ -63,7 +63,7 @@ static	char	*init_path_env_utils(char *cmd, char **path)
 		if (access(cmd, X_OK) == -1)
 		{
 			res = 0;
-			ft_printf("pipex: %s: %s\n", strerror(errno), cmd);
+			printf("pipex: %s: %s\n", strerror(errno), cmd);
 		}
 		else
 			res = ft_strdup(cmd);
@@ -81,7 +81,7 @@ char	*init_path_env(char *cmd, char **path)
 	if (cmd == 0)
 	{
 		res = 0;
-		ft_printf("pipex: permission denied:\n");
+		printf("pipex: permission denied:\n");
 	}
 	else
 		res = init_path_env_utils(cmd, path);

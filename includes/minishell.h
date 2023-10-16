@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 19:50:56 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:38:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,7 @@ void			set_terminal_print_on(void);
 void malloc_error();
 int	print_unexpected_token_syntax_error(char *error_string, char error_ch);
 int print_unmatched_parentheses_syntax_error(void);
+int print_arithmetic_expansion_syntax_error(void);
 
 /*free*/
 char *free_list(t_linked_list *list);
@@ -234,6 +235,9 @@ void 	run_redirection_list(t_tree_node *node);
 void	run_word(t_cmd cmd_info, char **env);
 
 /*	run_utils */
+char	*init_path_env(char *cmd, char **path);
+char	*get_path(char *exe);
+
 int		cnt_cmd_element(t_tree_node *node);
 char	*set_redir_file_name(t_tree_node *node);
 void	check_single_redir(t_tree_node *child, char *redir_name);

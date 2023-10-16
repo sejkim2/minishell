@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 18:10:21 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:18:22 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	run_redirection_list(t_tree_node *node)
 	child = node->child_list;
 	while (child)
 	{
-		redir_name = get_file_name(child->token->value, child->token->redir_type);
+		redir_name = set_redir_file_name(child);
 		if (child->token->redir_type == SINGLE_REDIR)
 			check_single_redir(child, redir_name);
 		else	//DOUBLE_REDIR
@@ -71,7 +71,6 @@ void	check_single_redir(t_tree_node *child, char *redir_name)
 		}
 		dup2(fd, 1);
 	}
-	return (fd);
 }
 
 void	check_double_redir(t_tree_node *child, char *redir_name)

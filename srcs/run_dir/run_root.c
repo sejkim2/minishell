@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 18:37:09 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/13 20:18:36 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	run_pipeline(t_tree_node *node, int *iput, char **env, t_symbol	last_symbol
 
 	child = node->child_list; //COMMAND, PIPE, PIPELINE
 	if (child->num_of_child > 1) // 넘어갈수록 줄여줘야 할 듯?
-		pipe(oput[2]);
+		pipe(oput);
 	else if (last_symbol != PIPE)
 		return (run_command_nonpipe(child, env)); //
 	while (child) //next가 null로 도달할 때 까지 단, pipe는 넘김)
