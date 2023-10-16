@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:28:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 17:41:39 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 15:12:20 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ int	check_key_rule(char **cmd_argv, char ***env)
 		if (!check_key_string(cmd_argv[idx]))
 			flag = 1;
 		if (flag == 1)
-			printf("minishell: export: `%s': not a valid identifier\n", \
-			cmd_argv[idx]);
+			ft_stderror_print("export", cmd_argv[idx], "not a valid identifier");
 		else
 			*env = check_equation(cmd_argv[idx], *env);
 		idx++;
@@ -69,15 +68,11 @@ int	is_equal(char *str)
 char	**check_equation(char *str, char **env)
 {
 	char	*env_name;
-	char	*env_val;
 
 	env_name = get_envname(str);
-	env_val = get_envval(env_name, env);
 	if (!check_dup(str, env_name, env))
-	{
-		free_2str(env_name, env_val);
-		return (add_export(str, env));
-	}
+		env = add_export(str, env);
+	free(env_name);
 	return (env);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:06:44 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 17:36:14 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 12:29:47 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,25 @@ static void	list_shv(char **cmd_argv)
 	}
 }
 
+static void env_stderror_print(char *argv, int error_code)
+{
+	write(2, "env: ", 6);
+	if (error_code == 1)
+	{
+		write(2, "setenv ", 8);
+		write(2, argv, ft_strlen(argv));
+		write(2, ": ", 2);
+		write(2, "Invalid argument", 17);
+	}
+	else
+	{
+		write(2, argv, ft_strlen(argv));
+		write(2, ": ", 2);
+		write(2, "No such file or directory", 17);
+	}
+	write(2, "\n", 1);
+}
+
 static void	set_env(char **cmd_argv, char **env)
 {
 	int		i;
@@ -48,15 +67,15 @@ static void	set_env(char **cmd_argv, char **env)
 		j = 0;
 		if (cmd_argv[i][j] == '=')
 		{
-			printf("env: setenv %s: Invalid argument\n", cmd_argv[i]);
-			exit(1);
+			env_stderror_print(cmd_argv[i], 1);
+			exit_status = 1;
 		}
 		while (cmd_argv[i][j] && cmd_argv[i][j] != '=')
 			j++;
 		if (cmd_argv[i][j] == '\0')
 		{
-			printf("env: %s: No such file or directory\n", cmd_argv[i]);
-			exit(127);
+			env_stderror_print(cmd_argv[i], 127);
+			exit_status = 127;
 		}
 		i++;
 	}
@@ -73,5 +92,5 @@ void	builtin_env(char **cmd_argv, char **env)
 		list_env(env);
 	else
 		set_env(cmd_argv, env);
-	exit(0);
+	exit_status = 0;
 }

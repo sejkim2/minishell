@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:13:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 17:31:57 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 12:25:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ static void	exit_fork(void)
 	child = fork();
 	if (child == 0)
 		exit(1);
+	exit_status = 1;
 }
 
 void	builtin_exit(char **cmd_argv, char **env)
@@ -89,7 +90,7 @@ void	builtin_exit(char **cmd_argv, char **env)
 	int				cmd_argc;
 
 	cmd_argc = cnt_line(cmd_argv);
-	printf("exit\n");
+	write(2, "exit\n", 6);
 	if (!cmd_argc)
 		exit(0);
 	error_code = ft_atol(*cmd_argv, &flag);
@@ -97,13 +98,12 @@ void	builtin_exit(char **cmd_argv, char **env)
 	{
 		if (flag == 1)
 		{
-			printf("minishell: exit: %s: numeric argument required\n", \
-			*cmd_argv);
+			ft_stderror_print("exit", *cmd_argv, "numeric argument required");
 			exit(255);
 		}
 		else if (cmd_argc > 2 && flag == 0)
 		{
-			printf("minishell: exit: too many arguments\n");
+			ft_stderror_print("exit", NULL, "too many arguments");
 			return (exit_fork());
 		}
 	}

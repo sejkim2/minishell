@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_pwd.c                                      :+:      :+:    :+:   */
+/*   ft_stderror_print.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/12 16:04:23 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 12:20:47 by jaehyji          ###   ########.fr       */
+/*   Created: 2023/10/16 11:50:04 by jaehyji           #+#    #+#             */
+/*   Updated: 2023/10/16 12:19:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-/*
-	옵션없는 pwd구현.
-	pwd는 인자를 받지 않음. 인자 개수의 상관없이 pwd는 출력을 진행함.
-*/
-
-void	builtin_pwd(char **env)
+void	ft_stderror_print(char *cmd, char *argv, char *err_string)
 {
-	char	buff[PATH_MAX];
-
-	getcwd(buff, PATH_MAX);
-	printf("%s\n", buff);
-	exit_status = 0;
+	write(2, "minishell: ", 12);
+	write(2, cmd, ft_strlen(cmd));
+	write(2, ": ", 3);
+	if (argv)
+	{
+		if (ft_strncmp(cmd, "export", 6))
+			write(2, "`", 2);
+		write(2, argv, ft_strlen(argv));
+		if (ft_strncmp(cmd, "export", 6))
+			write(2, "\'", 2);
+		write(2, ": ", 3);
+	}
+	write(2, err_string, ft_strlen(err_string));
+	write(2, "\n", 1);
 }

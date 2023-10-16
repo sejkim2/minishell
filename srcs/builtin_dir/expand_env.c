@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:25:18 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 20:47:08 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 12:33:37 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	mk_env(int *idx, char **string, char **env)
 	make_strings(idx, string, str);
 	if ((*string)[*idx + 1] && (*string)[*idx + 1] == '?')
 	{
-		str[3] = ft_strdup(ft_itoa(WEXITSTATUS(status)));
+		str[3] = ft_strdup(ft_itoa((int)exit_status));
 		str[2] = ft_strdup(*string + *idx + 2);
 	}
 	else
@@ -55,6 +55,8 @@ static t_tree_node	*apply_in_tree(t_tree_node *node, t_tree_node *head)
 		free(remov);
 		i++;
 	}
+	free(node->token->value);
+	node->token->value = tmp;
 	return (node->next);
 }
 
@@ -85,7 +87,6 @@ void	change_env(t_tree_node *parent, char **env) //parent = simple_command
 			}
 			i++;
 		}
-		printf("%s\n", child->token->value);
 		child = apply_in_tree(child, head);
 	}
 }

@@ -6,7 +6,7 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/13 20:11:49 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/16 12:26:57 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -75,7 +75,8 @@ RUN_SRCS = init_path_env-1.c \
 	run_fork.c \
 	run_redir.c \
 	run_root.c \
-	run_utils.c
+	run_utils.c	\
+	ft_stderror_print.c
 
 TEST_SRCS = test.c
 

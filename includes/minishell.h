@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 20:38:56 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 15:13:22 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 
 typedef unsigned long long	t_ull;
 extern char **environ;
+unsigned char exit_status;
 
 typedef enum e_symbol
 {
@@ -221,7 +222,7 @@ void    tree_traverse(t_tree_node *node, int depth);
 void print_symbol(t_symbol symbol);
 
 /* run_root */
-void	run_root(t_tree_node *node, char **env);
+void	run_root(t_tree_node *node, char **ptr);
 void	run_list(t_tree_node *node, char **env);
 void	run_pipeline(t_tree_node *node, int *iput, char **env, t_symbol last_symbol);
 void	run_command(t_tree_node *node, int *iput, int *oput, char **env);
@@ -261,18 +262,18 @@ void	builtin_cd(char **cmd_argv, char **env);
 void	builtin_echo(char **cmd_argv, char **env);
 void	builtin_env(char **cmd_argv, char **env);
 void	builtin_exit(char **cmd_argv, char **env);
-int	list_export(char **envp);
+void	list_export(char **env);
 char	**add_export(char *str, char **env);
-int	set_export(char **cmd_argv, char **env);
+void	set_export(char **cmd_argv, char **env);
 void	builtin_export(char **cmd_argv, char **env);
 void	builtin_pwd(char **env);
 void	builtin_unset(char **cmd_argv, char **env);
 void	change_env(t_tree_node *parent, char **env);
-int	check_key_rule(char **cmd_argv, char ***env);
-int	check_key_string(char *str);
-int	is_equal(char *str);
+int		check_key_rule(char **cmd_argv, char ***env);
+int		check_key_string(char *str);
+int		is_equal(char *str);
 char	**check_equation(char *str, char **env);
-int	check_dup(char *str, char *env_name, char **env);
+int		check_dup(char *str, char *env_name, char **env);
 char	**init_environ(char **envp);
 char	*get_envname(char *av);
 char	*get_envval(char *env_name, char **env);
@@ -283,6 +284,7 @@ int	cnt_line(char **str_arr);
 void	free_2str(char *s1, char *s2);
 void	free_4str(char *s1, char *s2, char *s3, char *s4);
 
-/*	pipe	*/
+/*	utils	*/
+void	ft_stderror_print(char *cmd, char *argv, char *err_string);
 
 #endif

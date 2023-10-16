@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 20:18:36 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 15:04:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	run_list(t_tree_node *node, char **env)
 	}
 }
 
-void	run_pipeline(t_tree_node *node, int *iput, char **env, t_symbol	last_symbol)
+void	run_pipeline(t_tree_node *node, int *iput, char **env, t_symbol last_symbol)
 {
 	int			oput[2];
 	t_tree_node	*child;
