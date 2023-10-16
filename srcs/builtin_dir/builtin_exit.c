@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:13:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 12:25:56 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 15:40:30 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	exit_fork(void)
 	exit_status = 1;
 }
 
-void	builtin_exit(char **cmd_argv, char **env)
+void	builtin_exit(char **cmd_argv)
 {
 	unsigned char	error_code;
 	int				flag;

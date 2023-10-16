@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 20:18:22 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 17:05:50 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,18 +56,18 @@ void	check_single_redir(t_tree_node *child, char *redir_name)
 		fd = open(redir_name, O_RDONLY);
 		if (fd == -1)
 		{
-			printf("minishell: %s: %s", redir_name, strerror(errno));
-			exit(1);
+			ft_stderror_print(redir_name, NULL, strerror(errno));
+			exit_status = 1;
 		}
 		dup2(fd, 0);
 	}
 	else
 	{
-		fd = open(redir_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		fd = open(redir_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
 		{
-			printf("minishell: %s: %s", redir_name, strerror(errno));
-			exit(1);
+			ft_stderror_print(redir_name, NULL, strerror(errno));
+			exit_status = 1;
 		}
 		dup2(fd, 1);
 	}
@@ -82,8 +82,8 @@ void	check_double_redir(t_tree_node *child, char *redir_name)
 		fd = here_document();
 		if (fd == -1)
 		{
-			printf("minishell: %s: %s", redir_name, strerror(errno));
-			exit(1);
+			ft_stderror_print(redir_name, NULL, strerror(errno));
+			exit_status = 1;
 		}
 		dup2(fd, 0);
 	}
@@ -92,8 +92,8 @@ void	check_double_redir(t_tree_node *child, char *redir_name)
 		fd = open(redir_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
 		{
-			printf("minishell: %s: %s", redir_name, strerror(errno));
-			exit(1);
+			ft_stderror_print(redir_name, NULL, strerror(errno));
+			exit_status = 1;
 		}
 		dup2(fd, 1);
 	}

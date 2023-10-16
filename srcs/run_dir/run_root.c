@@ -6,13 +6,13 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/16 15:04:56 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 18:09:17 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_root(t_tree_node *root, char **env)
+void	run_root(t_tree_node *root, char ***env)
 {
 	t_tree_node	*child;
 
@@ -20,7 +20,7 @@ void	run_root(t_tree_node *root, char **env)
 	run_list(child, env);
 }
 
-void	run_list(t_tree_node *node, char **env)
+void	run_list(t_tree_node *node, char ***env)
 {
 	t_tree_node	*child;
 	int			flag;
@@ -31,7 +31,9 @@ void	run_list(t_tree_node *node, char **env)
 	child = node->child_list; //symbol: PIPELINE, LIST, AND_IF, OR_IF
 	run_pipeline(child, iput, env, PIPELINE); // run_pipeline의 반환으로 실행 여부를 확인.
 	child = child->next;
-	flag = WEXITSTATUS(status);
+	if (WEXITSTATUS(status))
+		exit_status = WEXITSTATUS(status);
+	flag = exit_status;
 	while (child && ((child->symbol == AND_IF && !flag) || (child ->symbol == OR_IF && flag)))
 	{
 		child = child->next;
@@ -40,7 +42,7 @@ void	run_list(t_tree_node *node, char **env)
 	}
 }
 
-void	run_pipeline(t_tree_node *node, int *iput, char **env, t_symbol last_symbol)
+void	run_pipeline(t_tree_node *node, int *iput, char ***env, t_symbol last_symbol)
 {
 	int			oput[2];
 	t_tree_node	*child;

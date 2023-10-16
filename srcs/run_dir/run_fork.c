@@ -6,13 +6,13 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:44:36 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 14:37:56 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 18:23:05 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_command_nonpipe(t_tree_node *node, char **env)
+void	run_command_nonpipe(t_tree_node *node, char ***env)
 {
 	t_tree_node	*child;
 	t_tree_node	*redirection_list;
@@ -25,11 +25,16 @@ void	run_command_nonpipe(t_tree_node *node, char **env)
 	{
 		sub_pro = fork();
 		if (sub_pro == 0)
+		{
 			run_list(child->child_list->next, env);
+			exit(exit_status);
+		}
+		else
+			wait(0);
 	}
 }
 
-void	run_command(t_tree_node *node, int *iput, int *oput, char **env)
+void	run_command(t_tree_node *node, int *iput, int *oput, char ***env)
 {
 	t_tree_node	*child;
 	t_tree_node	*redirection_list;

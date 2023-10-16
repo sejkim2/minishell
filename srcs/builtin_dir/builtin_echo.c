@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:36:27 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 20:28:54 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 15:56:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,10 @@ static int	echo_opt_flag(char *str)
 	int		idx;
 
 	idx = 1;
+	if (str[0] == '\0' || str[0] != '-')
+		return (0);
+	if (!str[idx])
+		return (0);
 	while (str[idx] && str[idx] == 'n')
 		idx++;
 	if (str[idx] != '\0')
@@ -94,12 +98,12 @@ static void	echo_opt(int cmd_argc, char **cmd_argv)
 		return (echo_no_opt_print(cmd_argc, cmd_argv));
 }
 
-void	builtin_echo(char **cmd_argv, char **env)
+void	builtin_echo(char **cmd_argv)
 {
 	int		cmd_argc;
 
 	cmd_argc = cnt_line(cmd_argv);
-	if (!cmd_argc || *cmd_argv[0] != '-' || !*cmd_argv[1]) //인자가 없거나, 첫 인자가 '-'로 시작하지 않거나, 첫 인자가 '-'이기만 하다면 no opt
+	if (!cmd_argc)
 		echo_no_opt_print(cmd_argc, cmd_argv);
 	else
 		echo_opt(cmd_argc, cmd_argv);

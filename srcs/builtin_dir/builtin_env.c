@@ -6,11 +6,15 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:06:44 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 12:29:47 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 17:37:20 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+/*
+	인자 & 출력문 중북체크
+*/
 
 static void	list_env(char **env)
 {
@@ -51,7 +55,7 @@ static void env_stderror_print(char *argv, int error_code)
 	{
 		write(2, argv, ft_strlen(argv));
 		write(2, ": ", 2);
-		write(2, "No such file or directory", 17);
+		write(2, "No such file or directory", 26);
 	}
 	write(2, "\n", 1);
 }
@@ -69,6 +73,7 @@ static void	set_env(char **cmd_argv, char **env)
 		{
 			env_stderror_print(cmd_argv[i], 1);
 			exit_status = 1;
+			return ;
 		}
 		while (cmd_argv[i][j] && cmd_argv[i][j] != '=')
 			j++;
@@ -76,6 +81,7 @@ static void	set_env(char **cmd_argv, char **env)
 		{
 			env_stderror_print(cmd_argv[i], 127);
 			exit_status = 127;
+			return ;
 		}
 		i++;
 	}

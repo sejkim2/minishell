@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:25:18 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 12:33:37 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 17:03:18 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,36 @@ static void	mk_env(int *idx, char **string, char **env)
 	free_2str(tmp, str[2]);
 }
 
+static char	*check_redir(t_tree_node *node)
+{
+	char	*tmp;
+
+	if (node->token->redir_type == SINGLE_REDIR)
+	{
+		if (node->token->value[0] == '<')
+			tmp = ft_strdup("<");
+		else
+			tmp = ft_strdup(">");
+	}
+	else if (node->token->redir_type == DOUBLE_REDIR)
+	{
+		if (node->token->value[0] == '<')
+			tmp = ft_strdup("<<");
+		else
+			tmp = ft_strdup(">>");
+	}
+	else 
+		tmp = ft_strdup("");
+	return (tmp);
+}
+
 static t_tree_node	*apply_in_tree(t_tree_node *node, t_tree_node *head)
 {
 	char	*tmp;
 	char	*remov;
 	int		i;
 
-	tmp = ft_strdup("\0");
+	tmp = check_redir(node);
 	i = 0;
 	while (head->token->str_info[i].str_type != NUL)
 	{
