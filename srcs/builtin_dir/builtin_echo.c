@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:36:27 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 15:56:33 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 13:11:17 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	builtin_echo(char **cmd_argv)
 {
 	int		cmd_argc;
 
+	exit_status = 0;
 	cmd_argc = cnt_line(cmd_argv);
 	if (!cmd_argc)
 		echo_no_opt_print(cmd_argc, cmd_argv);

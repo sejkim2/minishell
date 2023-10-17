@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/16 18:09:17 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 13:20:35 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	run_root(t_tree_node *root, char ***env)
 void	run_list(t_tree_node *node, char ***env)
 {
 	t_tree_node	*child;
-	int			flag;
 	int			status;
 	int			iput[2];
 
@@ -31,10 +30,7 @@ void	run_list(t_tree_node *node, char ***env)
 	child = node->child_list; //symbol: PIPELINE, LIST, AND_IF, OR_IF
 	run_pipeline(child, iput, env, PIPELINE); // run_pipeline의 반환으로 실행 여부를 확인.
 	child = child->next;
-	if (WEXITSTATUS(status))
-		exit_status = WEXITSTATUS(status);
-	flag = exit_status;
-	while (child && ((child->symbol == AND_IF && !flag) || (child ->symbol == OR_IF && flag)))
+	while (child && ((child->symbol == AND_IF && !exit_status) || (child ->symbol == OR_IF && exit_status)))
 	{
 		child = child->next;
 		run_list(child, env);

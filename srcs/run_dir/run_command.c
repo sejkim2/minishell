@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/17 11:38:50 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 13:35:08 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	run_simple_command_nonpipe(t_tree_node *node, char ***env)
 			run_redirection_list(child);
 		child = child->next;
 	}
-	if (cmd_info.cmd && exit_status == 0)
+	if (cmd_info.cmd)
 	{
 		if (!run_builtin(cmd_info, env))
 			run_execve(cmd_info, *env);

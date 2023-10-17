@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:25:18 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 17:03:18 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 14:31:00 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,17 @@ static t_tree_node	*apply_in_tree(t_tree_node *node, t_tree_node *head)
 	return (node->next);
 }
 
+int	string_dollar(char *str)
+{
+	while (*str)
+	{
+		if (*str != '$')
+			return (0);
+		str++;
+	}
+	return (1);
+}
+
 void	change_env(t_tree_node *parent, char **env) //parent = simple_command
 {
 	int			i;
@@ -102,6 +113,8 @@ void	change_env(t_tree_node *parent, char **env) //parent = simple_command
 				j = 0;
 				while (child->token->str_info[i].str[j])
 				{
+					if (string_dollar(child->token->str_info[i].str))
+						break ;
 					if (child->token->str_info[i].str[j] != '$')
 						j++;
 					else

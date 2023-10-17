@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:44:36 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 18:23:05 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 14:37:51 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	run_command_nonpipe(t_tree_node *node, char ***env)
 {
+	int			status;
 	t_tree_node	*child;
 	t_tree_node	*redirection_list;
 	pid_t		sub_pro;
@@ -30,7 +31,10 @@ void	run_command_nonpipe(t_tree_node *node, char ***env)
 			exit(exit_status);
 		}
 		else
-			wait(0);
+		{
+			wait(&status);
+			exit_status = WEXITSTATUS(status);
+		}
 	}
 }
 

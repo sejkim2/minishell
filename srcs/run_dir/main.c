@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/17 11:37:16 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 14:34:01 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ int	main(void)
 	char 			*line;
 
 	env = init_environ(environ);
+	exit_status = 0;
 	while (1)
 	{
-		exit_status = 0;
 		set_shell_signal();
 		line = readline("minishell$ ");
 		if (line)

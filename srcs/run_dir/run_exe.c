@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 17:20:25 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 14:47:45 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,24 @@ int	run_builtin(t_cmd cmd_info, char ***env)
 void	run_execve(t_cmd cmd_info, char **env)
 {
 	pid_t	exe_fork;
+	char	*cmd;
+	int		status;
 
+	cmd = cmd_info.cmd;
 	exe_fork = fork();
 	if (exe_fork == 0)
 	{
 		cmd_info.cmd = get_path(cmd_info.cmd, env); // 경로 찾아서 붙여주는 함수.
-		if (access(cmd_info.cmd, X_OK) == -1)
+		if (!cmd_info.cmd || access(cmd_info.cmd, X_OK) == -1)
 		{
-			ft_stderror_print(cmd_info.cmd, NULL, strerror(errno));
-			exit(1);
+			ft_stderror_print(cmd, NULL, "command not found");
+			exit(127);
 		}
 		execve(cmd_info.cmd, cmd_info.cmd_line, env);
 	}
 	else
-		wait(0);
+	{
+		wait(&status);
+		exit_status = WEXITSTATUS(status);
+	}
 }

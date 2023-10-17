@@ -1,4 +1,5 @@
 pipe 제외.
 
-1. 와일드카드 확장.
-2. subshell일 경우, 매크로 에러코드 & 전역 변수 에러코드로 fork_subshell종료방법.
+환경변수 $ 확장 제외
+
+ANDIF 와 ORIF

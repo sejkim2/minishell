@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/16 17:16:45 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 13:48:19 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,6 @@ char	*get_path(char *exe, char **env)
 	char 	*res;
 
 	path = find_path_in_envp_and_split(env);
-	if (path == 0)
-	{
-		printf("$PATH is not exist\n");
-		exit(1);
-	}
 	res = init_path_env(exe, path);
 	return (res);
 }

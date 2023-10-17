@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:13:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 15:40:30 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 13:36:16 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,27 +85,24 @@ static void	exit_fork(void)
 
 void	builtin_exit(char **cmd_argv)
 {
-	unsigned char	error_code;
 	int				flag;
 	int				cmd_argc;
 
+	exit_status = 0;
 	cmd_argc = cnt_line(cmd_argv);
 	write(2, "exit\n", 6);
 	if (!cmd_argc)
-		exit(0);
-	error_code = ft_atol(*cmd_argv, &flag);
-	if (cmd_argc)
+		exit(exit_status);
+	exit_status = ft_atol(*cmd_argv, &flag);
+	if (flag == 1)
 	{
-		if (flag == 1)
-		{
-			ft_stderror_print("exit", *cmd_argv, "numeric argument required");
-			exit(255);
-		}
-		else if (cmd_argc > 2 && flag == 0)
-		{
-			ft_stderror_print("exit", NULL, "too many arguments");
-			return (exit_fork());
-		}
+		ft_stderror_print("exit", *cmd_argv, "numeric argument required");
+		exit(exit_status);
 	}
-	exit(error_code);
+	else if (cmd_argc > 1 && flag == 0)
+	{
+		ft_stderror_print("exit", NULL, "too many arguments");
+		return (exit_fork());
+	}
+	exit(exit_status);
 }
