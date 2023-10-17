@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:06:44 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 17:37:20 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 12:57:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,40 @@
 	인자 & 출력문 중북체크
 */
 
-static void	list_env(char **env)
+static void	list_env(char **env, char **cmd_argv)
 {
-	int		idx;
+	int		i;
+	int		j;
+	char	*s1;
+	char	*s2;
 
-	idx = 0;
-	while (env[idx])
+	i = 0;
+	j = 0;
+	if (!cmd_argv)
 	{
-		printf("%s\n", env[idx]);
-		idx++;
+		while (env[i])
+		{
+			printf("%s\n", env[i]);
+			i++;
+		}
 	}
-}
-
-static void	list_shv(char **cmd_argv)
-{
-	int		idx;
-
-	idx = 0;
-	while (cmd_argv[idx])
+	else
 	{
-		if (ft_strchr(cmd_argv[idx], '='))
-			printf("%s\n", cmd_argv[idx]);
-		idx++;
+		while (cmd_argv[i])
+		{
+			s1 = get_envname(cmd_argv[i]);
+			while (env[j])
+			{
+				s2 = get_envname(env[j]);
+				if (strcmp(s1, s2))
+					printf("%s\n", env[j]);
+				free(s2);
+				j++;
+			}
+			free(s1);
+			i++;
+		}
+		list_env(cmd_argv, NULL);
 	}
 }
 
@@ -85,8 +97,7 @@ static void	set_env(char **cmd_argv, char **env)
 		}
 		i++;
 	}
-	list_env(env);
-	list_shv(cmd_argv);
+	list_env(env, cmd_argv);
 }
 
 void	builtin_env(char **cmd_argv, char **env)
@@ -95,8 +106,7 @@ void	builtin_env(char **cmd_argv, char **env)
 
 	cmd_argc = cnt_line(cmd_argv);
 	if (!cmd_argc)
-		list_env(env);
+		list_env(env, NULL);
 	else
 		set_env(cmd_argv, env);
-	exit_status = 0;
 }

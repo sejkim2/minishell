@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/16 17:17:58 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 11:24:21 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 # include <termios.h>
 # include <sys/wait.h>
+# include <dirent.h>
 # include <fcntl.h>
 # include <limits.h>
 # include <curses.h>
@@ -239,13 +240,11 @@ void	run_word(t_cmd cmd_info, char **env);
 /*	run_utils */
 char	*init_path_env(char *cmd, char **path);
 char	*get_path(char *exe, char **env);
-
 int		cnt_cmd_element(t_tree_node *node);
 char	*set_redir_file_name(t_tree_node *node);
 void	check_single_redir(t_tree_node *child, char *redir_name);
 void	check_double_redir(t_tree_node *child, char *redir_name);
 t_cmd	make_cmd_info(t_tree_node *node, char **env);
-void	recover_std_fd(int *o_fd);
 int		run_builtin(t_cmd cmd_info, char ***env);
 void	run_execve(t_cmd cmd_info, char **env);
 
@@ -287,5 +286,6 @@ void	free_4str(char *s1, char *s2, char *s3, char *s4);
 
 /*	utils	*/
 void	ft_stderror_print(char *cmd, char *argv, char *err_string);
-
+void	store_std_fd(int *o_fd);
+void	recover_std_fd(int *o_fd);
 #endif

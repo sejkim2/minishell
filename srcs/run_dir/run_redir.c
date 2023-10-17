@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 17:05:50 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 11:52:06 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	run_redirection_list(t_tree_node *node)
 	while (child)
 	{
 		redir_name = set_redir_file_name(child);
+		// wild_card_in_redir(redir_name, child);
 		if (child->token->redir_type == SINGLE_REDIR)
 			check_single_redir(child, redir_name);
 		else	//DOUBLE_REDIR

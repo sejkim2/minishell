@@ -6,11 +6,17 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:07:55 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 16:49:51 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/16 18:38:00 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	store_std_fd(int *o_fd)
+{
+	o_fd[0] = dup(0);
+	o_fd[1] = dup(1);
+}
 
 void	recover_std_fd(int *o_fd)
 {

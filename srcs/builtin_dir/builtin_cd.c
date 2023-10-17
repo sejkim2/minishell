@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:28:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 12:10:35 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 11:40:44 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,5 +42,4 @@ void	builtin_cd(char **cmd_argv, char **env)
 			exit_status = 1;
 		}
 	}
-	exit_status = 0;
 }
