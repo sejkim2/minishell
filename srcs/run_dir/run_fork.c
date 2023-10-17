@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:44:36 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/17 14:37:51 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 16:38:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	run_command_nonpipe(t_tree_node *node, char ***env)
 		sub_pro = fork();
 		if (sub_pro == 0)
 		{
+			if (child->next)
+				run_redirection_list(child->next);
 			run_list(child->child_list->next, env);
 			exit(exit_status);
 		}
