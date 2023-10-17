@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/17 13:35:08 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 16:56:57 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,10 @@ void	run_simple_command_nonpipe(t_tree_node *node, char ***env)
 void	run_simple_command(t_tree_node *node, int *iput, int *oput, char ***env)
 {
 	t_tree_node	*child;
+	t_cmd		cmd_info;
 
+	change_env(node, *env);
+	cmd_info = make_cmd_info(node->child_list, *env);
 	child = node->child_list;
 	dup2(iput[0], 0);
 	dup2(oput[1], 1);
@@ -49,23 +52,9 @@ void	run_simple_command(t_tree_node *node, int *iput, int *oput, char ***env)
 			run_redirection_list(child);
 		child = child->next;
 	}
-	// run_simple_command_element(node->child_list, env);
-}
-
-// void	run_simple_command_element(t_tree_node *node, char **env)
-// {
-// 	run_word(cmd_info, env);
-// }
-
-
-void	run_word(t_cmd cmd_info, char **env)
-{
-
-	cmd_info.cmd = get_path(cmd_info.cmd, env); // 경로 찾아서 붙여주는 함수.
-	if (access(cmd_info.cmd, X_OK) == -1)
+	if (cmd_info.cmd)
 	{
-		printf("minishell: %s: %s\n", cmd_info.cmd, strerror(errno));
-		exit(1);
+		if (!run_builtin(cmd_info, env))
+			run_execve(cmd_info, *env);
 	}
-	execve(cmd_info.cmd, cmd_info.cmd_line, env);
 }
