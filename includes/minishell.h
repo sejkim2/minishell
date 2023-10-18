@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/18 13:34:27 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/18 16:33:33 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -253,7 +253,11 @@ char	*generate_temp_filename(char *mode);
 int		here_document(void);
 void	working_history(void);
 void	filecpy(int in_fd, int out_fd);
+
+/*wild_card*/
 char	**get_file_by_wild_card(s_str_info	*str_info);
+int	check_wild_card_pattern(s_str_info *str_info, int *bit_mask);
+int	wild_card_type_is_string(char *str, char **file_name);
 
 /*wild_card*/
 int	wild_card(char *input, char *file);
