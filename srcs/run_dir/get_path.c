@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   path.c                                             :+:      :+:    :+:   */
+/*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/17 13:48:19 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 16:10:59 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static	char	**find_path_in_envp_and_split(char **env)
 char	*get_path(char *exe, char **env)
 {
 	char	**path;
-	char 	*res;
+	char	*res;
 
 	path = find_path_in_envp_and_split(env);
 	res = init_path_env(exe, path);

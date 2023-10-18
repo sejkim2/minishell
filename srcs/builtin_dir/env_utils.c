@@ -1,16 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_env.c                                        :+:      :+:    :+:   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 14:30:02 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 15:29:59 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	expand_env(t_tree_node *parent, char **env)
+{
+	int			i;
+	int			j;
+	t_tree_node	*child;
+	t_tree_node	*head;
+
+	child = parent->child_list;
+	while (child)
+	{
+		head = child;
+		i = 0;
+		while (child->token->str_info[i].str_type != NUL)
+		{
+			if (child->token->str_info[i].str_type != SINGLE_QUOTE)
+				parser_env(i, child, env);
+			i++;
+		}
+		child = apply_in_tree(child, head);
+	}
+}
 
 char	**init_environ(char **envp)
 {

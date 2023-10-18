@@ -6,17 +6,11 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:36:27 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/17 13:11:17 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 14:58:46 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	받은 인자를 문자열로 출력함.
-	인자가 다수라면, 각 인자에 공백을 삽입하여 붙여 출력함.
-	-n 옵션은 줄바꿈을 붙이지 않음. 따라서 프롬프트가 출력문에 바로 붙어서 들어오게 됨. 
-*/
 
 static void	echo_no_opt_print(int cmd_argc, char **cmd_argv)
 {
@@ -75,7 +69,7 @@ static void	echo_opt(int cmd_argc, char **cmd_argv)
 	int		i;
 	int		j;
 
-	if (echo_opt_flag(*cmd_argv)) // 첫 인자에서 일단, opt가 적용되는지를 확인.
+	if (echo_opt_flag(*cmd_argv))
 	{
 		i = 1;
 		while (cmd_argv[i][0] == '-')
@@ -102,7 +96,7 @@ void	builtin_echo(char **cmd_argv)
 {
 	int		cmd_argc;
 
-	exit_status = 0;
+	g_exit_status = 0;
 	cmd_argc = cnt_line(cmd_argv);
 	if (!cmd_argc)
 		echo_no_opt_print(cmd_argc, cmd_argv);

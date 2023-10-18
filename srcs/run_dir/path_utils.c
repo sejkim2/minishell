@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_path_env-1.c                                  :+:      :+:    :+:   */
+/*   path_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:54:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/17 14:39:45 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 16:11:18 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ static	int	find_root(char *cmd)
 
 static	char	*init_path_env_utils(char *cmd, char **path)
 {
-	int	root_place;
-	char *res;
+	int		root_place;
+	char	*res;
 
 	root_place = find_root(cmd);
 	if (root_place > 0)
@@ -70,7 +70,7 @@ static	char	*init_path_env_utils(char *cmd, char **path)
 
 char	*init_path_env(char *cmd, char **path)
 {
-	char *res;
+	char	*res;
 
 	res = init_path_env_utils(cmd, path);
 	return (res);

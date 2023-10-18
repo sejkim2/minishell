@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:44:36 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/17 19:54:24 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 16:19:23 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,50 +30,69 @@ void	run_command_nonpipe(t_tree_node *node, char ***env)
 			if (child->next)
 				run_redirection_list(child->next);
 			run_list(child->child_list->next, NULL, env);
-			exit(exit_status);
+			exit(g_exit_status);
 		}
 		else
 		{
 			wait(&status);
-			exit_status = WEXITSTATUS(status);
+			g_exit_status = WEXITSTATUS(status);
 		}
 	}
 }
 
-void	run_command(t_tree_node *node, int *iput, int *oput, char ***env)
-{
-	t_tree_node	*child;
-	t_tree_node	*redirection_list;
-	pid_t		sub_pro;
+// void	run_command_firstpipe(t_tree_node *node, int *oput, char ***env)
+// {
+// 	t_tree_node	*child;
+// 	t_tree_node	*redirection_list;
+// 	pid_t		sub_pro;
 
-	child = node->child_list;
-	if (child->symbol == SIMPLE_COMMAND)
-		run_simple_command(child, iput, oput, env);
-	else //subshell
-	{
-		write(2, "미완성\n", 11);
-		exit(1);
-		// sub_pro = fork();
-		// if (sub_pro == 0)
-		// 	run_list(child->child_list->next, env);
-	}
-}
+// 	child = node->child_list;
+// 	if (child->symbol == SIMPLE_COMMAND)
+// 		run_simple_command(child, iput, oput, env);
+// 	else //subshell
+// 	{
+// 		write(2, "미완성\n", 11);
+// 		exit(1);
+// 		// sub_pro = fork();
+// 		// if (sub_pro == 0)
+// 		// 	run_list(child->child_list->next, env);
+// 	}
+// }
 
-void	run_command_lastpipe(t_tree_node *node, int *iput, char ***env)
-{
-	t_tree_node	*child;
-	t_tree_node	*redirection_list;
-	pid_t		sub_pro;
+// void	run_command_middlepipe(t_tree_node *node, int *iput, int *oput, char ***env)
+// {
+// 	t_tree_node	*child;
+// 	t_tree_node	*redirection_list;
+// 	pid_t		sub_pro;
 
-	child = node->child_list;
-	if (child->symbol == SIMPLE_COMMAND)
-		run_simple_command_lastpipe(child, iput, env);
-	else //subshell
-	{
-		write(2, "미완성\n", 11);
-		exit(1);
-		// sub_pro = fork();
-		// if (sub_pro == 0)
-		// 	run_list(child->child_list->next, env);
-	}
-}
+// 	child = node->child_list;
+// 	if (child->symbol == SIMPLE_COMMAND)
+// 		run_simple_command(child, iput, oput, env);
+// 	else //subshell
+// 	{
+// 		write(2, "미완성\n", 11);
+// 		exit(1);
+// 		// sub_pro = fork();
+// 		// if (sub_pro == 0)
+// 		// 	run_list(child->child_list->next, env);
+// 	}
+// }
+
+// void	run_command_lastpipe(t_tree_node *node, int *iput, char ***env)
+// {
+// 	t_tree_node	*child;
+// 	t_tree_node	*redirection_list;
+// 	pid_t		sub_pro;
+
+// 	child = node->child_list;
+// 	if (child->symbol == SIMPLE_COMMAND)
+// 		run_simple_command_lastpipe(child, iput, env);
+// 	else //subshell
+// 	{
+// 		write(2, "미완성\n", 11);
+// 		exit(1);
+// 		// sub_pro = fork();
+// 		// if (sub_pro == 0)
+// 		// 	run_list(child->child_list->next, env);
+// 	}
+// }

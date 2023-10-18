@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 14:42:03 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 15:30:04 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 15:14:46 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,5 +61,5 @@ void	builtin_unset(char **cmd_argv, char ***env)
 		free_2str(env_name[0], env_name[1]);
 	}
 	*env = rearrange_env(cnt, *env);
-	exit_status = 0;
+	g_exit_status = 0;
 }

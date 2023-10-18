@@ -6,31 +6,13 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/17 11:52:06 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 16:46:05 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_redirection_list(t_tree_node *node)
-{
-	t_tree_node	*child;
-	char		*redir_name;
-
-	child = node->child_list;
-	while (child)
-	{
-		redir_name = set_redir_file_name(child);
-		// wild_card_in_redir(redir_name, child);
-		if (child->token->redir_type == SINGLE_REDIR)
-			check_single_redir(child, redir_name);
-		else	//DOUBLE_REDIR
-			check_double_redir(child, redir_name);
-		child = child->next;
-	}
-}
-
-char	*set_redir_file_name(t_tree_node *node)
+static char	*set_redir_file_name(t_tree_node *node)
 {
 	char	*file_name;
 	char	*remove_str;
@@ -48,7 +30,27 @@ char	*set_redir_file_name(t_tree_node *node)
 	return (file_name);
 }
 
-void	check_single_redir(t_tree_node *child, char *redir_name)
+int	run_redirection_list(t_tree_node *node)
+{
+	t_tree_node	*child;
+	char		*redir_name;
+	int			fd_flag;
+
+	child = node->child_list;
+	while (child)
+	{
+		redir_name = set_redir_file_name(child);
+		if (child->token->redir_type == SINGLE_REDIR)
+			fd_flag = check_single_redir(child, redir_name);
+		else
+			fd_flag = check_double_redir(child, redir_name);
+		child = child->next;
+	}
+	return (fd_flag);
+}
+
+
+int	check_single_redir(t_tree_node *child, char *redir_name)
 {
 	int		fd;
 
@@ -58,7 +60,7 @@ void	check_single_redir(t_tree_node *child, char *redir_name)
 		if (fd == -1)
 		{
 			ft_stderror_print(redir_name, NULL, strerror(errno));
-			exit_status = 1;
+			return (1);
 		}
 		dup2(fd, 0);
 	}
@@ -68,13 +70,14 @@ void	check_single_redir(t_tree_node *child, char *redir_name)
 		if (fd == -1)
 		{
 			ft_stderror_print(redir_name, NULL, strerror(errno));
-			exit_status = 1;
+			return (1);
 		}
 		dup2(fd, 1);
 	}
+	return (0);
 }
 
-void	check_double_redir(t_tree_node *child, char *redir_name)
+int	check_double_redir(t_tree_node *child, char *redir_name)
 {
 	int		fd;
 
@@ -84,7 +87,7 @@ void	check_double_redir(t_tree_node *child, char *redir_name)
 		if (fd == -1)
 		{
 			ft_stderror_print(redir_name, NULL, strerror(errno));
-			exit_status = 1;
+			return (1);
 		}
 		dup2(fd, 0);
 	}
@@ -94,8 +97,9 @@ void	check_double_redir(t_tree_node *child, char *redir_name)
 		if (fd == -1)
 		{
 			ft_stderror_print(redir_name, NULL, strerror(errno));
-			exit_status = 1;
+			return (1);
 		}
 		dup2(fd, 1);
 	}
+	return (0);
 }

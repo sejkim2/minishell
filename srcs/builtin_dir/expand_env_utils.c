@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand_env.c                                       :+:      :+:    :+:   */
+/*   expand_env_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:25:18 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/17 14:31:00 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 15:27:58 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	mk_env(int *idx, char **string, char **env)
+void	mk_env(int *idx, char **string, char **env)
 {
 	int		status;
 	char	*str[4];
@@ -22,7 +22,7 @@ static void	mk_env(int *idx, char **string, char **env)
 	make_strings(idx, string, str);
 	if ((*string)[*idx + 1] && (*string)[*idx + 1] == '?')
 	{
-		str[3] = ft_strdup(ft_itoa((int)exit_status));
+		str[3] = ft_strdup(ft_itoa((int)g_exit_status));
 		str[2] = ft_strdup(*string + *idx + 2);
 	}
 	else
@@ -40,7 +40,7 @@ static void	mk_env(int *idx, char **string, char **env)
 	free_2str(tmp, str[2]);
 }
 
-static char	*check_redir(t_tree_node *node)
+char	*check_redir(t_tree_node *node)
 {
 	char	*tmp;
 
@@ -58,12 +58,12 @@ static char	*check_redir(t_tree_node *node)
 		else
 			tmp = ft_strdup(">>");
 	}
-	else 
+	else
 		tmp = ft_strdup("");
 	return (tmp);
 }
 
-static t_tree_node	*apply_in_tree(t_tree_node *node, t_tree_node *head)
+t_tree_node	*apply_in_tree(t_tree_node *node, t_tree_node *head)
 {
 	char	*tmp;
 	char	*remov;
@@ -83,7 +83,7 @@ static t_tree_node	*apply_in_tree(t_tree_node *node, t_tree_node *head)
 	return (node->next);
 }
 
-int	string_dollar(char *str)
+int	dollar_string(char *str)
 {
 	while (*str)
 	{
@@ -94,35 +94,18 @@ int	string_dollar(char *str)
 	return (1);
 }
 
-void	change_env(t_tree_node *parent, char **env) //parent = simple_command
+void	parser_env(int i, t_tree_node *child, char **env)
 {
-	int			i;
-	int			j;
-	t_tree_node	*child;
-	t_tree_node *head;
+	int		j;
 
-	child = parent->child_list;
-	while (child)
+	j = 0;
+	while (child->token->str_info[i].str[j])
 	{
-		head = child;
-		i = 0;
-		while (child->token->str_info[i].str_type != NUL)
-		{
-			if (child->token->str_info[i].str_type != SINGLE_QUOTE)
-			{
-				j = 0;
-				while (child->token->str_info[i].str[j])
-				{
-					if (string_dollar(child->token->str_info[i].str))
-						break ;
-					if (child->token->str_info[i].str[j] != '$')
-						j++;
-					else
-						mk_env(&j, &child->token->str_info[i].str, env);
-				}
-			}
-			i++;
-		}
-		child = apply_in_tree(child, head);
+		if (dollar_string(child->token->str_info[i].str))
+			break ;
+		if (child->token->str_info[i].str[j] != '$')
+			j++;
+		else
+			mk_env(&j, &child->token->str_info[i].str, env);
 	}
 }

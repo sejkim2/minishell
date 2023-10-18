@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:07:55 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 18:38:00 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 16:23:52 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	recover_std_fd(int *o_fd)
 	dup2(o_fd[1], 1);
 }
 
-int	cnt_cmd_element(t_tree_node *node)
+static int	cnt_argv(t_tree_node *node)
 {
 	int		cnt;
 
@@ -38,7 +38,7 @@ int	cnt_cmd_element(t_tree_node *node)
 	return (cnt);
 }
 
-char	*find_command(t_tree_node *node)
+static char	*find_command(t_tree_node *node)
 {
 	while (node)
 	{
@@ -60,7 +60,7 @@ t_cmd	make_cmd_info(t_tree_node *node, char **env)
 	cmd_info.cmd_line = NULL;
 	if (cmd_info.cmd)
 	{
-		cmd_info.cmd_line = (char **)malloc(sizeof(char *) * cnt_cmd_element(node) + 1);
+		cmd_info.cmd_line = malloc(sizeof(char *) * cnt_argv(node) + 1);
 		if (!cmd_info.cmd_line)
 			malloc_error();
 		while (node)

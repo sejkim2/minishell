@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:32:26 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/16 18:06:11 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 16:43:38 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static void	print_export(int i, char *env_name, char *env_val, char **env)
 	j = 0;
 	write(1, "declare -x ", 12);
 	write(1, env_name, ft_strlen(env_name));
-	if (is_equal(env[i]))
+	if (ft_strchr(env[i], '='))
 	{
 		write(1, "=\"", 2);
 		while (env_val[j])
@@ -34,7 +34,7 @@ static void	print_export(int i, char *env_name, char *env_val, char **env)
 	printf("\n");
 }
 
-void	list_export(char **env)
+static void	list_export(char **env)
 {
 	int		cnt;
 	int		i;
@@ -52,44 +52,17 @@ void	list_export(char **env)
 		free_2str(env_name, env_val);
 		i++;
 	}
-	exit_status = 0;
-}
-
-char	**add_export(char *str, char **env)
-{
-	int		i;
-	int		j;
-	int		cnt;
-	char	**renv;
-
-	i = 0;
-	j = 0;
-	cnt = cnt_line(env);
-	renv = (char **)malloc(sizeof(char *) * (cnt + 2));
-	while (i < cnt)
-	{
-		renv[j] = env[i];
-		i++;
-		j++;
-	}
-	renv[j] = str;
-	renv[j + 1] = NULL;
-	return (renv);
-}
-
-void	set_export(char **cmd_argv, char ***env)
-{
-	check_key_rule(cmd_argv, env);
+	g_exit_status = 0;
 }
 
 void	builtin_export(char **cmd_argv, char ***env)
 {
 	int		cmd_argc;
 
-	exit_status = 0;
+	g_exit_status = 0;
 	cmd_argc = cnt_line(cmd_argv);
 	if (!cmd_argc)
 		list_export(*env);
 	else
-		set_export(cmd_argv, env);
+		check_key_rule(cmd_argv, env);
 }
