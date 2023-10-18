@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/17 16:59:36 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 19:57:59 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int	main(void)
 	t_tree_node 	*root;
 	char			**env;
 	char 			*line;
+	int				status;
 
 	env = init_environ(environ);
 	exit_status = 0;

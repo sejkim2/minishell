@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/17 11:24:21 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/17 19:56:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -225,11 +225,13 @@ void print_symbol(t_symbol symbol);
 
 /* run_root */
 void	run_root(t_tree_node *node, char ***env);
-void	run_list(t_tree_node *node, char ***env);
+void	run_list(t_tree_node *node, int *iput, char ***env);
 void	run_pipeline(t_tree_node *node, int *iput, char ***env, t_symbol last_symbol);
 void	run_command(t_tree_node *node, int *iput, int *oput, char ***env);
 void	run_command_nonpipe(t_tree_node *node, char ***env);
 void 	run_simple_command_nonpipe(t_tree_node *node, char ***env);
+void	run_command_lastpipe(t_tree_node *node, int *iput, char ***env);
+void	run_simple_command_lastpipe(t_tree_node *node, int *iput, char ***env);
 
 // void run_subshell(t_tree_node *node);
 void 	run_simple_command(t_tree_node *node, int *iput, int *oput, char ***env);
