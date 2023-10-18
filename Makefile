@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
+#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/16 12:26:57 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/18 13:40:47 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,8 @@ PARSER_SRCS = parser.c \
 	parser_utils.c
 
 ENTRY_SRCS = temp_file.c \
-	wild_card.c
+	wild_card.c \
+	wild_card_test.c
 	
 SIGNAL_SRCS = shell_signal.c \
 	terminal_option.c \
@@ -121,4 +122,7 @@ re :
 	make fclean
 	make all
 
-.PHONY : all clean fclean re
+fast :
+	make && make clean && clear
+
+.PHONY : all clean fclean re fast
