@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 14:16:56 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 14:42:24 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	run_simple_command_nonpipe(t_tree_node *node, char ***env)
 	while (child)
 	{
 		if (child->symbol == REDIRECTION_LIST)
-			fd_flag = run_redirection_list(child, o_fd);
+			fd_flag = run_redirection_list(child);
 		child = child->next;
 		if (fd_flag == -1)
 			break ;

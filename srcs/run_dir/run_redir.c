@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 14:17:17 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 14:41:43 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static int	*check_double_redir(t_tree_node *child, char *redir_name)
 	return (fd);
 }
 
-int	run_redirection_list(t_tree_node *node, int *o_fd)
+int	run_redirection_list(t_tree_node *node)
 {
 	t_tree_node		*child;
 	char			*redir_name;

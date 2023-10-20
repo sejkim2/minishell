@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 13:15:45 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 14:43:07 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -269,7 +269,7 @@ void			run_simple_command_middlepipe(t_tree_node *node, int *iput, int *oput, ch
 void			run_simple_command_lastpipe(t_tree_node *node, int *iput, char ***env);
 
 /*run_redir*/
-int				run_redirection_list(t_tree_node *node, int *o_fd);
+int				run_redirection_list(t_tree_node *node);
 
 /*run_exe*/
 int				run_builtin(t_cmd cmd_info, char ***env);
@@ -277,7 +277,7 @@ void			run_execve(t_cmd cmd_info, char **env);
 
 /*run_utils*/
 void			store_std_fd(int *o_fd);
-void			recover_std_fd(int *o_fd);
+void			recover_std_fd(int *o_fd, t_tree_node *redir_list);
 t_cmd			make_cmd_info(t_tree_node *node, char **env);
 
 /*				signal_dir				*/

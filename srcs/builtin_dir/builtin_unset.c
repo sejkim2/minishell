@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 14:42:03 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 15:14:46 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 14:39:10 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,10 @@ void	builtin_unset(char **cmd_argv, char ***env)
 			env_name[1] = get_envname((*env)[j]);
 			if (!strcmp(env_name[0], env_name[1]))
 				(*env)[j] = 0;
+			free_2str(env_name[0], env_name[1]);
 			j++;
 		}
 		i++;
-		free_2str(env_name[0], env_name[1]);
 	}
 	*env = rearrange_env(cnt, *env);
 	g_exit_status = 0;
