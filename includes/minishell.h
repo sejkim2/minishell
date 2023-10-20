@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/18 16:33:33 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 14:44:33 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ typedef struct s_token
     t_symbol symbol;
     t_redir redir_type;
     char *value;
+    char *HD_name;
     s_str_info *str_info;
 }   t_token;
 
@@ -261,6 +262,9 @@ int	wild_card_type_is_string(char *str, char **file_name);
 
 /*wild_card*/
 int	wild_card(char *input, char *file);
+
+/*heredoc*/
+void get_heredoc(t_tree_node *root, int depth);
 
 /*	built-in	*/
 void	builtin_cd(char **cmd_argv, char **env);

@@ -6,7 +6,7 @@
 #    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/18 16:33:17 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/10/20 14:43:45 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ SIGNAL_DIR = srcs/signal_dir
 BUILTIN_DIR= srcs/builtin_dir
 TEST_DIR = srcs/test_dir
 WILD_CARD_DIR = srcs/wild_card_dir
+HEREDOC_DIR = srcs/heredoc_dir
 
 LEXER_SRCS = lexer.c \
 	lexer_error.c \
@@ -82,6 +83,8 @@ WILD_CARD_SRCS = wild_card.c \
 	check_wild_card_pattern.c \
 	wild_card_type_is_string.c
 
+HEREDOC_SRCS = get_heredoc.c
+
 TEST_SRCS = test.c
 
 SRCS1 = $(addprefix $(LEXER_DIR)/,$(LEXER_SRCS))
@@ -92,6 +95,7 @@ SRCS5 = $(addprefix $(BUILTIN_DIR)/,$(BUILTIN_SRCS))
 SRCS6 = $(addprefix $(TEST_DIR)/,$(TEST_SRCS))
 SRCS7 = $(addprefix $(ENTRY_DIR)/,$(ENTRY_SRCS))
 SRCS8 = $(addprefix $(WILD_CARD_DIR)/,$(WILD_CARD_SRCS))
+SRCS9 = $(addprefix $(HEREDOC_DIR)/,$(HEREDOC_SRCS))
 
 LEXER_OBJS = $(SRCS1:.c=.o)
 PARSER_OBJS = $(SRCS2:.c=.o)
@@ -101,8 +105,9 @@ BUILTIN_OBJS = $(SRCS5:.c=.o)
 TEST_OBJS = $(SRCS6:.c=.o)
 ENTRY_OBJS = $(SRCS6:.c=.o)
 WILD_CARD_OBJS = $(SRCS7:.c=.o)
+HEREDOC_OBJS = $(SRCS8:.c=.o)
 
-OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(RUN_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS) $(TEST_OBJS) $(ENTRY_OBJS) $(WILD_CARD_OBJS)
+OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(RUN_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS) $(TEST_OBJS) $(ENTRY_OBJS) $(WILD_CARD_OBJS) $(HEREDOC_OBJS)
 # OBJS = $(SRCS:%.c=%.o)
 
 %.o : %.c $(HEADER)
@@ -111,7 +116,7 @@ OBJS = $(LEXER_OBJS) $(PARSER_OBJS) $(RUN_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS) $
 $(NAME) : $(OBJS)
 # @make -C ./mylib
 # $(CC) $(C_FLAGS) $(SRCS) -o $@ -L ./readline/lib -lreadline -lncurses
-	$(CC) $(C_FLAGS) $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4) $(SRCS5) $(SRCS6) $(SRCS7)  $(SRCS8) -o $@ -lreadline -lncurses mylib/mylib.a
+	$(CC) $(C_FLAGS) $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4) $(SRCS5) $(SRCS6) $(SRCS7) $(SRCS8) $(SRCS9) -o $@ -lreadline -lncurses mylib/mylib.a
 
 all : $(NAME)
 
