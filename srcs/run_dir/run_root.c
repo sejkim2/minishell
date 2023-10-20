@@ -3,70 +3,72 @@
 /*                                                        :::      ::::::::   */
 /*   run_root.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:03:02 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 20:18:36 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 15:04:08 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_root(t_tree_node *root, char **env)
+void	run_root(t_tree_node *root, char ***env)
 {
 	t_tree_node	*child;
-
-	child = root->child_list;
-	run_list(child, env);
-}
-
-void	run_list(t_tree_node *node, char **env)
-{
-	t_tree_node	*child;
-	int			flag;
-	int			status;
 	int			iput[2];
 
 	pipe(iput);
+	close(iput[1]);
+	child = root->child_list;
+	run_list(child, iput, env);
+}
+
+void	run_list(t_tree_node *node, int *iput, char ***env)
+{
+	t_tree_node	*child;
+	int			status;
+
 	child = node->child_list; //symbol: PIPELINE, LIST, AND_IF, OR_IF
-	run_pipeline(child, iput, env, PIPELINE); // run_pipeline의 반환으로 실행 여부를 확인.
+	run_pipeline(child, iput, env, PIPELINE);
 	child = child->next;
-	flag = WEXITSTATUS(status);
-	while (child && ((child->symbol == AND_IF && !flag) || (child ->symbol == OR_IF && flag)))
+	while (child && ((child->symbol == AND_IF && !g_exit_status) || (child ->symbol == OR_IF && g_exit_status)))
 	{
 		child = child->next;
-		run_list(child, env);
+		run_list(child, iput, env);
 		child = child->next;
 	}
 }
 
-void	run_pipeline(t_tree_node *node, int *iput, char **env, t_symbol	last_symbol)
+void	run_pipeline(t_tree_node *node, int *iput, char ***env, t_symbol last_symbol)
 {
 	int			oput[2];
 	t_tree_node	*child;
 	pid_t		c_pro;
-	t_symbol	before;
 
-	child = node->child_list; //COMMAND, PIPE, PIPELINE
-	if (child->num_of_child > 1) // 넘어갈수록 줄여줘야 할 듯?
-		pipe(oput);
-	else if (last_symbol != PIPE)
-		return (run_command_nonpipe(child, env)); //
-	while (child) //next가 null로 도달할 때 까지 단, pipe는 넘김)
+	if (node->num_of_child > 1) //pipeline의 하위 개념수 (1이상이면 반드시 파이프가 존재한다.)
 	{
-		if (child->symbol == PIPE)
-		{
-			before = child->symbol;
-			child = child ->next;
-			return (run_pipeline(child, iput, env, before));
-		}
-		c_pro = fork();
-		if (c_pro)
-			run_command(child, iput, oput, env);
-		else
-		{
-			iput = oput;
-			child = child->next;
-		}
+		pipe(oput);
+		close(oput[0]);
 	}
+	child = node->child_list; //COMMAND, PIPE, PIPELINE
+	if (node->num_of_child == 1 && last_symbol != PIPE)
+		return (run_command_nonpipe(child, env));
+	// else if (node->num_of_child == 1 && last_symbol == PIPE)
+	// 	return (run_command_lastpipe(child, iput, env));
+	// while (child) //COMMAND, PIPE, PIPELINE. 단, PIPE는 넘김)
+	// {
+	// 	if (child->symbol == PIPE)
+	// 		return (run_pipeline(child->next, iput, env, child->symbol));
+	// 	c_pro = fork();
+	// 	if (c_pro == 0)
+	// 	{
+	// 		run_command(child, iput, oput, env);
+	// 		exit(g_exit_status);
+	// 	}
+	// 	else
+	// 	{
+	// 		iput = oput;
+	// 		child = child->next;
+	// 	}
+	// }
 }

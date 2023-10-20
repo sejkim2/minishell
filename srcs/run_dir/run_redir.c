@@ -3,33 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   run_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 20:18:22 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 15:04:29 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_redirection_list(t_tree_node *node)
-{
-	t_tree_node	*child;
-	char		*redir_name;
-
-	child = node->child_list;
-	while (child)
-	{
-		redir_name = set_redir_file_name(child);
-		if (child->token->redir_type == SINGLE_REDIR)
-			check_single_redir(child, redir_name);
-		else	//DOUBLE_REDIR
-			check_double_redir(child, redir_name);
-		child = child->next;
-	}
-}
-
-char	*set_redir_file_name(t_tree_node *node)
+static char	*set_redir_file_name(t_tree_node *node)
 {
 	char	*file_name;
 	char	*remove_str;
@@ -47,7 +30,7 @@ char	*set_redir_file_name(t_tree_node *node)
 	return (file_name);
 }
 
-void	check_single_redir(t_tree_node *child, char *redir_name)
+static int	*check_single_redir(t_tree_node *child, char *redir_name)
 {
 	int		fd;
 
@@ -56,45 +39,68 @@ void	check_single_redir(t_tree_node *child, char *redir_name)
 		fd = open(redir_name, O_RDONLY);
 		if (fd == -1)
 		{
-			printf("minishell: %s: %s", redir_name, strerror(errno));
-			exit(1);
+			ft_stderror_print(redir_name, NULL, strerror(errno));
+			return (-1);
 		}
 		dup2(fd, 0);
 	}
 	else
 	{
-		fd = open(redir_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		fd = open(redir_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
 		{
-			printf("minishell: %s: %s", redir_name, strerror(errno));
-			exit(1);
+			ft_stderror_print(redir_name, NULL, strerror(errno));
+			return (-1);
 		}
 		dup2(fd, 1);
 	}
 }
 
-void	check_double_redir(t_tree_node *child, char *redir_name)
+static int	*check_double_redir(t_tree_node *child, char *redir_name)
 {
 	int		fd;
 
-	if (child->token->value[0] == '<')
-	{
-		fd = here_document();
-		if (fd == -1)
-		{
-			printf("minishell: %s: %s", redir_name, strerror(errno));
-			exit(1);
-		}
-		dup2(fd, 0);
-	}
-	else
+	if (child->token->value[0] == '>')
 	{
 		fd = open(redir_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
 		{
-			printf("minishell: %s: %s", redir_name, strerror(errno));
-			exit(1);
+			ft_stderror_print(redir_name, NULL, strerror(errno));
+			return (-1);
 		}
 		dup2(fd, 1);
 	}
+	else
+	{
+		fd = open(child->token->HD_name, O_RDONLY);
+		if (fd == -1)
+		{
+			ft_stderror_print(redir_name, NULL, strerror(errno));
+			return (-1);
+		}
+		dup2(fd, 0);
+	}
+	return (fd);
+}
+
+int	run_redirection_list(t_tree_node *node)
+{
+	t_tree_node		*child;
+	char			*redir_name;
+	int				fd_flag;
+
+	child = node->child_list;
+	while (child)
+	{
+		redir_name = set_redir_file_name(child);
+		if (child->token->redir_type == SINGLE_REDIR)
+			fd_flag = check_single_redir(child, redir_name);
+		else
+			fd_flag = check_double_redir(child, redir_name);
+		child = child->next;
+		free(redir_name);
+		if (fd_flag == -1)
+			return (fd_flag);
+	}
+	return (0);
 }

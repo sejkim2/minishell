@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:24:41 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/11 17:28:17 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 12:22:25 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	임시 파일을 하나 만들고 minishell이 종료되었을 때 임시 파일의 내용을 히스토리로 옮김.
 */
 
-char	*generate_temp_filename(char *mode)
+static char	*generate_temp_filename(char *mode)
 {
 	char	*str;
 	char	*rstr;
@@ -46,15 +46,27 @@ char	*generate_temp_filename(char *mode)
 	return (str);
 }
 
-int	here_document(void)
+char	*here_document(char *limit)
 {
 	char	*tmp_name;
 	int		hd_fd;
+	char	*line;
 
 	tmp_name = generate_temp_filename("HD_Temp");
-	hd_fd = open(tmp_name, O_RDWR | O_CREAT | O_TRUNC, 0644);
-	free(tmp_name);
-	return (hd_fd);
+	hd_fd = open(tmp_name, O_RDWR | O_CREAT, 0644);
+	while (1)
+	{
+		line = get_next_line(0);
+		if (!line || !ft_strncmp(limit, line, ft_strlen(limit)))
+		{
+			free(line);
+			break ;
+		}
+		write(hd_fd, line, ft_strlen(line));
+		free(line);
+	}
+	close(hd_fd);
+	return (tmp_name);
 }
 
 void	working_history(void)

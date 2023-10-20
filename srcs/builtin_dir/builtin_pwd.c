@@ -6,16 +6,11 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:04:23 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/10 10:07:19 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/18 15:14:35 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-/*
-	옵션없는 pwd구현.
-	pwd는 인자를 받지 않음. 인자 개수의 상관없이 pwd는 출력을 진행함.
-*/
 
 void	builtin_pwd(char **env)
 {
@@ -23,4 +18,5 @@ void	builtin_pwd(char **env)
 
 	getcwd(buff, PATH_MAX);
 	printf("%s\n", buff);
+	g_exit_status = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 14:42:03 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/13 17:34:38 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 14:39:10 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,29 @@ static char	**rearrange_env(int cnt, char **env)
 	return (renv);
 }
 
-void	builtin_unset(char **cmd_argv, char **env)
+void	builtin_unset(char **cmd_argv, char ***env)
 {
 	int		i;
 	int		j;
 	int		cnt;
 	char	*env_name[2];
 
-	cnt = cnt_line(env);
+	cnt = cnt_line(*env);
 	i = 0;
 	while (cmd_argv[i])
 	{
 		j = 0;
-		while (env[j])
+		while ((*env)[j])
 		{
 			env_name[0] = get_envname(cmd_argv[0]);
-			env_name[1] = get_envname(env[j]);
+			env_name[1] = get_envname((*env)[j]);
 			if (!strcmp(env_name[0], env_name[1]))
-				env[j] = 0;
+				(*env)[j] = 0;
+			free_2str(env_name[0], env_name[1]);
 			j++;
 		}
 		i++;
-		free_2str(env_name[0], env_name[1]);
 	}
-	env = rearrange_env(cnt, env);
+	*env = rearrange_env(cnt, *env);
+	g_exit_status = 0;
 }
