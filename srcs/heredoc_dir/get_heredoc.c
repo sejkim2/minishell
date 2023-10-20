@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 15:25:11 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 15:49:14 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static	char	*input_heredoc(char *limit)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || !ft_strncmp(limit, line, ft_strlen(line)))
+		if (!line || !strcmp(limit, line))
 		{
 			free(line);
 			break ;
