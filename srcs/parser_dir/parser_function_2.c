@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 17:22:59 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 15:24:59 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 		if (accept(list, REDIRECTION))
 		{
 			node = make_tree_node(list, list->head->token->symbol);
+			get_heredoc(node);
 			next_symbol(list);
 			addchild(parent, node);
 			/*

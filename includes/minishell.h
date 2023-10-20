@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 14:44:33 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 15:25:28 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,7 +264,7 @@ int	wild_card_type_is_string(char *str, char **file_name);
 int	wild_card(char *input, char *file);
 
 /*heredoc*/
-void get_heredoc(t_tree_node *root, int depth);
+void get_heredoc(t_tree_node *node);
 
 /*	built-in	*/
 void	builtin_cd(char **cmd_argv, char **env);
