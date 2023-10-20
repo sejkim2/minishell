@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/18 16:49:46 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 13:15:45 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,8 +149,7 @@ char			*get_envval(char *env_name, char **env);
 
 /*				entry_dir				*/
 /*temp_file*/
-char			*generate_temp_filename(char *mode);
-int				here_document(void);
+int				here_document(char *redir_name);
 void			working_history(void);
 void			filecpy(int in_fd, int out_fd);
 
@@ -270,9 +269,7 @@ void			run_simple_command_middlepipe(t_tree_node *node, int *iput, int *oput, ch
 void			run_simple_command_lastpipe(t_tree_node *node, int *iput, char ***env);
 
 /*run_redir*/
-int				run_redirection_list(t_tree_node *node);
-int				check_single_redir(t_tree_node *child, char *redir_name);
-int				check_double_redir(t_tree_node *child, char *redir_name);
+int				run_redirection_list(t_tree_node *node, int *o_fd);
 
 /*run_exe*/
 int				run_builtin(t_cmd cmd_info, char ***env);

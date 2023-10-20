@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:07:55 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 16:23:52 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 14:12:47 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,25 @@ void	store_std_fd(int *o_fd)
 	o_fd[1] = dup(1);
 }
 
-void	recover_std_fd(int *o_fd)
+void	recover_std_fd(int *o_fd, t_tree_node *redir_list)
 {
+	t_tree_node	*child;
+
+	close(0);
+	close(1);
 	dup2(o_fd[0], 0);
 	dup2(o_fd[1], 1);
+	while (redir_list)
+	{
+		child = redir_list->child_list;
+		while (child)
+		{
+			if (child->symbol == REDIRECTION)
+				unlink(child->token->hd_name);
+			child = child->next;
+		}
+		redir_list = redir_list->next;
+	}
 }
 
 static int	cnt_argv(t_tree_node *node)

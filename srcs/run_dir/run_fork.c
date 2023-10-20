@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:44:36 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 16:19:23 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 11:47:05 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ void	run_command_nonpipe(t_tree_node *node, char ***env)
 {
 	int			status;
 	t_tree_node	*child;
-	t_tree_node	*redirection_list;
 	pid_t		sub_pro;
+	int			o_fd[2];
 
+	store_std_fd(o_fd);
 	child = node->child_list;
 	if (child->symbol == SIMPLE_COMMAND)
 		run_simple_command_nonpipe(child, env);
@@ -28,7 +29,7 @@ void	run_command_nonpipe(t_tree_node *node, char ***env)
 		if (sub_pro == 0)
 		{
 			if (child->next)
-				run_redirection_list(child->next);
+				run_redirection_list(child->next, o_fd);
 			run_list(child->child_list->next, NULL, env);
 			exit(g_exit_status);
 		}

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 16:33:10 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 14:18:18 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(void)
 	int				status;
 
 	env = init_environ(environ);
-	g_exit_status = 0;
 	while (1)
 	{
 		set_shell_signal();

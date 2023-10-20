@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 16:44:55 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 14:16:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ void	run_simple_command_nonpipe(t_tree_node *node, char ***env)
 	t_cmd		cmd_info;
 	int			fd_flag;
 
-	fd_flag = 0;
 	store_std_fd(o_fd);
 	expand_env(node, *env);
 	cmd_info = make_cmd_info(node->child_list, *env);
@@ -27,17 +26,17 @@ void	run_simple_command_nonpipe(t_tree_node *node, char ***env)
 	while (child)
 	{
 		if (child->symbol == REDIRECTION_LIST)
-			fd_flag = run_redirection_list(child);
+			fd_flag = run_redirection_list(child, o_fd);
 		child = child->next;
+		if (fd_flag == -1)
+			break ;
 	}
 	if (cmd_info.cmd && fd_flag == 0)
-	{
 		if (!run_builtin(cmd_info, env))
 			run_execve(cmd_info, *env);
-	}
 	else
 		g_exit_status = 1;
-	recover_std_fd(o_fd);
+	recover_std_fd(o_fd, node->child_list);
 }
 
 // void	run_simple_command_firstpipe(t_tree_node *node, int *oput, char ***env)

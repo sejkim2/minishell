@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 15:29:59 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 14:18:27 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	**init_environ(char **envp)
 	env = (char **)malloc(sizeof(char *) * (cnt + 1));
 	env[cnt] = 0;
 	matrix_cpy(envp, env);
+	g_exit_status = 0;
 	return (env);
 }
 
