@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_card.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:44:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/18 16:29:22 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 16:48:07 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int *bit_mask, int count_of_file)
 	return (string_table);
 }
 
-char	**get_file_by_wild_card(s_str_info	*str_info)
+char	**get_file_by_wild_card(s_str_info *str_info)
 {
 	int	count_of_file;
 	int	*bit_mask;

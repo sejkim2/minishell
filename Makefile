@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
+#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/20 16:24:20 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/10/20 18:56:08 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -68,9 +68,11 @@ RUN_SRCS = get_path.c \
 	run_command.c \
 	run_exe.c \
 	run_fork.c \
+	run_redir_utils.c \
 	run_redir.c \
 	run_root.c \
-	run_utils.c
+	run_utils.c \
+	std_utils.c
 
 SIGNAL_SRCS = blocking_signal.c \
 	heredoc_signal.c \

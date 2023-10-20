@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 15:49:14 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 16:42:18 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static	char	*input_heredoc(char *limit)
 	while (1)
 	{
 		line = readline("> ");
-		if (!line || !strcmp(limit, line))
+		if (!line || !ft_strcmp(limit, line))
 		{
 			free(line);
 			break ;

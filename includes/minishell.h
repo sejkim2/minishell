@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 16:14:53 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 17:47:59 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void			sort_ascii(char **envp, int cnt);
 int				cnt_line(char **str_arr);
 void			free_2str(char *s1, char *s2);
 void			free_4str(char *s1, char *s2, char *s3, char *s4);
+void			free_arr(char **arr);
 void			ft_stderror_print(char *cmd, char *argv, char *err_string);
 
 /*env_utils*/
@@ -269,8 +270,12 @@ void			run_simple_command_firstpipe(t_tree_node *node, int *oput, char ***env);
 void			run_simple_command_middlepipe(t_tree_node *node, int *iput, int *oput, char ***env);
 void			run_simple_command_lastpipe(t_tree_node *node, int *iput, char ***env);
 
-/*run_redir*/
+/*run_redir_utils*/
 char			*set_redir_file_name(t_tree_node *node);
+int				wild_card_error(char *input, int cnt);
+int				open_error(char *redir_name);
+
+/*run_redir*/
 int				run_redirection_list(t_tree_node *node);
 
 /*run_exe*/

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:27:46 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 16:46:38 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 17:37:36 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ int	cnt_line(char **str_arr)
 	int		cnt;
 
 	cnt = 0;
+	if (!str_arr)
+		return (0);
 	while (str_arr[cnt])
 		cnt++;
 	return (cnt);

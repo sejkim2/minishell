@@ -3,45 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   run_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:07:55 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 16:27:25 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 20:19:01 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	store_std_fd(int *o_fd)
-{
-	o_fd[0] = dup(0);
-	o_fd[1] = dup(1);
-}
-
-void	recover_std_fd(int *o_fd, t_tree_node *redir_list)
-{
-	t_tree_node	*child;
-
-	close(0);
-	close(1);
-	dup2(o_fd[0], 0);
-	dup2(o_fd[1], 1);
-	while (redir_list)
-	{
-		child = redir_list->child_list;
-		while (child)
-		{
-			if (child->symbol == REDIRECTION)
-			{
-				unlink(child->token->HD_name);
-				free(child->token->HD_name);
-				child->token->HD_name = 0;
-			}
-			child = child->next;
-		}
-		redir_list = redir_list->next;
-	}
-}
 
 static int	cnt_argv(t_tree_node *node)
 {
@@ -57,41 +26,82 @@ static int	cnt_argv(t_tree_node *node)
 	return (cnt);
 }
 
-static char	*find_command(t_tree_node *node)
+static void	setting_cmdinfo(t_tree_node *node, t_cmd *cmd_info)
 {
+	cmd_info->cmd_line = NULL;
 	while (node)
 	{
 		if (node->symbol == SIMPLE_COMMAND_ELEMENT)
-			return (node->token->value);
+		{
+			cmd_info->cmd = node->token->value;
+			return ;
+		}
 		node = node->next;
 	}
-	return (NULL);
+	cmd_info->cmd = NULL;
 }
 
-t_cmd	make_cmd_info(t_tree_node *node, char **env)
+static int	cmd_malloc_size(t_tree_node *node)
 {
-	char	*tmp;
-	int		idx;
+	int		cnt;
+	char	**table;
+
+	cnt = 0;
+	while (node)
+	{
+		if (node->symbol == SIMPLE_COMMAND_ELEMENT)
+		{
+			table = get_file_by_wild_card(node->child_list->token->str_info);
+			if (!*table) // null이 어디부터인지 확인.
+				cnt++;
+			else
+				cnt += cnt_line(table);
+			free_arr(table);
+		}
+		node = node->next;
+	}
+	return (cnt);
+}
+
+void	make_cmd_line(t_tree_node *node, t_cmd *cmd_info)
+{
+	int		i;
+	int		j;
+	char	**table;
+
+	i = 0;
+	j = 0;
+	while (node)
+	{
+		if (node->symbol == SIMPLE_COMMAND_ELEMENT)
+		{
+			table = get_file_by_wild_card(node->token->str_info);
+			if (!*table)
+				cmd_info->cmd_line[i++] = node->token->value;
+			else
+			{
+				while (table[j])
+					cmd_info->cmd_line[i++] = table[j++];
+				free_arr(table);
+			}
+		}
+		node = node->next;
+	}
+}
+
+t_cmd	make_cmd_info(t_tree_node *node, char **env) //SIMPLE COMMAND ELEMENT
+{
+	int		cnt;
+	char	*table;
 	t_cmd	cmd_info;
 
-	idx = 0;
-	cmd_info.cmd = find_command(node);
-	cmd_info.cmd_line = NULL;
+	setting_cmdinfo(node, &cmd_info);
+	cnt = cmd_malloc_size(node);
 	if (cmd_info.cmd)
 	{
-		cmd_info.cmd_line = malloc(sizeof(char *) * cnt_argv(node) + 1);
-		if (!cmd_info.cmd_line)
-			malloc_error();
-		while (node)
-		{
-			if (node->symbol == SIMPLE_COMMAND_ELEMENT)
-			{
-				cmd_info.cmd_line[idx] = node->token->value;
-				idx++;
-			}
-			node = node->next;
-		}
-		cmd_info.cmd_line[idx] = NULL;
+		cmd_info.cmd_line = malloc(sizeof(char *) * (cnt + 1));
+		make_cmd_line(node, &cmd_info);
+		cmd_info.cmd_line[cnt] = NULL;
 	}
 	return (cmd_info);
 }

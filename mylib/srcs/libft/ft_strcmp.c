@@ -1,48 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_utils.c                                       :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/05 16:58:29 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 17:31:10 by jaehyji          ###   ########.fr       */
+/*   Created: 2023/03/21 17:57:27 by sejkim2           #+#    #+#             */
+/*   Updated: 2023/10/20 15:31:26 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/libft.h"
 
-void	free_2str(char *s1, char *s2)
+int	ft_strcmp(const char *str1, const char *str2)
 {
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
-}
-
-void	free_4str(char *s1, char *s2, char *s3, char *s4)
-{
-	if (s1)
-		free(s1);
-	if (s2)
-		free(s2);
-	if (s3)
-		free(s3);
-	if (s4)
-		free(s4);
-}
-
-void	free_arr(char **arr)
-{
-	int		idx;
-
-	if (!arr)
-		return ;
-	idx = 0;
-	while (arr[idx])
+	while (*str1 != '\0' && *str2 != '\0' && *str1 == *str2)
 	{
-		free(arr[idx]);
-		idx++;
+		str1++;
+		str2++;
 	}
-	free(arr);
+	if (*str1 < *str2)
+		return (-1);
+	else if (*str1 > *str2)
+		return (1);
+	else
+		return (0);
 }
