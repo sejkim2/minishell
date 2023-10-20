@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 15:01:12 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 16:14:53 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,12 @@ typedef struct s_string_info
 
 typedef struct s_token
 {
-	t_symbol	symbol;
-	t_redir		redir_type;
-	char		*value;
-	s_str_info	*str_info;
-}	t_token;
+    t_symbol symbol;
+    t_redir redir_type;
+    char *value;
+    char *HD_name;
+    s_str_info *str_info;
+}   t_token;
 
 typedef struct s_token_node
 {
@@ -149,7 +150,7 @@ char			*get_envval(char *env_name, char **env);
 
 /*				entry_dir				*/
 /*temp_file*/
-int				here_document(char *redir_name);
+char			*generate_temp_filename(char *mode);
 void			working_history(void);
 void			filecpy(int in_fd, int out_fd);
 
@@ -269,6 +270,7 @@ void			run_simple_command_middlepipe(t_tree_node *node, int *iput, int *oput, ch
 void			run_simple_command_lastpipe(t_tree_node *node, int *iput, char ***env);
 
 /*run_redir*/
+char			*set_redir_file_name(t_tree_node *node);
 int				run_redirection_list(t_tree_node *node);
 
 /*run_exe*/
@@ -299,8 +301,20 @@ void			set_origin_signal(void);
 void			set_terminal_print_off(void);
 void			set_terminal_print_on(void);
 
+/*wild_card*/
+char			**get_file_by_wild_card(s_str_info	*str_info);
+int				check_wild_card_pattern(s_str_info *str_info, int *bit_mask);
+int				wild_card_type_is_string(char *str, char **file_name);
+
+/*wild_card*/
+int				wild_card(char *input, char *file);
+
+/*heredoc*/
+void			get_heredoc(t_tree_node *node);
+
 /*test*/
 void			print_list(t_linked_list *list);
 void			tree_traverse(t_tree_node *node, int depth);
 void			print_symbol(t_symbol symbol);
+
 #endif

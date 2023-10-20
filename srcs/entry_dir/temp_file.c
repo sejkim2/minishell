@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   temp_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/22 16:24:41 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 12:22:25 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 16:13:39 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 	임시 파일을 하나 만들고 minishell이 종료되었을 때 임시 파일의 내용을 히스토리로 옮김.
 */
 
-static char	*generate_temp_filename(char *mode)
+char	*generate_temp_filename(char *mode)
 {
 	char	*str;
 	char	*rstr;
@@ -44,29 +44,6 @@ static char	*generate_temp_filename(char *mode)
 		str = rstr;
 	}
 	return (str);
-}
-
-char	*here_document(char *limit)
-{
-	char	*tmp_name;
-	int		hd_fd;
-	char	*line;
-
-	tmp_name = generate_temp_filename("HD_Temp");
-	hd_fd = open(tmp_name, O_RDWR | O_CREAT, 0644);
-	while (1)
-	{
-		line = get_next_line(0);
-		if (!line || !ft_strncmp(limit, line, ft_strlen(limit)))
-		{
-			free(line);
-			break ;
-		}
-		write(hd_fd, line, ft_strlen(line));
-		free(line);
-	}
-	close(hd_fd);
-	return (tmp_name);
 }
 
 void	working_history(void)

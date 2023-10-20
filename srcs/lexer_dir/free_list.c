@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:55:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 20:02:49 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/20 15:46:04 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,11 @@ char	*free_token(t_token *token)
 		free(token->value);
 	if (token->str_info)
 		free_str_info(token->str_info);
+	if (token->HD_name)
+	{
+		unlink(token->HD_name);
+		free(token->HD_name);
+	}
 	free(token);
 	return (0);
 }

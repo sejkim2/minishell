@@ -6,13 +6,13 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 15:04:29 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 16:14:39 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*set_redir_file_name(t_tree_node *node)
+char	*set_redir_file_name(t_tree_node *node)
 {
 	char	*file_name;
 	char	*remove_str;
@@ -30,7 +30,7 @@ static char	*set_redir_file_name(t_tree_node *node)
 	return (file_name);
 }
 
-static int	*check_single_redir(t_tree_node *child, char *redir_name)
+static int	check_single_redir(t_tree_node *child, char *redir_name)
 {
 	int		fd;
 
@@ -54,9 +54,10 @@ static int	*check_single_redir(t_tree_node *child, char *redir_name)
 		}
 		dup2(fd, 1);
 	}
+	return (fd);
 }
 
-static int	*check_double_redir(t_tree_node *child, char *redir_name)
+static int	check_double_redir(t_tree_node *child, char *redir_name)
 {
 	int		fd;
 

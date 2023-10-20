@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:07:55 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 15:05:30 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 16:27:25 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ void	recover_std_fd(int *o_fd, t_tree_node *redir_list)
 		while (child)
 		{
 			if (child->symbol == REDIRECTION)
+			{
 				unlink(child->token->HD_name);
+				free(child->token->HD_name);
+				child->token->HD_name = 0;
+			}
 			child = child->next;
 		}
 		redir_list = redir_list->next;

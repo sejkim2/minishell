@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 15:03:21 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/20 16:32:10 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	run_simple_command_nonpipe(t_tree_node *node, char ***env)
 	expand_env(node, *env);
 	cmd_info = make_cmd_info(node->child_list, *env);
 	child = node->child_list;
+	fd_flag = 0;
 	while (child)
 	{
 		if (child->symbol == REDIRECTION_LIST)
@@ -32,8 +33,10 @@ void	run_simple_command_nonpipe(t_tree_node *node, char ***env)
 			break ;
 	}
 	if (cmd_info.cmd && fd_flag == 0)
+	{	
 		if (!run_builtin(cmd_info, env))
 			run_execve(cmd_info, *env);
+	}
 	else
 		g_exit_status = 1;
 	recover_std_fd(o_fd, node->child_list);
