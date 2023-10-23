@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 14:32:26 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 16:43:38 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/23 18:23:55 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	print_export(int i, char *env_name, char *env_val, char **env)
 	int		j;
 
 	j = 0;
-	write(1, "declare -x ", 12);
+	write(1, "declare -x ", 11);
 	write(1, env_name, ft_strlen(env_name));
 	if (ft_strchr(env[i], '='))
 	{

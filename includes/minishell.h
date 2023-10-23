@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 17:47:59 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/23 19:50:46 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ typedef struct s_string_info
 
 typedef struct s_token
 {
-    t_symbol symbol;
-    t_redir redir_type;
-    char *value;
-    char *HD_name;
-    s_str_info *str_info;
-}   t_token;
+    t_symbol	symbol;
+    t_redir		redir_type;
+    char		*value;
+    char		*HD_name;
+    s_str_info	*str_info;
+}  	t_token;
 
 typedef struct s_token_node
 {
@@ -142,7 +142,7 @@ void			ft_stderror_print(char *cmd, char *argv, char *err_string);
 void			expand_env(t_tree_node *parent, char **env);
 void			mk_env(int *idx, char **string, char **env);
 char			*check_redir(t_tree_node *node);
-t_tree_node		*apply_in_tree(t_tree_node *node, t_tree_node *head);
+char			*apply_in_tree(t_tree_node *node, t_tree_node *head);
 int				dollar_string(char *str);
 void			parser_env(int i, t_tree_node *child, char **env);
 char			**init_environ(char **envp);
@@ -253,22 +253,22 @@ void			addchild(t_tree_node *parent, t_tree_node *child);
 char			*get_path(char *exe, char **env);
 char			*init_path_env(char *cmd, char **path);
 
-/*root ~ run ~ pipeline*/
-void			run_root(t_tree_node *root, char ***env);
-void			run_list(t_tree_node *node, int *iput, char ***env);
-void			run_pipeline(t_tree_node *node, int *iput, char ***env, t_symbol last_symbol);
+/*run_root*/
+void			run_root(t_tree_node *root, char ***env, int *o_fd);
+
+/*run_list*/
+void			run_list(t_tree_node *node, char ***env, int *o_fd);
+
+/*run_pipeline*/
+void			run_pipeline(t_tree_node *node, char ***env, int *o_fd, t_symbol before);
+void			run_pipe(t_tree_node *child, char ***env, int *o_fd);
 
 /*run_command*/
-void			run_command_nonpipe(t_tree_node *node, char ***env);
-void			run_command_firstpipe(t_tree_node *node, int *oupt, char ***env);
-void			run_command_middlepipe(t_tree_node *node, int *iput, int *oput, char ***env);
-void			run_command_lastpipe(t_tree_node *node, int *iput, char ***env);
+void			run_command_nonpipe(t_tree_node *node, char ***env, int *o_fd);
+void			run_command_pipe(t_tree_node *node, char ***env, int *o_fd);
 
 /*run_simple_command*/
-void			run_simple_command_nonpipe(t_tree_node *node, char ***env);
-void			run_simple_command_firstpipe(t_tree_node *node, int *oput, char ***env);
-void			run_simple_command_middlepipe(t_tree_node *node, int *iput, int *oput, char ***env);
-void			run_simple_command_lastpipe(t_tree_node *node, int *iput, char ***env);
+void			run_simple_command(t_tree_node *node, char ***env);
 
 /*run_redir_utils*/
 char			*set_redir_file_name(t_tree_node *node);
@@ -276,16 +276,24 @@ int				wild_card_error(char *input, int cnt);
 int				open_error(char *redir_name);
 
 /*run_redir*/
-int				run_redirection_list(t_tree_node *node);
+int				run_redirection_list(t_tree_node *node, char ***env);
 
 /*run_exe*/
 int				run_builtin(t_cmd cmd_info, char ***env);
 void			run_execve(t_cmd cmd_info, char **env);
 
 /*run_utils*/
-void			store_std_fd(int *o_fd);
-void			recover_std_fd(int *o_fd, t_tree_node *redir_list);
 t_cmd			make_cmd_info(t_tree_node *node, char **env);
+
+/*std_utils*/
+void			unlink_tmpfile(t_tree_node *redir_list);
+void			store_std_fd(int *o_fd);
+void			recover_std_fd(int *o_fd);
+
+/*exit_utils*/
+void			exit_record_status(void);
+void			wait_record_status(void);
+void			wait_last_command(pid_t c_pro);
 
 /*				signal_dir				*/
 /*blocking signal*/

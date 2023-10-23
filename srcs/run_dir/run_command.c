@@ -5,106 +5,65 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 18:49:34 by jaehyji          ###   ########.fr       */
+/*   Created: 2023/10/13 15:44:36 by jaehyji           #+#    #+#             */
+/*   Updated: 2023/10/23 19:54:11 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_simple_command_nonpipe(t_tree_node *node, char ***env)
+int	run_subshell_redir(t_tree_node *node, char ***env)
 {
-	t_tree_node	*child;
-	int			o_fd[2];
-	t_cmd		cmd_info;
-	int			fd_flag;
+	int		fd_flag;
 
-	store_std_fd(o_fd);
-	expand_env(node, *env);
-	cmd_info = make_cmd_info(node->child_list, *env);
-	child = node->child_list;
+	if (node == NULL)
+		return (0);
 	fd_flag = 0;
-	while (child)
-	{
-		if (child->symbol == REDIRECTION_LIST)
-			fd_flag = run_redirection_list(child);
-		child = child->next;
-		if (fd_flag == -1)
-			break ;
-	}
-	if (cmd_info.cmd && fd_flag == 0)
-	{	
-		if (!run_builtin(cmd_info, env))
-			run_execve(cmd_info, *env);
-	}
-	else
-		g_exit_status = 1;
-	recover_std_fd(o_fd, node->child_list);
+	if (node->symbol == REDIRECTION_LIST)
+		fd_flag = run_redirection_list(node, env);
+	return (fd_flag);
 }
 
-// void	run_simple_command_firstpipe(t_tree_node *node, int *oput, char ***env)
-// {
-// 	t_tree_node	*child;
-// 	t_cmd		cmd_info;
+void	run_command_nonpipe(t_tree_node *node, char ***env, int *o_fd)
+{
+	t_tree_node	*child;
+	pid_t		sub_pro;
 
-// 	expand_env(node, *env);
-// 	cmd_info = make_cmd_info(node->child_list, *env);
-// 	child = node->child_list;
-// 	dup2(oput[0], 1);
-// 	while (child)
-// 	{
-// 		if (child->symbol == REDIRECTION_LIST)
-// 			run_redirection_list(child);
-// 		child = child->next;
-// 	}
-// 	if (cmd_info.cmd)
-// 	{
-// 		if (!run_builtin(cmd_info, env))
-// 			run_execve(cmd_info, *env);
-// 	}
-// }
+	child = node->child_list;
+	if (child->symbol == SIMPLE_COMMAND)
+		run_simple_command(child, env);
+	else
+	{
+		sub_pro = fork();
+		if (sub_pro == 0)
+		{
+			if (run_subshell_redir(child->next, env) == 0)
+				run_list(child->child_list->next, env, o_fd);
+			exit(g_exit_status);
+		}
+		else
+			wait_record_status();
+	}
+}
 
-// void	run_simple_command_middlepipe(t_tree_node *node, int *iput, int *oput, char ***env)
-// {
-// 	t_tree_node	*child;
-// 	t_cmd		cmd_info;
+void	run_command_pipe(t_tree_node *node, char ***env, int *o_fd)
+{
+	t_tree_node	*child;
+	pid_t		sub_pro;
+	int			fd_flag;
 
-// 	expand_env(node, *env);
-// 	cmd_info = make_cmd_info(node->child_list, *env);
-// 	child = node->child_list;
-// 	dup2(iput[0], 0);
-// 	dup2(oput[1], 1);
-// 	while (child)
-// 	{
-// 		if (child->symbol == REDIRECTION_LIST)
-// 			run_redirection_list(child);
-// 		child = child->next;
-// 	}
-// 	if (cmd_info.cmd)
-// 	{
-// 		if (!run_builtin(cmd_info, env))
-// 			run_execve(cmd_info, *env);
-// 	}
-// }
-
-// void	run_simple_command_lastpipe(t_tree_node *node, int *iput, char ***env)
-// {
-// 	t_tree_node	*child;
-// 	t_cmd		cmd_info;
-
-// 	expand_env(node, *env);
-// 	cmd_info = make_cmd_info(node->child_list, *env);
-// 	child = node->child_list;
-// 	dup2(iput[0], 0);
-// 	while (child)
-// 	{
-// 		if (child->symbol == REDIRECTION_LIST)
-// 			run_redirection_list(child);
-// 		child = child->next;
-// 	}
-// 	if (cmd_info.cmd)
-// 	{
-// 		if (!run_builtin(cmd_info, env))
-// 			run_execve(cmd_info, *env);
-// 	}
-// }
+	fd_flag = 0;
+	child = node->child_list;
+	if (child->symbol == SIMPLE_COMMAND)
+		run_simple_command(child, env);
+	else
+	{
+		sub_pro = fork();
+		if (sub_pro == 0)
+		{
+			if (run_subshell_redir(child->next, env) == 0)
+				run_list(child->child_list->next, env, o_fd);
+			exit(g_exit_status);
+		}
+	}
+}

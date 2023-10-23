@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:07:55 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 20:19:01 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/23 16:18:47 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static int	cmd_malloc_size(t_tree_node *node)
 		if (node->symbol == SIMPLE_COMMAND_ELEMENT)
 		{
 			table = get_file_by_wild_card(node->child_list->token->str_info);
-			if (!*table) // null이 어디부터인지 확인.
+			if (!*table)
 				cnt++;
 			else
 				cnt += cnt_line(table);
@@ -63,7 +63,7 @@ static int	cmd_malloc_size(t_tree_node *node)
 	return (cnt);
 }
 
-void	make_cmd_line(t_tree_node *node, t_cmd *cmd_info)
+static void	make_cmd_line(t_tree_node *node, t_cmd *cmd_info)
 {
 	int		i;
 	int		j;
@@ -89,19 +89,35 @@ void	make_cmd_line(t_tree_node *node, t_cmd *cmd_info)
 	}
 }
 
-t_cmd	make_cmd_info(t_tree_node *node, char **env) //SIMPLE COMMAND ELEMENT
+t_cmd	make_cmd_info(t_tree_node *node, char **env)
 {
+	int		i = 0;
 	int		cnt;
 	char	*table;
 	t_cmd	cmd_info;
 
 	setting_cmdinfo(node, &cmd_info);
-	cnt = cmd_malloc_size(node);
+	cnt = cnt_argv(node);
 	if (cmd_info.cmd)
 	{
 		cmd_info.cmd_line = malloc(sizeof(char *) * (cnt + 1));
-		make_cmd_line(node, &cmd_info);
-		cmd_info.cmd_line[cnt] = NULL;
+		while (node)
+		{
+			if (node->symbol == SIMPLE_COMMAND_ELEMENT)
+			{
+				cmd_info.cmd_line[i] = node->token->value;
+				i++;
+			}
+			node = node->next;
+		}
+		cmd_info.cmd_line[i] = NULL;
 	}
+	// cnt = cmd_malloc_size(node);
+	// if (cmd_info.cmd)
+	// {
+	// 	cmd_info.cmd_line = malloc(sizeof(char *) * (cnt + 1));
+	// 	make_cmd_line(node, &cmd_info);
+	// 	cmd_info.cmd_line[cnt] = NULL;
+	// }
 	return (cmd_info);
 }

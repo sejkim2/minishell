@@ -6,7 +6,7 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/20 18:56:08 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/23 15:00:44 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -67,12 +67,15 @@ RUN_SRCS = get_path.c \
 	path_utils.c \
 	run_command.c \
 	run_exe.c \
-	run_fork.c \
+	run_list.c \
+	run_pipeline.c \
 	run_redir_utils.c \
 	run_redir.c \
 	run_root.c \
+	run_simple_command.c \
 	run_utils.c \
-	std_utils.c
+	std_utils.c \
+	exit_utils.c
 
 SIGNAL_SRCS = blocking_signal.c \
 	heredoc_signal.c \

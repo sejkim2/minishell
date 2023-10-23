@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:25:18 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 15:02:28 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/23 20:30:10 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,15 +29,20 @@ void	mk_env(int *idx, char **string, char **env)
 	{
 		env_val = get_envval(str[1] + 1, env);
 		if (env_val)
+		{
 			str[3] = env_val;
+			tmp = ft_strjoin(str[0], str[3]);
+			*idx += ft_strlen(str[3]);
+			free_4str(str[0], str[1], str[3], *string);
+			*string = ft_strjoin(tmp, str[2]);
+			free_2str(tmp, str[2]);
+		}
 		else
-			str[3] = ft_strdup("");
+		{
+			free(*string);
+			*string = ft_strdup("\0");
+		}
 	}
-	tmp = ft_strjoin(str[0], str[3]);
-	*idx += ft_strlen(str[3]);
-	free_4str(str[0], str[1], str[3], *string);
-	*string = ft_strjoin(tmp, str[2]);
-	free_2str(tmp, str[2]);
 }
 
 char	*check_redir(t_tree_node *node)
@@ -63,11 +68,12 @@ char	*check_redir(t_tree_node *node)
 	return (tmp);
 }
 
-t_tree_node	*apply_in_tree(t_tree_node *node, t_tree_node *head)
+char	*apply_in_tree(t_tree_node *node, t_tree_node *head)
 {
 	char	*tmp;
 	char	*remov;
 	int		i;
+
 
 	tmp = check_redir(node);
 	i = 0;
@@ -79,8 +85,7 @@ t_tree_node	*apply_in_tree(t_tree_node *node, t_tree_node *head)
 		i++;
 	}
 	free(node->token->value);
-	node->token->value = tmp;
-	return (node->next);
+	return (tmp);
 }
 
 int	dollar_string(char *str)

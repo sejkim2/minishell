@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:27:46 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 17:37:36 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/23 20:28:50 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	make_strings(int *i, char **string, char **str)
 	if (!str[0])
 		exit(0);
 	while ((*string)[ldx + 1] && (*string)[ldx + 1] != '$' \
-	&& (*string)[ldx + 1] != '\'' && (*string)[ldx + 1] != ' ')
+	&& (*string)[ldx + 1] != ' ')
 		ldx++;
 	str[1] = ft_substr(*string, *i, (ldx + 1) - *i);
 	if (!str[1])

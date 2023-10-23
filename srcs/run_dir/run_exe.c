@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 16:41:34 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/23 15:29:36 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,5 @@ void	run_execve(t_cmd cmd_info, char **env)
 		execve(cmd_info.cmd, cmd_info.cmd_line, env);
 	}
 	else
-	{
-		wait(&status);
-		g_exit_status = WEXITSTATUS(status);
-	}
+		wait_record_status();
 }

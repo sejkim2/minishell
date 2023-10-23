@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 14:18:27 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/23 20:26:47 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ void	expand_env(t_tree_node *parent, char **env)
 				parser_env(i, child, env);
 			i++;
 		}
-		child = apply_in_tree(child, head);
+		child->token->value = apply_in_tree(child, head);
+		child = child->next;
 	}
 }
 

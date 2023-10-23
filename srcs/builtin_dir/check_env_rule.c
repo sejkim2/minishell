@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:28:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 16:48:15 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/23 17:02:14 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	**add_export(char *str, char **env)
 		i++;
 		j++;
 	}
-	renv[j] = str;
+	renv[j] = ft_strdup(str);
 	renv[j + 1] = NULL;
 	return (renv);
 }
