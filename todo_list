@@ -7,4 +7,4 @@ pipe 제외.
 ANDIF 와 ORIF
 구조체 s_-> t_로 수정
 
-$a로 입력되는 것들 널문자로 처리
+(echo a && (echo b)) | echo c

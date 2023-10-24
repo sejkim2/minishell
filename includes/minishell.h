@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/23 19:50:46 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 11:54:58 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,8 @@ void			run_root(t_tree_node *root, char ***env, int *o_fd);
 
 /*run_list*/
 void			run_list(t_tree_node *node, char ***env, int *o_fd);
+void			run_andif_list(t_tree_node *node, char ***env, int *o_fd);
+void			run_orif_list(t_tree_node *node, char ***env, int *o_fd);
 
 /*run_pipeline*/
 void			run_pipeline(t_tree_node *node, char ***env, int *o_fd, t_symbol before);

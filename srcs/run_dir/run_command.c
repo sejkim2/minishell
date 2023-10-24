@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:44:36 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 19:54:11 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 12:13:22 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,7 @@ void	run_command_pipe(t_tree_node *node, char ***env, int *o_fd)
 				run_list(child->child_list->next, env, o_fd);
 			exit(g_exit_status);
 		}
+		else
+			wait_record_status();
 	}
 }
