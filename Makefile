@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
+#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/24 15:57:46 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/24 16:44:34 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -82,7 +82,7 @@ SIGNAL_SRCS = blocking_signal.c \
 
 WILD_CARD_SRCS = wild_card.c \
 	check_wild_card_pattern.c \
-	wild_card_type_is_string.c
+	check_is_right_wild_card_pattern.c 
 
 HEREDOC_SRCS = get_heredoc.c
 

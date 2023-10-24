@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_card.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:44:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 16:48:07 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 14:06:48 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,14 +66,52 @@ int *bit_mask, int count_of_file)
 	return (string_table);
 }
 
-char	**get_file_by_wild_card(s_str_info *str_info)
+static	int	check_is_exist_wild_card(s_str_info	*str_info)
+{
+	int	i;
+
+	i = 0;
+	while (str_info[i].str_type != NUL)
+	{
+		if (str_info[i].str_type == STRING)
+		{
+			if (ft_strchr(str_info[i].str, '*') != 0)
+				return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
+static	int	check_is_exist_bit_mask(int *bit_mask)
+{
+	int	i;
+
+	i = 0;
+	while (bit_mask[i] != -1)
+	{
+		if (bit_mask[i] == 1)
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+char	**get_file_by_wild_card(s_str_info	*str_info)
 {
 	int	count_of_file;
 	int	*bit_mask;
 
-	bit_mask = malloc(sizeof(int) * num_of_file_in_current_directory());
+	if (check_is_exist_wild_card(str_info) == 0)
+		return (0);
+	bit_mask = malloc(sizeof(int) * num_of_file_in_current_directory() + 1);
 	if (!bit_mask)
 		malloc_error();
 	count_of_file = check_wild_card_pattern(str_info, bit_mask);
+	if (check_is_exist_bit_mask(bit_mask) == 0)
+	{
+		free(bit_mask);
+		return (0);
+	}
 	return (make_string_table(str_info, bit_mask, count_of_file));
 }

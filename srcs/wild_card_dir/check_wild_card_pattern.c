@@ -3,52 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   check_wild_card_pattern.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:24:58 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 16:46:03 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 16:38:45 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	int	wild_card_type_is_quote(char *str, char **file_name)
+static	void	check_wild_card(s_str_info *str_info, char *file_name, \
+int **bit_mask, int *count_of_file)
 {
-	*file_name = ft_strnstr(*file_name, str, ft_strlen(*file_name));
-	if (*file_name == 0)
-		return (0);
+	if (check_is_right_wild_card_pattern(str_info[0].str, \
+	file_name, str_info, 0))
+	{
+		**bit_mask = 1;
+		(*count_of_file)++;
+	}
 	else
-	{
-		while (*str == **file_name)
-		{
-			str++;
-			(*file_name)++;
-		}
-		return (1);
-	}
-}
-
-static	int	check_is_right_wild_card_pattern(char *file_name, \
-s_str_info *str_info)
-{
-	int	i;
-
-	i = 0;
-	while (str_info[i].str_type != NUL)
-	{
-		if (str_info[i].str_type == STRING)
-		{
-			if (wild_card_type_is_string(str_info[i].str, &file_name) == 0)
-				return (0);
-		}
-		else
-		{	
-			if (wild_card_type_is_quote(str_info[i].str, &file_name) == 0)
-				return (0);
-		}
-		i++;
-	}
-	return (1);
+		**bit_mask = 0;
+	(*bit_mask)++;
 }
 
 int	check_wild_card_pattern(s_str_info *str_info, int *bit_mask)
@@ -56,6 +31,7 @@ int	check_wild_card_pattern(s_str_info *str_info, int *bit_mask)
 	DIR				*dir;
 	struct dirent	*entry;
 	int				count_of_file;
+	int				hidden_file_flag;
 
 	dir = opendir(".");
 	count_of_file = 0;
@@ -64,15 +40,15 @@ int	check_wild_card_pattern(s_str_info *str_info, int *bit_mask)
 		entry = readdir(dir);
 		if (!entry)
 			break ;
-		if (check_is_right_wild_card_pattern(entry->d_name, str_info))
+		if (entry->d_name[0] == '.' && str_info[0].str[0] != '.')
 		{
-			*bit_mask = 1;
-			count_of_file++;
-		}
-		else
 			*bit_mask = 0;
-		bit_mask++;
+			bit_mask++;
+			continue ;
+		}
+		check_wild_card(str_info, entry->d_name, &bit_mask, &count_of_file);
 	}
+	*bit_mask = -1;
 	closedir(dir);
 	return (count_of_file);
 }
