@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 12:39:06 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 15:58:59 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,15 +145,9 @@ char			*check_redir(t_tree_node *node);
 char			*apply_in_tree(t_tree_node *node, t_tree_node *head);
 int				dollar_string(char *str);
 void			parser_env(int i, t_tree_node *child, char **env);
-char			**init_environ(char **envp);
+char			**init_setting(char **envp, int *o_fd);
 char			*get_envname(char *av);
 char			*get_envval(char *env_name, char **env);
-
-/*				entry_dir				*/
-/*temp_file*/
-char			*generate_temp_filename(char *mode);
-void			working_history(void);
-void			filecpy(int in_fd, int out_fd);
 
 /*				lexer_dir				*/
 /*check_character_symbol*/
@@ -288,7 +282,7 @@ void			run_execve(t_cmd cmd_info, char **env);
 t_cmd			make_cmd_info(t_tree_node *node, char **env);
 
 /*std_utils*/
-void			unlink_tmpfile(t_tree_node *redir_list);
+void			unlink_tmpfile(t_tree_node *node, int depth);
 void			store_std_fd(int *o_fd);
 void			recover_std_fd(int *o_fd);
 
@@ -308,7 +302,7 @@ void			set_heredoc_signal(void);
 /*shell_signal*/
 void			set_shell_signal(void);
 void			ctrl_c(int signum);
-int				shell_ctrl_d(void);
+int				shell_ctrl_d();
 
 /*terminal option*/
 struct termios	terminal_option(void);
@@ -322,7 +316,6 @@ int				check_wild_card_pattern(s_str_info *str_info, int *bit_mask);
 int				wild_card_type_is_string(char *str, char **file_name);
 
 /*wild_card*/
-int				wild_card(char *input, char *file);
 
 /*heredoc*/
 void			get_heredoc(t_tree_node *node);

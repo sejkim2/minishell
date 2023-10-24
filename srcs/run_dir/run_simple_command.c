@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 20:28:14 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 13:45:58 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,4 @@ void	run_simple_command(t_tree_node *node, char ***env)
 	}
 	else
 		g_exit_status = 1;
-	unlink_tmpfile(node->child_list);
 }

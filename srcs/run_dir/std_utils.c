@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:55:17 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 14:58:25 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 14:15:03 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,23 +26,29 @@ void	recover_std_fd(int *o_fd)
 	dup2(o_fd[1], 1);
 }
 
-void	unlink_tmpfile(t_tree_node *redir_list)
+void	unlink_tmpfile(t_tree_node *parent, int depth)
 {
 	t_tree_node	*child;
+	t_tree_node	*node;
 
-	while (redir_list)
+	node = parent;
+	while (node)
 	{
-		child = redir_list->child_list;
+		if (node->symbol == REDIRECTION)
+		{
+			unlink(node->token->HD_name);
+			free(node->token->HD_name);
+			node->token->HD_name = 0;
+		}
+		node = node->next;
+	}
+	child = parent->child_list;
+	if (child)
+	{
 		while (child)
 		{
-			if (child->symbol == REDIRECTION)
-			{
-				unlink(child->token->HD_name);
-				free(child->token->HD_name);
-				child->token->HD_name = 0;
-			}
+			unlink_tmpfile(child, depth + 1);
 			child = child->next;
 		}
-		redir_list = redir_list->next;
 	}
 }

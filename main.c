@@ -6,47 +6,54 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 12:39:12 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 15:58:52 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	main(void)
+char	*read_command_line(char **env)
 {
+	char			*line;
 	t_linked_list	*list;
 	t_tree_node		*root;
-	char			**env;
-	char			*line;
-	int				o_fd[2];
 
-	env = init_environ(environ);
-	store_std_fd(o_fd);
+	line = readline("minishell$ ");
+	if (line)
+	{
+		if (line[0] == '\0')
+			return (line);
+		add_history(line);
+		list = lexer(line);
+		if (list == 0)
+			return (line);
+		root = parser(list);
+		if (root == 0)
+			return (line);
+		run_root(root, &env);
+		unlink_tmpfile(root, 0);
+	}
+	else
+		shell_ctrl_d();
+	return (line);
+}
+
+int	main(void)
+{
+	char	**env;
+	char	*line;
+	int		o_fd[2];
+
+	env = init_setting(environ, o_fd);
 	while (1)
 	{
 		set_shell_signal();
-		line = readline("minishell$ ");
+		line = read_command_line(env);
 		if (line)
-		{
-			if (line[0] == '\0')
-			{
-				free(line);
-				continue ;
-			}
-			add_history(line);
-			list = lexer(line);
 			free(line);
-			if (list == 0)
-				continue ;
-			root = parser(list);
-			if (root == 0)
-				continue ;
-			run_root(root, &env);
-			// free_list(list);
-			free_tree(root);
-			recover_std_fd(o_fd);
-		}
 		else
-			return (shell_ctrl_d());
+			break ;
+		recover_std_fd(o_fd);
 	}
+	return (0);
 }

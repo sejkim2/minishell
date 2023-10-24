@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 20:26:47 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 15:28:20 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	expand_env(t_tree_node *parent, char **env)
 	}
 }
 
-char	**init_environ(char **envp)
+char	**init_setting(char **envp, int *o_fd)
 {
 	int		cnt;
 	char	**env;
@@ -44,6 +44,7 @@ char	**init_environ(char **envp)
 	env = (char **)malloc(sizeof(char *) * (cnt + 1));
 	env[cnt] = 0;
 	matrix_cpy(envp, env);
+	store_std_fd(o_fd);
 	g_exit_status = 0;
 	return (env);
 }

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:54:42 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/04 17:10:31 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 15:58:41 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	ctrl_c(int signum)
     // 저장중이던 최근 반환값을 1로 수정해줌 (ctrl+c 시그널을 작동할때 1의 반환값을 가져야함)
 }
 
-int	shell_ctrl_d(void)
+int	shell_ctrl_d()
 // ctrl+d를 눌렀을때 작동,
 {
 	printf("exit\n");

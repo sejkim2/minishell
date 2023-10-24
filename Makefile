@@ -6,7 +6,7 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/23 15:00:44 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/24 15:57:46 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -60,8 +60,6 @@ PARSER_SRCS = free_tree.c \
 	parser.c \
 	tree_node_utils.c \
 	parser_utils.c
-
-ENTRY_SRCS = temp_file.c
 	
 RUN_SRCS = get_path.c \
 	path_utils.c \
@@ -93,27 +91,25 @@ MAIN_SRC = main.c
 TEST_SRCS = test.c
 
 SRCS1 = $(addprefix $(BUILTIN_DIR)/,$(BUILTIN_SRCS))
-SRCS2 = $(addprefix $(ENTRY_DIR)/,$(ENTRY_SRCS))
-SRCS3 = $(addprefix $(LEXER_DIR)/,$(LEXER_SRCS))
-SRCS4 = $(addprefix $(PARSER_DIR)/,$(PARSER_SRCS))
-SRCS5 = $(addprefix $(RUN_DIR)/,$(RUN_SRCS))
-SRCS6 = $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_SRCS))
-SRCS7 = $(addprefix $(TEST_DIR)/,$(TEST_SRCS))
-SRCS8 = $(addprefix $(WILD_CARD_DIR)/,$(WILD_CARD_SRCS))
-SRCS9 = $(addprefix $(HEREDOC_DIR)/,$(HEREDOC_SRCS))
+SRCS2 = $(addprefix $(LEXER_DIR)/,$(LEXER_SRCS))
+SRCS3 = $(addprefix $(PARSER_DIR)/,$(PARSER_SRCS))
+SRCS4 = $(addprefix $(RUN_DIR)/,$(RUN_SRCS))
+SRCS5 = $(addprefix $(SIGNAL_DIR)/,$(SIGNAL_SRCS))
+SRCS6 = $(addprefix $(TEST_DIR)/,$(TEST_SRCS))
+SRCS7 = $(addprefix $(WILD_CARD_DIR)/,$(WILD_CARD_SRCS))
+SRCS8 = $(addprefix $(HEREDOC_DIR)/,$(HEREDOC_SRCS))
 
 MAIN_OBJ = $(MAIN_SRC:.c=.o)
 BUILTIN_OBJS = $(SRCS1:.c=.o)
-ENTRY_OBJS = $(SRCS2:.c=.o)
-LEXER_OBJS = $(SRCS3:.c=.o)
-PARSER_OBJS = $(SRCS4:.c=.o)
-RUN_OBJS = $(SRCS5:.c=.o)
-SIGNAL_OBJS = $(SRCS6:.c=.o)
-TEST_OBJS = $(SRCS7:.c=.o)
-WILD_CARD_OBJS = $(SRCS8:.c=.o)
-HEREDOC_OBJS = $(SRCS9:.c=.o)
+LEXER_OBJS = $(SRCS2:.c=.o)
+PARSER_OBJS = $(SRCS3:.c=.o)
+RUN_OBJS = $(SRCS4:.c=.o)
+SIGNAL_OBJS = $(SRCS5:.c=.o)
+TEST_OBJS = $(SRCS6:.c=.o)
+WILD_CARD_OBJS = $(SRCS7:.c=.o)
+HEREDOC_OBJS = $(SRCS8:.c=.o)
 
-OBJS = $(MAIN_OBJ) $(LEXER_OBJS) $(PARSER_OBJS) $(RUN_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS) $(TEST_OBJS) $(ENTRY_OBJS) $(WILD_CARD_OBJS) $(HEREDOC_OBJS)
+OBJS = $(MAIN_OBJ) $(LEXER_OBJS) $(PARSER_OBJS) $(RUN_OBJS) $(SIGNAL_OBJS) $(BUILTIN_OBJS) $(TEST_OBJS) $(WILD_CARD_OBJS) $(HEREDOC_OBJS)
 # OBJS = $(SRCS:%.c=%.o)
 
 %.o : %.c $(HEADER)
@@ -122,7 +118,7 @@ OBJS = $(MAIN_OBJ) $(LEXER_OBJS) $(PARSER_OBJS) $(RUN_OBJS) $(SIGNAL_OBJS) $(BUI
 $(NAME) : $(OBJS)
 # @make -C ./mylib
 # $(CC) $(C_FLAGS) $(SRCS) -o $@ -L ./readline/lib -lreadline -lncurses
-	$(CC) $(C_FLAGS) $(MAIN_SRC) $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4) $(SRCS5) $(SRCS6) $(SRCS7) $(SRCS8) $(SRCS9) -o $@ -lreadline -lncurses mylib/mylib.a
+	$(CC) $(C_FLAGS) $(MAIN_SRC) $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4) $(SRCS5) $(SRCS6) $(SRCS7) $(SRCS8) -o $@ -lreadline -lncurses mylib/mylib.a
 
 all : $(NAME)
 
