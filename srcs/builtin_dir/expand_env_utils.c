@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:25:18 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 20:30:10 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 11:31:01 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,19 +29,14 @@ void	mk_env(int *idx, char **string, char **env)
 	{
 		env_val = get_envval(str[1] + 1, env);
 		if (env_val)
-		{
 			str[3] = env_val;
-			tmp = ft_strjoin(str[0], str[3]);
-			*idx += ft_strlen(str[3]);
-			free_4str(str[0], str[1], str[3], *string);
-			*string = ft_strjoin(tmp, str[2]);
-			free_2str(tmp, str[2]);
-		}
 		else
-		{
-			free(*string);
-			*string = ft_strdup("\0");
-		}
+			str[3] = ft_strdup("\0");
+		tmp = ft_strjoin(str[0], str[3]);
+		*idx += ft_strlen(str[3]);
+		free_4str(str[0], str[1], str[3], *string);
+		*string = ft_strjoin(tmp, str[2]);
+		free_2str(tmp, str[2]);
 	}
 }
 
@@ -85,6 +80,7 @@ char	*apply_in_tree(t_tree_node *node, t_tree_node *head)
 		i++;
 	}
 	free(node->token->value);
+	node->token->value = 0;
 	return (tmp);
 }
 

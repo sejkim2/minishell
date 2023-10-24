@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 17:00:24 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 11:30:37 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int	main(void)
 			if (root == 0)
 				continue ;
 			run_root(root, &env, o_fd);
-			free_list(list);
-			free_tree(root);
+			// free_list(list);
+			// free_tree(root);
 			recover_std_fd(o_fd);
 		}
 		else
