@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:07:55 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 16:18:47 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 19:49:55 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	setting_cmdinfo(t_tree_node *node, t_cmd *cmd_info)
 	{
 		if (node->symbol == SIMPLE_COMMAND_ELEMENT)
 		{
-			cmd_info->cmd = node->token->value;
+			cmd_info->cmd = ft_strdup(node->token->value);
 			return ;
 		}
 		node = node->next;
@@ -52,7 +52,7 @@ static int	cmd_malloc_size(t_tree_node *node)
 		if (node->symbol == SIMPLE_COMMAND_ELEMENT)
 		{
 			table = get_file_by_wild_card(node->child_list->token->str_info);
-			if (!*table)
+			if (!table)
 				cnt++;
 			else
 				cnt += cnt_line(table);
@@ -70,18 +70,18 @@ static void	make_cmd_line(t_tree_node *node, t_cmd *cmd_info)
 	char	**table;
 
 	i = 0;
-	j = 0;
 	while (node)
 	{
+		j = 0;
 		if (node->symbol == SIMPLE_COMMAND_ELEMENT)
 		{
 			table = get_file_by_wild_card(node->token->str_info);
-			if (!*table)
-				cmd_info->cmd_line[i++] = node->token->value;
+			if (!table)
+				cmd_info->cmd_line[i++] = ft_strdup(node->token->value);
 			else
 			{
 				while (table[j])
-					cmd_info->cmd_line[i++] = table[j++];
+					cmd_info->cmd_line[i++] = ft_strdup(table[j++]);
 				free_arr(table);
 			}
 		}
@@ -91,33 +91,17 @@ static void	make_cmd_line(t_tree_node *node, t_cmd *cmd_info)
 
 t_cmd	make_cmd_info(t_tree_node *node, char **env)
 {
-	int		i = 0;
 	int		cnt;
 	char	*table;
 	t_cmd	cmd_info;
 
 	setting_cmdinfo(node, &cmd_info);
-	cnt = cnt_argv(node);
+	cnt = cmd_malloc_size(node);
 	if (cmd_info.cmd)
 	{
 		cmd_info.cmd_line = malloc(sizeof(char *) * (cnt + 1));
-		while (node)
-		{
-			if (node->symbol == SIMPLE_COMMAND_ELEMENT)
-			{
-				cmd_info.cmd_line[i] = node->token->value;
-				i++;
-			}
-			node = node->next;
-		}
-		cmd_info.cmd_line[i] = NULL;
+		make_cmd_line(node, &cmd_info);
+		cmd_info.cmd_line[cnt] = NULL;
 	}
-	// cnt = cmd_malloc_size(node);
-	// if (cmd_info.cmd)
-	// {
-	// 	cmd_info.cmd_line = malloc(sizeof(char *) * (cnt + 1));
-	// 	make_cmd_line(node, &cmd_info);
-	// 	cmd_info.cmd_line[cnt] = NULL;
-	// }
 	return (cmd_info);
 }
