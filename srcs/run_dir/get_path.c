@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/01 12:32:51 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 15:02:54 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:34:00 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ char	*get_path(char *exe, char **env)
 	char	**path;
 	char	*res;
 
+	if (!*exe)
+		return (exe);
 	path = find_path_in_envp_and_split(env);
 	res = init_path_env(exe, path);
 	return (res);

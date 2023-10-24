@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 15:58:52 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:35:17 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ char	*read_command_line(char **env)
 	line = readline("minishell$ ");
 	if (line)
 	{
-		if (line[0] == '\0')
-			return (line);
 		add_history(line);
 		list = lexer(line);
 		if (list == 0)

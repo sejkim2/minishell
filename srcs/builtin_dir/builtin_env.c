@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:06:44 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 15:03:07 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:32:30 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	check_env_dup(char **env, char **cmd_argv)
 		while (env[j])
 		{
 			s2 = get_envname(env[j]);
-			if (strcmp(s1, s2))
+			if (ft_strcmp(s1, s2))
 				printf("%s\n", env[j]);
 			free(s2);
 			j++;

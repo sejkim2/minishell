@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 15:28:20 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:32:58 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ char	*get_envval(char *env_name, char **env)
 	{
 		j = 0;
 		compare = get_envname(env[i]);
-		if (!strcmp(env_name, compare))
+		if (!ft_strcmp(env_name, compare))
 		{
 			while (env[i][j] != '=')
 				j++;

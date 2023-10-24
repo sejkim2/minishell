@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_env_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:25:18 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 17:06:05 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:33:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ char	*apply_in_tree(t_tree_node *node, t_tree_node *head)
 
 int	dollar_string(char *str)
 {
+	while (*str && *str != '$')
+		str++;
 	while (*str)
 	{
 		if (*str != '$')
