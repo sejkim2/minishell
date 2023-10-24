@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 11:39:06 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 12:39:12 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	main(void)
 			root = parser(list);
 			if (root == 0)
 				continue ;
-			run_root(root, &env, o_fd);
+			run_root(root, &env);
 			// free_list(list);
 			free_tree(root);
 			recover_std_fd(o_fd);

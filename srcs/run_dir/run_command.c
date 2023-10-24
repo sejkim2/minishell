@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:44:36 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 12:13:22 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 12:38:51 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	run_subshell_redir(t_tree_node *node, char ***env)
 	return (fd_flag);
 }
 
-void	run_command_nonpipe(t_tree_node *node, char ***env, int *o_fd)
+void	run_command_nonpipe(t_tree_node *node, char ***env)
 {
 	t_tree_node	*child;
 	pid_t		sub_pro;
@@ -38,7 +38,7 @@ void	run_command_nonpipe(t_tree_node *node, char ***env, int *o_fd)
 		if (sub_pro == 0)
 		{
 			if (run_subshell_redir(child->next, env) == 0)
-				run_list(child->child_list->next, env, o_fd);
+				run_list(child->child_list->next, env);
 			exit(g_exit_status);
 		}
 		else
@@ -46,7 +46,7 @@ void	run_command_nonpipe(t_tree_node *node, char ***env, int *o_fd)
 	}
 }
 
-void	run_command_pipe(t_tree_node *node, char ***env, int *o_fd)
+void	run_command_pipe(t_tree_node *node, char ***env)
 {
 	t_tree_node	*child;
 	pid_t		sub_pro;
@@ -62,7 +62,7 @@ void	run_command_pipe(t_tree_node *node, char ***env, int *o_fd)
 		if (sub_pro == 0)
 		{
 			if (run_subshell_redir(child->next, env) == 0)
-				run_list(child->child_list->next, env, o_fd);
+				run_list(child->child_list->next, env);
 			exit(g_exit_status);
 		}
 		else

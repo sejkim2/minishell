@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 11:54:58 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 12:39:06 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,20 +254,20 @@ char			*get_path(char *exe, char **env);
 char			*init_path_env(char *cmd, char **path);
 
 /*run_root*/
-void			run_root(t_tree_node *root, char ***env, int *o_fd);
+void			run_root(t_tree_node *root, char ***env);
 
 /*run_list*/
-void			run_list(t_tree_node *node, char ***env, int *o_fd);
-void			run_andif_list(t_tree_node *node, char ***env, int *o_fd);
-void			run_orif_list(t_tree_node *node, char ***env, int *o_fd);
+void			run_list(t_tree_node *node, char ***env);
+void			run_andif_list(t_tree_node *node, char ***env);
+void			run_orif_list(t_tree_node *node, char ***env);
 
 /*run_pipeline*/
-void			run_pipeline(t_tree_node *node, char ***env, int *o_fd, t_symbol before);
-void			run_pipe(t_tree_node *child, char ***env, int *o_fd);
+void			run_pipeline(t_tree_node *node, char ***env, t_symbol before);
+void			run_pipe(t_tree_node *child, char ***env);
 
 /*run_command*/
-void			run_command_nonpipe(t_tree_node *node, char ***env, int *o_fd);
-void			run_command_pipe(t_tree_node *node, char ***env, int *o_fd);
+void			run_command_nonpipe(t_tree_node *node, char ***env);
+void			run_command_pipe(t_tree_node *node, char ***env);
 
 /*run_simple_command*/
 void			run_simple_command(t_tree_node *node, char ***env);
