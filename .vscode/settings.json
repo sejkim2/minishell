@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-		"__node_handle": "cpp",
-		"__mutex_base": "c",
-		"stdio.h": "c",
-		"typeinfo": "c"
-	}
-}
