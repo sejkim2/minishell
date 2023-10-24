@@ -6,12 +6,15 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 15:24:59 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:23:14 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*
+ex) cmd (cmd2)
+*/
 int	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
@@ -22,9 +25,6 @@ int	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
 		addchild(parent, node);
-		/*
-		ex) cmd (cmd2)
-		*/
 		if (list->num_of_node > 0)
 		{
 			symbol = list->head->token->symbol;
@@ -37,6 +37,9 @@ int	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 		return (parse_error(list->head->token->value));
 }
 
+/*
+ex1) >re1 (<re3)
+*/
 int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
@@ -50,9 +53,6 @@ int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 			get_heredoc(node);
 			next_symbol(list);
 			addchild(parent, node);
-			/*
-			ex1) >re1 (<re3)
-			*/
 			if (list->num_of_node > 0)
 			{
 				symbol = list->head->token->symbol;
@@ -95,17 +95,22 @@ int	parse_simple_command(t_linked_list *list, t_tree_node *parent)
 	return (1);
 }
 
+static	int	if_word_or_redir(t_linked_list *list, t_tree_node *parent)
+{
+	t_tree_node	*node;
+
+	node = make_tree_node(list, SIMPLE_COMMAND);
+	addchild(parent, node);
+	return (parse_simple_command(list, node));
+}
+
 int	parse_command(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
 	int			syntax_error;
 
 	if (accept(list, WORD) || accept(list, REDIRECTION))
-	{
-		node = make_tree_node(list, SIMPLE_COMMAND);
-		addchild(parent, node);
-		return (parse_simple_command(list, node));
-	}
+		return (if_word_or_redir(list, parent));
 	else if (accept(list, L_BRA))
 	{
 		node = make_tree_node(list, SUBSHELL);
@@ -117,7 +122,6 @@ int	parse_command(t_linked_list *list, t_tree_node *parent)
 			node = make_tree_node(list, REDIRECTION_LIST);
 			addchild(parent, node);
 			syntax_error = parse_redirection_list(list, node);
-			/*추가된 부분 -> (ls) >out1 pwd >out2*/
 			if (accept(list, WORD))
 				return (parse_error(list->head->token->value));
 			else
@@ -125,12 +129,13 @@ int	parse_command(t_linked_list *list, t_tree_node *parent)
 		}
 		return (1);
 	}
-	/*
-	list && list == command && command
-	if command != simple_command(redir, word) or subshell --> parse error
-	
-	ex) (cmd1 && )
-	*/
 	else
 		return (parse_error(list->head->token->value));
 }
+/*추가된 부분 line 120-> (ls) >out1 pwd >out2*/
+/*
+list && list == command && command
+if command != simple_command(redir, word) or subshell --> parse error
+
+ex) (cmd1 && )
+*/

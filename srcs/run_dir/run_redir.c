@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 19:50:35 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:22:17 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char **file_table)
 	}
 	else
 	{
-		fd = open(child->token->HD_name, O_RDONLY);
+		fd = open(child->token->hd_name, O_RDONLY);
 		dup2(fd, 0);
 	}
 	return (fd);

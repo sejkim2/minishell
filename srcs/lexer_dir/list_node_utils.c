@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:03:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 13:43:25 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:21:51 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static	void	init_new_token(t_token *token)
 	token->symbol = WORD;
 	token->redir_type = NO_REDIR;
 	token->value = 0;
-	token->HD_name = 0;
+	token->hd_name = 0;
 	token->str_info = 0;
 }
 

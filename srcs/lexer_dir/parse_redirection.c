@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/06 14:11:28 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 14:29:25 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:19:15 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static	int	check_parse_redirection_error(char *cmd_line, int index)
 	return (1);
 }
 
-int	parse_redirection(char *cmd_line, int *end, s_str_info **str_info)
+int	parse_redirection(char *cmd_line, int *end, t_str_info **str_info)
 {
 	int	start;
 

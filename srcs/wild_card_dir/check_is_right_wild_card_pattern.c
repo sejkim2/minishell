@@ -6,14 +6,14 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 16:28:32 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 16:28:36 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:20:08 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 static	int	push_wild_card(char **str, char **file, \
-s_str_info *str_info, int *i)
+t_str_info *str_info, int *i)
 {
 	while (**str == '*')
 		(*str)++;
@@ -28,7 +28,7 @@ s_str_info *str_info, int *i)
 }
 
 static	int	is_case_is_not_wild_card(char **str, char **file, \
-s_str_info *str_info, int *i)
+t_str_info *str_info, int *i)
 {
 	if (**str != **file)
 		return (0);
@@ -56,7 +56,7 @@ static int	check_return_value(char ch)
 }
 
 static int	if_case_is_wild_card(char *str, char **file, \
-s_str_info *str_info, int i)
+t_str_info *str_info, int i)
 {
 	char	*tmp;
 	int		flag;
@@ -80,7 +80,7 @@ s_str_info *str_info, int i)
 }
 
 int	check_is_right_wild_card_pattern(char *str, char *file, \
-s_str_info *str_info, int i)
+t_str_info *str_info, int i)
 {
 	char	*tmp;
 	int		flag;

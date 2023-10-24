@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 15:55:55 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:21:17 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,5 @@ void	get_heredoc(t_tree_node *node)
 {
 	if (node->token->redir_type == DOUBLE_REDIR \
 	&& node->token->value[0] == '<' && node->token->value[1] == '<')
-		node->token->HD_name = input_heredoc(set_redir_file_name(node));
+		node->token->hd_name = input_heredoc(set_redir_file_name(node));
 }

@@ -6,12 +6,14 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:31:05 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 16:59:30 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:12:54 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+/*remove : line 30*/
+/*| or ls |*/
 int	parse_pipeline(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
@@ -25,8 +27,6 @@ int	parse_pipeline(t_linked_list *list, t_tree_node *parent)
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
 		addchild(parent, node);
-		/*remove*/
-		/*| or ls |*/
 		if (list->num_of_node == 0)
 			return (parse_error(node->token->value));
 		node = make_tree_node(list, PIPELINE);
@@ -37,6 +37,8 @@ int	parse_pipeline(t_linked_list *list, t_tree_node *parent)
 	return (1);
 }
 
+/*remove : line 54*/
+/*remove : line 59*/
 int	parse_list(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
@@ -51,11 +53,9 @@ int	parse_list(t_linked_list *list, t_tree_node *parent)
 		node = make_tree_node(list, list->head->token->symbol);
 		next_symbol(list);
 		addchild(parent, node);
-		/*remove*/
 		if (list->num_of_node == 0)
 			return (parse_error(node->token->value));
 		symbol = list->head->token->symbol;
-		/*remove*/
 		if (symbol == PIPE || symbol == AND_IF || \
 		symbol == OR_IF || symbol == R_BRA)
 			return (parse_error(list->head->token->value));
@@ -66,6 +66,11 @@ int	parse_list(t_linked_list *list, t_tree_node *parent)
 	return (1);
 }
 
+/*
+line 92
+ex1) (cmd1) cmd2
+ex2) (cmd1) (cmd2)
+*/
 int	parse_subshell(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
@@ -85,10 +90,6 @@ int	parse_subshell(t_linked_list *list, t_tree_node *parent)
 	node = make_tree_node(list, list->head->token->symbol);
 	next_symbol(list);
 	addchild(parent, node);
-	/*
-	ex1) (cmd1) cmd2
-	ex2) (cmd1) (cmd2)
-	*/
 	if (list->num_of_node > 0)
 	{
 		symbol = list->head->token->symbol;

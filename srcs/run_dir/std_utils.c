@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   std_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 18:55:17 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 14:15:03 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:22:29 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,9 @@ void	unlink_tmpfile(t_tree_node *parent, int depth)
 	{
 		if (node->symbol == REDIRECTION)
 		{
-			unlink(node->token->HD_name);
-			free(node->token->HD_name);
-			node->token->HD_name = 0;
+			unlink(node->token->hd_name);
+			free(node->token->hd_name);
+			node->token->hd_name = 0;
 		}
 		node = node->next;
 	}

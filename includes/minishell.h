@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 16:43:49 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:17:22 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,16 +78,16 @@ typedef struct s_string_info
 	char		*str;
 	int			str_len;
 	t_str_type	str_type;
-}	s_str_info;
+}	t_str_info;
 
 typedef struct s_token
 {
-    t_symbol	symbol;
-    t_redir		redir_type;
-    char		*value;
-    char		*HD_name;
-    s_str_info	*str_info;
-}  	t_token;
+	t_symbol	symbol;
+	t_redir		redir_type;
+	char		*value;
+	char		*hd_name;
+	t_str_info	*str_info;
+}	t_token;
 
 typedef struct s_token_node
 {
@@ -164,7 +164,8 @@ char			*free_token(t_token *token);
 
 /*lexer_error*/
 void			malloc_error(void);
-int				print_unexpected_token_syntax_error(char *error_string, char error_ch);
+int				print_unexpected_token_syntax_error(char *error_string, \
+char error_ch);
 int				print_unmatched_parentheses_syntax_error(void);
 int				print_arithmetic_expansion_syntax_error(void);
 
@@ -181,20 +182,22 @@ void			push_back_list(t_linked_list *list, t_token_node *node);
 t_token_node	*pop_list(t_linked_list *list);
 
 /*make_quote_string*/
-s_str_info		*make_quote_string(char *cmd_line, int start, int end);
+t_str_info		*make_quote_string(char *cmd_line, int start, int end);
 
 /*make_value*/
 char			*make_value(char *cmd_line, int start, int end);
 
 /*parse_pipe_or_orif_or_andif*/
-int				parse_pipe_or_orif_or_andif(char *cmd_line, char ch, int *end, t_token *token);
+int				parse_pipe_or_orif_or_andif(char *cmd_line, char ch, \
+int *end, t_token *token);
 
 /*parse_quote_string*/
 void			parse_single_quote_string(char *cmd_line, int *end);
 void			parse_double_quote_string(char *cmd_line, int *end);
 
 /*parse_redirection*/
-int				parse_redirection(char *cmd_line, int *end, s_str_info **str_info);
+int				parse_redirection(char *cmd_line, int *end, \
+t_str_info **str_info);
 
 /*parse_word_or_branket*/
 int				parse_word(char *cmd_line, int *end, t_token *token);
@@ -225,9 +228,11 @@ int				parse_list(t_linked_list *list, t_tree_node *parent);
 
 /*parser_function_2*/
 int				parse_simple_command(t_linked_list *list, t_tree_node *parent);
-int				parse_simple_command_element(t_linked_list *list, t_tree_node *parent);
+int				parse_simple_command_element(t_linked_list *list, \
+t_tree_node *parent);
 int				parse_command(t_linked_list *list, t_tree_node *parent);
-int				parse_redirection_list(t_linked_list *list, t_tree_node *parent);
+int				parse_redirection_list(t_linked_list *list, \
+t_tree_node *parent);
 
 /*parser_utils*/
 t_symbol		next_symbol(t_linked_list *list);
@@ -238,7 +243,8 @@ int				expect(t_linked_list *list, t_symbol symbol);
 t_tree_node		*parser(t_linked_list *list);
 
 /*tree_node_utils*/
-void			init_tree_node(t_linked_list *list, t_tree_node *node, t_symbol symbol);
+void			init_tree_node(t_linked_list *list, t_tree_node *node, \
+t_symbol symbol);
 t_tree_node		*make_tree_node(t_linked_list *list, t_symbol symbol);
 void			addchild(t_tree_node *parent, t_tree_node *child);
 
@@ -302,7 +308,7 @@ void			set_heredoc_signal(void);
 /*shell_signal*/
 void			set_shell_signal(void);
 void			ctrl_c(int signum);
-int				shell_ctrl_d();
+int				shell_ctrl_d(void);
 
 /*terminal option*/
 struct termios	terminal_option(void);
@@ -311,10 +317,10 @@ void			set_terminal_print_off(void);
 void			set_terminal_print_on(void);
 
 /*wild_card*/
-char			**get_file_by_wild_card(s_str_info	*str_info);
-int				check_wild_card_pattern(s_str_info *str_info, int *bit_mask);
+char			**get_file_by_wild_card(t_str_info	*str_info);
+int				check_wild_card_pattern(t_str_info *str_info, int *bit_mask);
 int				check_is_right_wild_card_pattern(char *str, char *file, \
-s_str_info *str_info, int i);
+t_str_info *str_info, int i);
 
 /*heredoc*/
 void			get_heredoc(t_tree_node *node);

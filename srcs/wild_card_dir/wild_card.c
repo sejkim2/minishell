@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:44:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 14:06:48 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:20:27 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static	int	num_of_file_in_current_directory(void)
 	return (num_of_file);
 }
 
-static	char	**make_string_table(s_str_info *str_info, \
+static	char	**make_string_table(t_str_info *str_info, \
 int *bit_mask, int count_of_file)
 {
 	DIR				*dir;
@@ -66,7 +66,7 @@ int *bit_mask, int count_of_file)
 	return (string_table);
 }
 
-static	int	check_is_exist_wild_card(s_str_info	*str_info)
+static	int	check_is_exist_wild_card(t_str_info	*str_info)
 {
 	int	i;
 
@@ -97,7 +97,7 @@ static	int	check_is_exist_bit_mask(int *bit_mask)
 	return (0);
 }
 
-char	**get_file_by_wild_card(s_str_info	*str_info)
+char	**get_file_by_wild_card(t_str_info	*str_info)
 {
 	int	count_of_file;
 	int	*bit_mask;

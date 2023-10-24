@@ -6,13 +6,13 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:24:58 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 16:38:45 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:20:17 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	void	check_wild_card(s_str_info *str_info, char *file_name, \
+static	void	check_wild_card(t_str_info *str_info, char *file_name, \
 int **bit_mask, int *count_of_file)
 {
 	if (check_is_right_wild_card_pattern(str_info[0].str, \
@@ -26,7 +26,7 @@ int **bit_mask, int *count_of_file)
 	(*bit_mask)++;
 }
 
-int	check_wild_card_pattern(s_str_info *str_info, int *bit_mask)
+int	check_wild_card_pattern(t_str_info *str_info, int *bit_mask)
 {
 	DIR				*dir;
 	struct dirent	*entry;

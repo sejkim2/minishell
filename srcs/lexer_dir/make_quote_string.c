@@ -6,19 +6,19 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 19:30:04 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/06 14:06:07 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:18:21 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static	s_str_info	*make_and_init_str_info(char *cmd_line, int start, int end)
+static	t_str_info	*make_and_init_str_info(char *cmd_line, int start, int end)
 {
 	int			len_string;
-	s_str_info	*str_info;
+	t_str_info	*str_info;
 
 	len_string = count_quote_string(cmd_line, start, end);
-	str_info = malloc(sizeof(s_str_info) * (len_string + 1));
+	str_info = malloc(sizeof(t_str_info) * (len_string + 1));
 	if (str_info == 0)
 		malloc_error();
 	str_info[len_string].str = 0;
@@ -28,7 +28,7 @@ static	s_str_info	*make_and_init_str_info(char *cmd_line, int start, int end)
 }
 
 static	void	set_single_quote(char *cmd_line, \
-int *start, int end, s_str_info *str_info)
+int *start, int end, t_str_info *str_info)
 {
 	int	i;
 
@@ -40,7 +40,7 @@ int *start, int end, s_str_info *str_info)
 }
 
 static	void	set_double_quote(char *cmd_line, \
-int *start, int end, s_str_info *str_info)
+int *start, int end, t_str_info *str_info)
 {
 	int	i;
 
@@ -52,7 +52,7 @@ int *start, int end, s_str_info *str_info)
 }
 
 static	void	set_normal_string(char *cmd_line, \
-int *start, int end, s_str_info *str_info)
+int *start, int end, t_str_info *str_info)
 {
 	int	i;
 
@@ -63,11 +63,11 @@ int *start, int end, s_str_info *str_info)
 	str_info->str_type = STRING;
 }
 
-s_str_info	*make_quote_string(char *cmd_line, int start, int end)
+t_str_info	*make_quote_string(char *cmd_line, int start, int end)
 {
 	int			len_string;
-	s_str_info	*str_info;
-	s_str_info	*info_address;
+	t_str_info	*str_info;
+	t_str_info	*info_address;
 
 	str_info = make_and_init_str_info(cmd_line, start, end);
 	info_address = str_info;

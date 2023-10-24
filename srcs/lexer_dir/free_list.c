@@ -6,13 +6,13 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:55:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 15:46:04 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/24 17:21:33 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*free_str_info(s_str_info *str_info)
+static char	*free_str_info(t_str_info *str_info)
 {
 	int	i;
 
@@ -32,10 +32,10 @@ char	*free_token(t_token *token)
 		free(token->value);
 	if (token->str_info)
 		free_str_info(token->str_info);
-	if (token->HD_name)
+	if (token->hd_name)
 	{
-		unlink(token->HD_name);
-		free(token->HD_name);
+		unlink(token->hd_name);
+		free(token->hd_name);
 	}
 	free(token);
 	return (0);
