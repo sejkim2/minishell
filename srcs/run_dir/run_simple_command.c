@@ -6,13 +6,13 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 13:45:58 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 15:35:08 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	run_simple_command(t_tree_node *node, char ***env)
+void	run_simple_command(t_tree_node *node, char ***env, t_tree_node *root)
 {
 	t_tree_node	*child;
 	t_cmd		cmd_info;
@@ -31,10 +31,10 @@ void	run_simple_command(t_tree_node *node, char ***env)
 			break ;
 	}
 	if (cmd_info.cmd && fd_flag == 0)
-	{	
-		if (!run_builtin(cmd_info, env))
+	{
+		if (!run_builtin(cmd_info, env, root))
 			run_execve(cmd_info, *env);
 	}
-	else
+	else if (fd_flag)
 		g_exit_status = 1;
 }

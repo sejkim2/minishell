@@ -6,13 +6,13 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 15:29:36 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 16:25:20 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	run_builtin(t_cmd cmd_info, char ***env)
+int	run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root)
 {
 	cmd_info.cmd_line++;
 	if (!ft_strcmp(cmd_info.cmd, "cd"))
@@ -22,7 +22,7 @@ int	run_builtin(t_cmd cmd_info, char ***env)
 	else if (!ft_strcmp(cmd_info.cmd, "env"))
 		builtin_env(cmd_info.cmd_line, *env);
 	else if (!ft_strcmp(cmd_info.cmd, "exit"))
-		builtin_exit(cmd_info.cmd_line);
+		builtin_exit(cmd_info.cmd_line, root);
 	else if (!ft_strcmp(cmd_info.cmd, "export"))
 		builtin_export(cmd_info.cmd_line, env);
 	else if (!ft_strcmp(cmd_info.cmd, "pwd"))

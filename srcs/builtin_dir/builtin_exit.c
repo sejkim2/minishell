@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:13:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/18 16:47:36 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 16:57:57 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,20 +62,22 @@ static unsigned char	ft_atol(char *str, int *flag)
 static void	exit_fork(void)
 {
 	pid_t	child;
+	int		status;
 
 	child = fork();
 	if (child == 0)
 		exit(1);
-	g_exit_status = 1;
+	waitpid(child, &status, 0);
+	g_exit_status = WEXITSTATUS(status);
 }
 
-void	builtin_exit(char **cmd_argv)
+void	builtin_exit(char **cmd_argv, t_tree_node *root)
 {
 	int				flag;
 	int				cmd_argc;
 
-	g_exit_status = 0;
 	cmd_argc = cnt_line(cmd_argv);
+	unlink_tmpfile(root, 0);
 	write(2, "exit\n", 6);
 	if (!cmd_argc)
 		exit(g_exit_status);

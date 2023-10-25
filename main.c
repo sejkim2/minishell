@@ -6,13 +6,13 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 15:20:29 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/25 17:14:34 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*read_command_line(char **env)
+char	*read_command_line(char ***env)
 {
 	char			*line;
 	t_linked_list	*list;
@@ -29,7 +29,7 @@ char	*read_command_line(char **env)
 		if (root == 0)
 			return (line);
 		free_list(list, 0);
-		run_root(root, &env);
+		run_root(root, env);
 		free_tree(root);
 		unlink_tmpfile(root, 0);
 	}
@@ -48,7 +48,7 @@ int	main(void)
 	while (1)
 	{
 		set_shell_signal();
-		line = read_command_line(env);
+		line = read_command_line(&env);
 		if (line)
 			free(line);
 		else
