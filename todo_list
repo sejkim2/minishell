@@ -1,0 +1,4 @@
+1. 시그널
+2. export && env의 leak검사
+3. unset 구조 다시짜기.
+4. readline 재구성.
