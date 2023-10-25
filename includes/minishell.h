@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 18:34:32 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 16:57:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ typedef struct s_cmd
 void			builtin_cd(char **cmd_argv, char **env);
 void			builtin_echo(char **cmd_argv);
 void			builtin_env(char **cmd_argv, char **env);
-void			builtin_exit(char **cmd_argv);
+void			builtin_exit(char **cmd_argv, t_tree_node *root);
 void			builtin_export(char **cmd_argv, char ***env);
 void			builtin_pwd(char **env);
 void			builtin_unset(char **cmd_argv, char ***env);
@@ -257,20 +257,20 @@ char			*init_path_env(char *cmd, char **path);
 void			run_root(t_tree_node *root, char ***env);
 
 /*run_list*/
-void			run_list(t_tree_node *node, char ***env);
-void			run_andif_list(t_tree_node *node, char ***env);
-void			run_orif_list(t_tree_node *node, char ***env);
+void			run_list(t_tree_node *node, char ***env, t_tree_node *root);
+void			run_andif_list(t_tree_node *node, char ***env, t_tree_node *root);
+void			run_orif_list(t_tree_node *node, char ***env, t_tree_node *root);
 
 /*run_pipeline*/
-void			run_pipeline(t_tree_node *node, char ***env, t_symbol before);
-void			run_pipe(t_tree_node *child, char ***env);
+void			run_pipeline(t_tree_node *node, char ***env, t_symbol before, t_tree_node *root);
+void			run_pipe(t_tree_node *child, char ***env, t_tree_node *root);
 
 /*run_command*/
-void			run_command_nonpipe(t_tree_node *node, char ***env);
-void			run_command_pipe(t_tree_node *node, char ***env);
+void			run_command_nonpipe(t_tree_node *node, char ***env, t_tree_node *root);
+void			run_command_pipe(t_tree_node *node, char ***env, t_tree_node *root);
 
 /*run_simple_command*/
-void			run_simple_command(t_tree_node *node, char ***env);
+void			run_simple_command(t_tree_node *node, char ***env, t_tree_node *root);
 
 /*run_redir_utils*/
 char			*set_redir_file_name(t_tree_node *node);
@@ -281,7 +281,7 @@ int				open_error(char *redir_name);
 int				run_redirection_list(t_tree_node *node, char ***env);
 
 /*run_exe*/
-int				run_builtin(t_cmd cmd_info, char ***env);
+int				run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root);
 void			run_execve(t_cmd cmd_info, char **env);
 
 /*run_utils*/

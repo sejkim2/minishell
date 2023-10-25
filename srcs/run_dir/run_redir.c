@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   run_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 17:22:17 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/25 15:11:51 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@ static int	expand_single_redir(t_tree_node *child, char *expand_file)
 	{
 		fd = open(expand_file, O_RDONLY);
 		if (fd == -1)
-			open_error(expand_file);
+			return (open_error(expand_file));
 		dup2(fd, 0);
 	}
 	else
 	{
 		fd = open(expand_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
-			open_error(expand_file);
+			return (open_error(expand_file));
 		dup2(fd, 1);
 	}
-	return (fd);
+	return (0);
 }
 
 static int	expand_double_redir(t_tree_node *child, char *expand_file)
@@ -39,9 +39,9 @@ static int	expand_double_redir(t_tree_node *child, char *expand_file)
 
 	fd = open(expand_file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
-		open_error(expand_file);
+		return (open_error(expand_file));
 	dup2(fd, 1);
-	return (fd);
+	return (0);
 }
 
 static int	check_single_redir(t_tree_node *child, char *redir_name, \
@@ -59,17 +59,17 @@ char **file_table)
 	{
 		fd = open(redir_name, O_RDONLY);
 		if (fd == -1)
-			open_error(redir_name);
+			return (open_error(redir_name));
 		dup2(fd, 0);
 	}
 	else
 	{
 		fd = open(redir_name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (fd == -1)
-			open_error(redir_name);
+			return (open_error(redir_name));
 		dup2(fd, 1);
 	}
-	return (fd);
+	return (0);
 }
 
 static int	check_double_redir(t_tree_node *child, char *redir_name, \
@@ -87,7 +87,7 @@ char **file_table)
 			return (expand_double_redir(child, *file_table));
 		fd = open(redir_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
-			open_error(redir_name);
+			return (open_error(redir_name));
 		dup2(fd, 1);
 	}
 	else
@@ -95,7 +95,7 @@ char **file_table)
 		fd = open(child->token->hd_name, O_RDONLY);
 		dup2(fd, 0);
 	}
-	return (fd);
+	return (0);
 }
 
 int	run_redirection_list(t_tree_node *node, char ***env)

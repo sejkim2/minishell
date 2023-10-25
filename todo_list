@@ -1,1 +1,4 @@
-built-in : unset norm
+exit
+
+1. 부모 프로세스가 종료되었을 때 오직, 화면에 exit출력.
+2. exit 자체의 출력문은 리다이렉트 되지 않음
