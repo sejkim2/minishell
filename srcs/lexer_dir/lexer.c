@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/28 13:48:24 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/20 15:42:02 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/25 15:17:27 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int	check_list_is_empty_or_blank_error(t_linked_list *list)
 	if (list->num_of_node == 0 || check_blank_error(list) == -1 \
 	|| check_arithmetic_expansion(list) == -1)
 	{
-		free_list(list);
+		free_list(list, 1);
 		return (0);
 	}
 	else
@@ -94,7 +94,7 @@ t_linked_list	*lexer(char *cmd_line)
 		node = tokenize(cmd_line, &i);
 		if (node == 0)
 		{
-			free_list(list);
+			free_list(list, 1);
 			return (0);
 		}
 		push_back_list(list, node);

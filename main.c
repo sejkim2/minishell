@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 17:35:17 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 15:20:29 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,9 @@ char	*read_command_line(char **env)
 		root = parser(list);
 		if (root == 0)
 			return (line);
+		free_list(list, 0);
 		run_root(root, &env);
+		free_tree(root);
 		unlink_tmpfile(root, 0);
 	}
 	else

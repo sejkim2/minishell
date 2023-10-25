@@ -6,50 +6,22 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 17:55:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 17:21:33 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/25 15:16:30 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*free_str_info(t_str_info *str_info)
+char	*free_token_node(t_token_node *node, int is_lexer)
 {
-	int	i;
-
-	i = 0;
-	while (str_info[i].str_type != NUL)
-	{
-		free(str_info[i].str);
-		i++;
-	}
-	free(str_info);
-	return (0);
-}
-
-char	*free_token(t_token *token)
-{
-	if (token->value)
-		free(token->value);
-	if (token->str_info)
-		free_str_info(token->str_info);
-	if (token->hd_name)
-	{
-		unlink(token->hd_name);
-		free(token->hd_name);
-	}
-	free(token);
-	return (0);
-}
-
-char	*free_token_node(t_token_node *node)
-{
-	free_token(node->token);
+	if (is_lexer == 1)
+		free_token(node->token);
 	node->next = 0;
 	free(node);
 	return (0);
 }
 
-char	*free_list(t_linked_list *list)
+char	*free_list(t_linked_list *list, int is_lexer)
 {
 	t_token_node	*cur;
 	t_token_node	*del_node;
@@ -66,10 +38,10 @@ char	*free_list(t_linked_list *list)
 	{
 		del_node = cur;
 		cur = cur->next;
-		free_token_node(del_node);
+		free_token_node(del_node, is_lexer);
 	}
 	if (cur)
-		free_token_node(cur);
+		free_token_node(cur, is_lexer);
 	free(list);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 17:17:22 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/25 15:16:56 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,8 +158,8 @@ int				check_is_meta_character(char ch);
 int				check_is_seperator(char ch);
 
 /*free_list*/
-char			*free_list(t_linked_list *list);
-char			*free_token_node(t_token_node *node);
+char			*free_list(t_linked_list *list, int is_lexer);
+char			*free_token_node(t_token_node *node, int is_lexer);
 char			*free_token(t_token *token);
 
 /*lexer_error*/
