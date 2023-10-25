@@ -6,11 +6,16 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 14:42:03 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 17:40:57 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 20:08:11 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static void	free_arr2(char **arr)
+{
+	
+}
 
 static char	**rearrange_env(int cnt, char **env)
 {
