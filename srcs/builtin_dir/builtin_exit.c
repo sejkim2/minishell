@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:13:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 16:57:57 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 19:29:24 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ void	builtin_exit(char **cmd_argv, t_tree_node *root)
 
 	cmd_argc = cnt_line(cmd_argv);
 	unlink_tmpfile(root, 0);
-	write(2, "exit\n", 6);
+	if (root->in_fork != 1)
+		write(2, "exit\n", 6);
 	if (!cmd_argc)
 		exit(g_exit_status);
 	g_exit_status = ft_atol(*cmd_argv, &flag);

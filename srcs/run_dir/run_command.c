@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:44:36 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 15:33:04 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 19:24:45 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	run_command_nonpipe(t_tree_node *node, char ***env, t_tree_node *root)
 		sub_pro = fork();
 		if (sub_pro == 0)
 		{
+			root->in_fork = 1;
 			if (run_subshell_redir(child->next, env) == 0)
 				run_list(child->child_list->next, env, root);
 			exit(g_exit_status);
@@ -61,6 +62,7 @@ void	run_command_pipe(t_tree_node *node, char ***env, t_tree_node *root)
 		sub_pro = fork();
 		if (sub_pro == 0)
 		{
+			root->in_fork = 1;
 			if (run_subshell_redir(child->next, env) == 0)
 				run_list(child->child_list->next, env, root);
 			exit(g_exit_status);

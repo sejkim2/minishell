@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/25 17:11:42 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/25 19:22:03 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_linkded_list
 
 typedef struct s_tree_node
 {
+	int					in_fork;
 	t_symbol			symbol;
 	t_token				*token;
 	int					num_of_child;
@@ -271,6 +272,7 @@ void			run_command_pipe(t_tree_node *node, char ***env, t_tree_node *root);
 
 /*run_simple_command*/
 void			run_simple_command(t_tree_node *node, char ***env, t_tree_node *root);
+void			free_cmd(t_cmd cmd_info);
 
 /*run_redir_utils*/
 char			*set_redir_file_name(t_tree_node *node);
@@ -284,7 +286,7 @@ int				run_redirection_list(t_tree_node *node, char ***env);
 int				run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root);
 void			run_execve(t_cmd cmd_info, char **env);
 
-/*run_utils*/
+/*cmd_utils*/
 t_cmd			make_cmd_info(t_tree_node *node, char **env);
 
 /*std_utils*/

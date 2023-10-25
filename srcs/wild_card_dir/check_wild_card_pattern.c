@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_wild_card_pattern.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:24:58 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 17:20:17 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/25 19:44:14 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ int	check_wild_card_pattern(t_str_info *str_info, int *bit_mask)
 		check_wild_card(str_info, entry->d_name, &bit_mask, &count_of_file);
 	}
 	*bit_mask = -1;
+	free(entry);
 	closedir(dir);
 	return (count_of_file);
 }

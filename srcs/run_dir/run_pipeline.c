@@ -6,11 +6,20 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:00:41 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 15:32:05 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 19:33:37 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+static pid_t	pro_setting(int *pipe_fd)
+{
+	pid_t	child;
+
+	pipe(pipe_fd);
+	child = fork();
+	return (child);
+}
 
 static void	pipe_fd_dup(int *pipe_fd, int flag)
 {
@@ -38,6 +47,7 @@ void	run_pipe(t_tree_node *child, char ***env, t_tree_node *root)
 		c_pro = fork();
 		if (c_pro == 0)
 		{
+			root->in_fork = 1;
 			run_command_nonpipe(child->child_list, env, root);
 			exit(g_exit_status);
 		}
@@ -62,10 +72,12 @@ t_symbol before, t_tree_node *root)
 	{
 		if (child->symbol == PIPE)
 			return (run_pipe(child, env, root));
+		// c_pro = pro_setting(pipe_fd);
 		pipe(pipe_fd);
 		c_pro = fork();
 		if (c_pro == 0)
 		{
+			root->in_fork = 1;
 			pipe_fd_dup(pipe_fd, 1);
 			run_command_pipe(child, env, root);
 			exit(g_exit_status);

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 16:25:20 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 18:14:48 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,19 +38,22 @@ void	run_execve(t_cmd cmd_info, char **env)
 {
 	pid_t	exe_fork;
 	char	*cmd;
-	int		status;
 
 	cmd = cmd_info.cmd;
 	exe_fork = fork();
 	if (exe_fork == 0)
 	{
-		cmd_info.cmd = get_path(cmd_info.cmd, env);
+		cmd_info.cmd = get_path(cmd, env);
 		if (!cmd_info.cmd || access(cmd_info.cmd, X_OK) == -1)
 		{
 			ft_stderror_print(cmd, NULL, "command not found");
 			exit(127);
 		}
-		execve(cmd_info.cmd, cmd_info.cmd_line, env);
+		if (execve(cmd_info.cmd, cmd_info.cmd_line, env) == -1)
+		{
+			ft_stderror_print(cmd, NULL, "is a directory");
+			exit(127);
+		}
 	}
 	else
 		wait_record_status();

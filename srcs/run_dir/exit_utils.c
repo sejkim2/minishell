@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:58:12 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 17:53:10 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 19:34:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,6 @@ void	wait_last_command(pid_t c_pro)
 	waitpid(c_pro, &status, 0);
 	g_exit_status = WEXITSTATUS(status);
 	while (1)
-		if (wait(&status) != -1)
+		if (wait(&status) == -1)
 			break ;
 }

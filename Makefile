@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
+#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/24 16:55:28 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/10/25 19:22:12 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ RUN_SRCS = get_path.c \
 	run_redir.c \
 	run_root.c \
 	run_simple_command.c \
-	run_utils.c \
+	cmd_utils.c \
 	std_utils.c \
 	exit_utils.c
 

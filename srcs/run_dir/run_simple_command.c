@@ -6,11 +6,18 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 15:35:08 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/25 18:00:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	free_cmd(t_cmd cmd_info)
+{
+	if (cmd_info.cmd)
+		free(cmd_info.cmd);
+	free_arr(cmd_info.cmd_line);
+}
 
 void	run_simple_command(t_tree_node *node, char ***env, t_tree_node *root)
 {
@@ -37,4 +44,5 @@ void	run_simple_command(t_tree_node *node, char ***env, t_tree_node *root)
 	}
 	else if (fd_flag)
 		g_exit_status = 1;
+	free_cmd(cmd_info);
 }

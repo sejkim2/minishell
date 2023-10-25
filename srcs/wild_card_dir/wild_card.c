@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_card.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:44:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 17:20:27 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/25 19:48:59 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static	int	num_of_file_in_current_directory(void)
 			break ;
 		num_of_file++;
 	}
+	free(entry);
 	closedir(dir);
 	return (num_of_file);
 }
@@ -43,6 +44,7 @@ int *bit_mask, int count_of_file)
 	struct dirent	*entry;
 	int				i;
 	char			**string_table;
+	int				*del_bit;
 
 	dir = opendir(".");
 	if (!dir)
@@ -52,6 +54,7 @@ int *bit_mask, int count_of_file)
 	}
 	i = 0;
 	string_table = malloc(sizeof(char **) * (count_of_file + 1));
+	del_bit = bit_mask;
 	while (1)
 	{
 		entry = readdir(dir);
@@ -62,7 +65,9 @@ int *bit_mask, int count_of_file)
 		bit_mask++;
 	}
 	string_table[i] = 0;
+	free(entry);
 	closedir(dir);
+	free(del_bit);
 	return (string_table);
 }
 
