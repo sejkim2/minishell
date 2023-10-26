@@ -34,39 +34,39 @@ int	run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root)
 	return (1);
 }
 
-static void	check_file_system2(t_cmd cmd_info, char **env, int flag)
+static void	check_file_system(t_cmd cmd_info, char **env)
 {
-	if (access(cmd_info.cmd, X_OK) == -1)
-	{
-		ft_stderror_print(error_cmd, NULL, "command not found");
-		exit(127);
-	}
-	if (execve(cmd_info.cmd, cmd_info.cmd_line, env) == -1)
-	{
-		ft_stderror_print(error_cmd, NULL, "is a directory");
-		exit(127);
-	}
-}
-
-static void	check_file_system1(t_cmd cmd_info, char **env)
-{
-	char		*input;
 	struct stat	file_info;
 
+	stat(cmd_info.cmd, &file_info);
+	if (S_ISDIR(file_info.st_mode))
+	{
+		ft_stderror_print(cmd_info.cmd, NULL, "is a directory");
+		exit(126);
+	}
+	if (execve(cmd_info.cmd, cmd_info.cmd_line, env) == -1)
+		system_call_error();
+}
+
+static void	check_file_exist(t_cmd cmd_info, char **env)
+{
 	if (!*cmd_info.cmd)
-		return (ft_stderror_print(cmd_info.input, NULL, "command not found"));
-	if (access(cmd_info.cmd, F_OK) != -1 && access(cmd_info.cmd, X_OK) == -1)
+	{
+		ft_stderror_print(cmd_info.input, NULL, "command not found");
+		exit(127);
+	}
+	else if (access(cmd_info.cmd, F_OK) == -1)
+	{
+		ft_stderror_print(cmd_info.cmd, NULL, "No such file or directory");
+		exit(127);
+	}
+	else if (access(cmd_info.cmd, X_OK) == -1)
 	{
 		ft_stderror_print(cmd_info.cmd, NULL, "Permission denied");
 		exit(126);
 	}
-	if (stat(cmd_info.cmd, &file_info) == 0)
-	{
-		if (S_ISREG(file_info.st_mode))
-			check_file_system2(cmd_info, env, 1);
-		else if (S_ISDIR(file_info.st_mode))
-			check_file_system2(cmd_info, env, 2);
-	}
+	else
+		check_file_system(cmd_info, env);
 }
 
 void	run_execve(t_cmd cmd_info, char **env)
@@ -81,7 +81,7 @@ void	run_execve(t_cmd cmd_info, char **env)
 	if (exe_fork == 0)
 	{
 		cmd_info.cmd = get_path(tmp, env);
-		check_file_system(cmd_info, env);
+		check_file_exist(cmd_info, env);
 	}
 	else
 		wait_record_status();
