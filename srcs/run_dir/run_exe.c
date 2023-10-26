@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 18:14:48 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 16:51:00 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ void	run_execve(t_cmd cmd_info, char **env)
 
 	cmd = cmd_info.cmd;
 	exe_fork = fork();
+	if (exe_fork == -1)
+		system_call_error();
 	if (exe_fork == 0)
 	{
 		cmd_info.cmd = get_path(cmd, env);

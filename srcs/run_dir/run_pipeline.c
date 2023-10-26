@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 13:00:41 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 19:33:37 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 16:47:47 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ static pid_t	pro_setting(int *pipe_fd)
 {
 	pid_t	child;
 
-	pipe(pipe_fd);
+	if (pipe(pipe_fd) == -1)
+		system_call_error();
 	child = fork();
+	if (child == -1)
+		system_call_error();
 	return (child);
 }
 
@@ -26,13 +29,15 @@ static void	pipe_fd_dup(int *pipe_fd, int flag)
 	if (flag == 0)
 	{
 		close(pipe_fd[1]);
-		dup2(pipe_fd[0], 0);
+		if (dup2(pipe_fd[0], 0) == -1)
+			system_call_error();
 		close(pipe_fd[0]);
 	}
 	else if (flag == 1)
 	{
 		close(pipe_fd[0]);
-		dup2(pipe_fd[1], 1);
+		if (dup2(pipe_fd[1], 1) == -1)
+			system_call_error();
 		close(pipe_fd[1]);
 	}
 }
@@ -72,9 +77,7 @@ t_symbol before, t_tree_node *root)
 	{
 		if (child->symbol == PIPE)
 			return (run_pipe(child, env, root));
-		// c_pro = pro_setting(pipe_fd);
-		pipe(pipe_fd);
-		c_pro = fork();
+		c_pro = pro_setting(pipe_fd);
 		if (c_pro == 0)
 		{
 			root->in_fork = 1;

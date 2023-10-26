@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:47:00 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/13 20:02:57 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 16:41:12 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,11 @@ int	print_arithmetic_expansion_syntax_error(void)
 void	malloc_error(void)
 {
 	printf("malloc error!\n");
+	exit(0);
+}
+
+void	system_call_error(void)
+{
+	perror("system call error");
 	exit(0);
 }

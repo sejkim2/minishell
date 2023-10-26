@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/26 16:12:06 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 16:57:25 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,8 @@
 # include <fcntl.h>
 # include <limits.h>
 # include <curses.h>
-// # include "../readline_dir/include/readline/readline.h"
-// # include "../readline_dir/include/readline/history.h"
 # include <readline/readline.h>
 # include <readline/history.h>
-// # include "../readline/include/readline/readline.h"
-// # include "../readline/include/readline/history.h"
 # include "../mylib/includes/libft.h"
 # include "../mylib/includes/get_next_line.h"
 
@@ -172,6 +168,7 @@ char			*free_token(t_token *token);
 
 /*lexer_error*/
 void			malloc_error(void);
+void			system_call_error(void);
 int				print_unexpected_token_syntax_error(char *error_string, \
 char error_ch);
 int				print_unmatched_parentheses_syntax_error(void);

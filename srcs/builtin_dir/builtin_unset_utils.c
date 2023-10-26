@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:49:39 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/26 16:11:33 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 16:36:24 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ int	cnt_size(char **env, int cnt)
 	}
 	return (ret);
 }
-
 
 void	compare_envname(char *unset_name, char ***env, int cnt)
 {
