@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/26 16:51:00 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 20:32:54 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,28 +34,54 @@ int	run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root)
 	return (1);
 }
 
+static void	check_file_system2(t_cmd cmd_info, char **env, int flag)
+{
+	if (access(cmd_info.cmd, X_OK) == -1)
+	{
+		ft_stderror_print(error_cmd, NULL, "command not found");
+		exit(127);
+	}
+	if (execve(cmd_info.cmd, cmd_info.cmd_line, env) == -1)
+	{
+		ft_stderror_print(error_cmd, NULL, "is a directory");
+		exit(127);
+	}
+}
+
+static void	check_file_system1(t_cmd cmd_info, char **env)
+{
+	char		*input;
+	struct stat	file_info;
+
+	if (!*cmd_info.cmd)
+		return (ft_stderror_print(cmd_info.input, NULL, "command not found"));
+	if (access(cmd_info.cmd, F_OK) != -1 && access(cmd_info.cmd, X_OK) == -1)
+	{
+		ft_stderror_print(cmd_info.cmd, NULL, "Permission denied");
+		exit(126);
+	}
+	if (stat(cmd_info.cmd, &file_info) == 0)
+	{
+		if (S_ISREG(file_info.st_mode))
+			check_file_system2(cmd_info, env, 1);
+		else if (S_ISDIR(file_info.st_mode))
+			check_file_system2(cmd_info, env, 2);
+	}
+}
+
 void	run_execve(t_cmd cmd_info, char **env)
 {
 	pid_t	exe_fork;
-	char	*cmd;
+	char	*tmp;
 
-	cmd = cmd_info.cmd;
+	tmp = cmd_info.cmd;
 	exe_fork = fork();
 	if (exe_fork == -1)
 		system_call_error();
 	if (exe_fork == 0)
 	{
-		cmd_info.cmd = get_path(cmd, env);
-		if (!cmd_info.cmd || access(cmd_info.cmd, X_OK) == -1)
-		{
-			ft_stderror_print(cmd, NULL, "command not found");
-			exit(127);
-		}
-		if (execve(cmd_info.cmd, cmd_info.cmd_line, env) == -1)
-		{
-			ft_stderror_print(cmd, NULL, "is a directory");
-			exit(127);
-		}
+		cmd_info.cmd = get_path(tmp, env);
+		check_file_system(cmd_info, env);
 	}
 	else
 		wait_record_status();

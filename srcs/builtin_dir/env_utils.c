@@ -6,37 +6,11 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/26 16:21:32 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 18:55:30 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	make_strings(int *i, char **string, char **str)
-{
-	int		ldx;
-
-	ldx = *i;
-	str[0] = ft_substr(*string, 0, *i);
-	if (!str[0])
-		malloc_error();
-	while ((*string)[ldx + 1] && (*string)[ldx + 1] != '$' \
-	&& (*string)[ldx + 1] != ' ')
-		ldx++;
-	str[1] = ft_substr(*string, *i, (ldx + 1) - *i);
-	if (!str[1])
-		malloc_error();
-	str[2] = ft_strdup("\0");
-	if (!str[2])
-		malloc_error();
-	if ((*string)[ldx + 1])
-	{
-		free(str[2]);
-		str[2] = ft_substr(*string, ldx + 1, ft_strlen(*string) - ldx);
-		if (!str[2])
-			malloc_error();
-	}
-}
 
 void	expand_env(t_tree_node *parent, char **env)
 {

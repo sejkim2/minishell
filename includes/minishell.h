@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/26 16:57:25 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 20:18:13 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <unistd.h>
 # include <termios.h>
 # include <sys/wait.h>
+# include <sys/stat.h>
 # include <dirent.h>
 # include <fcntl.h>
 # include <limits.h>
@@ -110,9 +111,18 @@ typedef struct s_tree_node
 
 typedef struct s_cmd
 {
+	char	*input;
 	char	*cmd;
 	char	**cmd_line;
 }	t_cmd;
+
+typedef struct s_env_str
+{
+	char	*fstr;
+	char	*env_str;
+	char	*bstr;
+	char	*exp_str;
+}	t_env_str;
 
 /*				builtin_dir				*/
 /*builtin*/
@@ -134,7 +144,7 @@ void			sort_ascii(char **envp, int cnt);
 void			print_export(int i, char *env_name, char *env_val, char **env);
 void			list_export(char **env);
 int				check_key_rule(char **cmd_argv, char ***env);
-void			make_strings(int *i, char **string, char **str);
+void			parser_strings(int *i, char *string, t_env_str *e_str);
 void			matrix_cpy(char **dest, char **origin);
 int				cnt_line(char **str_arr);
 void			free_2str(char *s1, char *s2);
@@ -144,7 +154,7 @@ void			ft_stderror_print(char *cmd, char *argv, char *err_string);
 
 /*env_utils*/
 void			expand_env(t_tree_node *parent, char **env);
-void			mk_env(int *idx, char **string, char **env);
+void			make_env(int *idx, char **string, char **env);
 char			*check_redir(t_tree_node *node);
 char			*apply_in_tree(t_tree_node *node, t_tree_node *head);
 int				dollar_string(char *str);
@@ -282,7 +292,7 @@ char ***env, t_tree_node *root);
 /*run_simple_command*/
 void			run_simple_command(t_tree_node *node, \
 char ***env, t_tree_node *root);
-void			free_cmd(t_cmd cmd_info);
+void			free_cmd(t_cmd *cmd_info);
 
 /*run_redir_utils*/
 char			*set_redir_file_name(t_tree_node *node);

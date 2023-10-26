@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:54:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/26 16:52:00 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 20:07:16 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static	char	*check_cmd_is_availabe(char **path, char *input_cmd)
 	while (path[i])
 	{
 		cmd_with_path = ft_strjoin(path[i], cmd_with_root);
+		if (!cmd_with_path)
+			malloc_error();
 		if (access(cmd_with_path, X_OK) == 0)
 		{
 			free(cmd_with_root);
@@ -33,7 +35,7 @@ static	char	*check_cmd_is_availabe(char **path, char *input_cmd)
 		i++;
 	}
 	free(cmd_with_root);
-	return (0);
+	return (input_cmd);
 }
 
 static	int	find_root(char *cmd)
@@ -57,12 +59,7 @@ static	char	*init_path_env_utils(char *cmd, char **path)
 
 	root_place = find_root(cmd);
 	if (root_place > 0)
-	{
-		if (access(cmd, X_OK) == -1)
-			res = 0;
-		else
-			res = ft_strdup(cmd);
-	}
+		res = ft_strdup(cmd);
 	else
 		res = check_cmd_is_availabe(path, cmd);
 	return (res);

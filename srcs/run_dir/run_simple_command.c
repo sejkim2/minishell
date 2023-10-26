@@ -6,17 +6,19 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 18:00:56 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 17:34:32 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	free_cmd(t_cmd cmd_info)
+void	free_cmd(t_cmd *cmd_info)
 {
-	if (cmd_info.cmd)
-		free(cmd_info.cmd);
-	free_arr(cmd_info.cmd_line);
+	if (cmd_info->cmd)
+		free(cmd_info->cmd);
+	if (cmd_info->input)
+		free(cmd_info->input);
+	free_arr(cmd_info->cmd_line);
 }
 
 void	run_simple_command(t_tree_node *node, char ***env, t_tree_node *root)
@@ -27,6 +29,7 @@ void	run_simple_command(t_tree_node *node, char ***env, t_tree_node *root)
 
 	expand_env(node, *env);
 	cmd_info = make_cmd_info(node->child_list, *env);
+	cmd_info.input = ft_strdup(node->token->value);
 	child = node->child_list;
 	fd_flag = 0;
 	while (child)
@@ -44,5 +47,5 @@ void	run_simple_command(t_tree_node *node, char ***env, t_tree_node *root)
 	}
 	else if (fd_flag)
 		g_exit_status = 1;
-	free_cmd(cmd_info);
+	free_cmd(&cmd_info);
 }
