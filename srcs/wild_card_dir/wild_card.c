@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   wild_card.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 16:44:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/25 19:48:59 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 19:04:09 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,7 @@ static	int	num_of_file_in_current_directory(void)
 	struct dirent	*entry;
 	int				num_of_file;
 
-	dir = opendir(".");
-	if (!dir)
-	{
-		perror("error\n");
-		exit(1);
-	}
+	dir = run_opendir();
 	num_of_file = 0;
 	while (1)
 	{
@@ -32,7 +27,6 @@ static	int	num_of_file_in_current_directory(void)
 			break ;
 		num_of_file++;
 	}
-	free(entry);
 	closedir(dir);
 	return (num_of_file);
 }
@@ -46,12 +40,7 @@ int *bit_mask, int count_of_file)
 	char			**string_table;
 	int				*del_bit;
 
-	dir = opendir(".");
-	if (!dir)
-	{
-		perror("error\n");
-		exit(1);
-	}
+	dir = run_opendir();
 	i = 0;
 	string_table = malloc(sizeof(char **) * (count_of_file + 1));
 	del_bit = bit_mask;
@@ -65,7 +54,6 @@ int *bit_mask, int count_of_file)
 		bit_mask++;
 	}
 	string_table[i] = 0;
-	free(entry);
 	closedir(dir);
 	free(del_bit);
 	return (string_table);

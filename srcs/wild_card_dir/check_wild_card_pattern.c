@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_wild_card_pattern.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:24:58 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/25 19:44:14 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 19:03:31 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,19 @@ int **bit_mask, int *count_of_file)
 	(*bit_mask)++;
 }
 
+DIR	*run_opendir(void)
+{
+	DIR	*dir;
+
+	dir = opendir(".");
+	if (!dir)
+	{
+		perror("error\n");
+		exit(1);
+	}
+	return (dir);
+}
+
 int	check_wild_card_pattern(t_str_info *str_info, int *bit_mask)
 {
 	DIR				*dir;
@@ -33,7 +46,7 @@ int	check_wild_card_pattern(t_str_info *str_info, int *bit_mask)
 	int				count_of_file;
 	int				hidden_file_flag;
 
-	dir = opendir(".");
+	dir = run_opendir();
 	count_of_file = 0;
 	while (1)
 	{
@@ -49,7 +62,6 @@ int	check_wild_card_pattern(t_str_info *str_info, int *bit_mask)
 		check_wild_card(str_info, entry->d_name, &bit_mask, &count_of_file);
 	}
 	*bit_mask = -1;
-	free(entry);
 	closedir(dir);
 	return (count_of_file);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/26 16:57:25 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 19:04:35 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,7 @@ char			**get_file_by_wild_card(t_str_info	*str_info);
 int				check_wild_card_pattern(t_str_info *str_info, int *bit_mask);
 int				check_is_right_wild_card_pattern(char *str, char *file, \
 t_str_info *str_info, int i);
+DIR				*run_opendir(void);
 
 /*heredoc*/
 void			get_heredoc(t_tree_node *node);
