@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 17:21:17 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/26 20:21:29 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,23 @@ static	char	*input_heredoc(char *limit)
 	return (tmp_name);
 }
 
+static	int	check_is_heredoc(t_token *token)
+{
+	if (token->redir_type == DOUBLE_REDIR \
+	&& token->value[0] == '<' && token->value[1] == '<')
+		return (1);
+	else
+		return (0);
+}
+
 void	get_heredoc(t_tree_node *node)
 {
-	if (node->token->redir_type == DOUBLE_REDIR \
-	&& node->token->value[0] == '<' && node->token->value[1] == '<')
-		node->token->hd_name = input_heredoc(set_redir_file_name(node));
+	char	*file_name;
+
+	if (check_is_heredoc(node->token) == 1)
+	{
+		file_name = set_redir_file_name(node);
+		node->token->hd_name = input_heredoc(file_name);
+		free(file_name);
+	}
 }
