@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/25 20:20:42 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 16:12:06 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,10 +129,17 @@ void			builtin_pwd(char **env);
 void			builtin_unset(char **cmd_argv, char ***env);
 
 /*builtin_utils*/
+int				check_unset_key_string(char *argv);
+int				check_unset_key_rule(char *argv);
+int				cnt_size(char **env, int cnt);
+char			**rearrange_env(int cnt, char **env);
+void			compare_envname(char *unset_name, char ***env, int cnt);
+void			sort_ascii(char **envp, int cnt);
+void			print_export(int i, char *env_name, char *env_val, char **env);
+void			list_export(char **env);
 int				check_key_rule(char **cmd_argv, char ***env);
 void			make_strings(int *i, char **string, char **str);
-void			matrix_cpy(char **src, char **dst);
-void			sort_ascii(char **envp, int cnt);
+void			matrix_cpy(char **dest, char **origin);
 int				cnt_line(char **str_arr);
 void			free_2str(char *s1, char *s2);
 void			free_4str(char *s1, char *s2, char *s3, char *s4);

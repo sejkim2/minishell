@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:25:18 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/24 17:33:33 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 16:32:01 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,9 @@ void	mk_env(int *idx, char **string, char **env)
 	make_strings(idx, string, str);
 	if ((*string)[*idx + 1] && (*string)[*idx + 1] == '?')
 	{
-		str[3] = ft_strdup(ft_itoa((int)g_exit_status));
+		tmp = ft_itoa((int)g_exit_status);
+		str[3] = ft_strdup(tmp);
+		free_2str(tmp, str[2]);
 		str[2] = ft_strdup(*string + *idx + 2);
 	}
 	else

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:28:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 17:02:14 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/26 14:51:30 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	check_dup(char *str, char *env_name, char **env)
 	while (env[i])
 	{
 		compare = get_envname(env[i]);
-		if (!strcmp(env_name, compare))
+		if (!ft_strcmp(env_name, compare))
 		{
 			free(compare);
 			if (ft_strchr(str, '='))
@@ -64,12 +64,13 @@ static char	**add_export(char *str, char **env)
 	renv = (char **)malloc(sizeof(char *) * (cnt + 2));
 	while (i < cnt)
 	{
-		renv[j] = env[i];
+		renv[j] = ft_strdup(env[i]);
 		i++;
 		j++;
 	}
 	renv[j] = ft_strdup(str);
 	renv[j + 1] = NULL;
+	free_arr(env);
 	return (renv);
 }
 
@@ -88,15 +89,15 @@ int	check_key_rule(char **cmd_argv, char ***env)
 {
 	int		idx;
 	int		flag;
-	char	let;
+	char	f_let;
 
 	idx = 0;
 	while (cmd_argv[idx])
 	{
 		flag = 0;
-		let = cmd_argv[idx][0];
-		if (!(let == '_' \
-		|| ('A' <= let && let <= 'Z') || ('a' <= let && let <= 'z')))
+		f_let = cmd_argv[idx][0];
+		if (!(f_let == '_' \
+		|| ('A' <= f_let && f_let <= 'Z') || ('a' <= f_let && f_let <= 'z')))
 			flag = 1;
 		if (!check_key_string(cmd_argv[idx]))
 			flag = 1;

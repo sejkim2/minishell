@@ -6,7 +6,7 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/25 19:22:12 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/26 15:54:01 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,8 +29,10 @@ BUILTIN_SRCS = builtin_cd.c \
 	builtin_echo.c \
 	builtin_env.c \
 	builtin_exit.c \
+	builtin_export_utils.c \
 	builtin_export.c \
 	builtin_pwd.c \
+	builtin_unset_utils.c \
 	builtin_unset.c \
 	builtin_utils.c \
 	check_env_rule.c \
