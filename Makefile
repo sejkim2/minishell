@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
+#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/27 13:08:10 by sejkim2          ###   ########.fr        #
+#    Updated: 2023/10/27 16:47:41 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,8 @@ WILD_CARD_SRCS = wild_card.c \
 	check_wild_card_pattern.c \
 	check_is_right_wild_card_pattern.c 
 
-HEREDOC_SRCS = get_heredoc.c
+HEREDOC_SRCS = get_heredoc.c \
+	heredoc_utils.c
 
 MAIN_SRC = main.c
 
@@ -113,24 +114,21 @@ OBJS = $(MAIN_OBJ) $(LEXER_OBJS) $(PARSER_OBJS) $(RUN_OBJS) $(SIGNAL_OBJS) $(BUI
 	$(CC) $(C_FLAGS) -c $< -o $@
 
 $(NAME) : $(OBJS)
-# @make -C ./mylib
+	@make -C ./mylib
 	$(CC) $(C_FLAGS) $(MAIN_SRC) $(SRCS1) $(SRCS2) $(SRCS3) $(SRCS4) $(SRCS5) $(SRCS6) $(SRCS7) -o $@ -lreadline -lncurses mylib/mylib.a
 
 all : $(NAME)
 
 clean :
-# make clean -C ./mylib
+	@make clean -C ./mylib
 	rm -rf $(OBJS)
 
 fclean : clean
-# make fclean -C ./mylib
+	@make fclean -C ./mylib
 	rm -rf $(NAME)
 
 re :
 	make fclean
 	make all
 
-fast :
-	make && make clean && clear
-
-.PHONY : all clean fclean re fast
+.PHONY : all clean fclean re

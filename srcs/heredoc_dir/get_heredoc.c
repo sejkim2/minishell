@@ -3,42 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 16:09:21 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 16:49:09 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	*generate_temp_filename(char *mode)
+static int	open_file(char *tmp_name)
 {
-	char	*str;
-	char	*rstr;
-	int		i;
+	int		hd_fd;
 
-	str = ft_strdup(mode);
-	if (access(str, F_OK) == -1)
-		return (str);
-	while (access(str, F_OK) == 0)
-	{
-		i = 0;
-		rstr = (char *)malloc(sizeof(char) * (ft_strlen(str) + 2));
-		ft_memcpy(rstr, str, ft_strlen(str));
-		while (i < 10)
-		{
-			rstr[ft_strlen(str)] = i + '0';
-			rstr[ft_strlen(str) + 1] = '\0';
-			if (access(rstr, F_OK) == -1)
-				return (free(str), rstr);
-			i++;
-		}
-		rstr[ft_strlen(str)] = '_';
-		free(str);
-		str = rstr;
-	}
-	return (str);
+	hd_fd = open(tmp_name, O_RDWR | O_CREAT, 0644);
+	if (hd_fd == -1)
+		system_call_error();
+	return (hd_fd);
 }
 
 static	void	run_readline(char *limit, int hd_fd)
@@ -67,8 +48,8 @@ static	char	*input_heredoc(char *limit)
 	pid_t	child;
 	int		status;
 
-	tmp_name = generate_temp_filename("HD_Temp");
-	hd_fd = open(tmp_name, O_RDWR | O_CREAT, 0644);
+	tmp_name = generate_temp_filename("/tmp/HD_Temp");
+	hd_fd = open_file(tmp_name);
 	child = fork();
 	if (child == 0)
 		run_readline(limit, hd_fd);

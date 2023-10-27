@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 15:53:20 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 16:47:21 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,5 +347,6 @@ DIR				*run_opendir(void);
 
 /*heredoc*/
 int				get_heredoc(t_tree_node *node);
+char			*generate_temp_filename(char *mode);
 
 #endif
