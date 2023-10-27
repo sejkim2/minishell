@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 15:15:56 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 16:01:35 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 			next_symbol(list);
 			addchild(parent, node);
 			if (get_heredoc(node) == -1)
-				return (-2);
+				return (-1);
 			if (list->num_of_node > 0)
 			{
 				symbol = list->head->token->symbol;
@@ -70,7 +70,6 @@ int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 int	parse_simple_command(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
-	int			error_flag;
 
 	while (1)
 	{
@@ -80,17 +79,15 @@ int	parse_simple_command(t_linked_list *list, t_tree_node *parent)
 			{
 				node = make_tree_node(list, REDIRECTION_LIST);
 				addchild(parent, node);
-				error_flag = parse_redirection_list(list, node);
-				if (error_flag < 0)
-					return (error_flag);
+				if (parse_redirection_list(list, node) == -1)
+					return (-1);
 			}
 			else
 			{
 				node = make_tree_node(list, SIMPLE_COMMAND_ELEMENT);
 				addchild(parent, node);
-				error_flag = parse_simple_command_element(list, node);
-				if (error_flag < 0)
-					return (error_flag);
+				if (parse_simple_command_element(list, node) == -1)
+					return (-1);
 			}
 		}
 		else
@@ -119,9 +116,8 @@ int	parse_command(t_linked_list *list, t_tree_node *parent)
 	{
 		node = make_tree_node(list, SUBSHELL);
 		addchild(parent, node);
-		error_flag = parse_subshell(list, node);
-		if (error_flag < 0)
-			return (error_flag);
+		if (parse_subshell(list, node) == -1)
+			return (-1);
 		if (accept(list, REDIRECTION))
 		{
 			node = make_tree_node(list, REDIRECTION_LIST);

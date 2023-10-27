@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 14:22:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 15:30:13 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 16:02:56 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ char	*free_tree(t_tree_node *parent, int is_remove_token)
 		}
 	}
 	free(parent);
-	// free_tree_node(parent, is_remove_token);
 	return (0);
 }
+
+/*free_tree_node(parent, is_remove_token);*/

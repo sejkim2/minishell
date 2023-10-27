@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 15:39:30 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 16:03:34 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,11 @@ t_token_node *head, int num_of_node)
 }
 
 static	t_tree_node	*free_tree_and_list(t_linked_list *list, \
-t_tree_node *root, int error_flag)
+t_tree_node *root)
 {
-	if (error_flag == -1)
-	{
-		unlink_tmpfile(root, 0);
-		free_list(list, 1);
-		free_tree(root, 0);
-	}
-	else
-	{
-		unlink_tmpfile(root, 0);
-		free_list(list, 1);
-		free_tree(root, 0);
-	}
+	unlink_tmpfile(root, 0);
+	free_list(list, 1);
+	free_tree(root, 0);
 	return (0);
 }
 
@@ -59,7 +50,7 @@ t_tree_node	*parser(t_linked_list *list)
 	else
 		error_flag = parse_error(list->head->token->value);
 	reset_list_info(list, head, num_of_node);
-	if (error_flag < 0)
-		return (free_tree_and_list(list, root, error_flag));
+	if (error_flag == -1)
+		return (free_tree_and_list(list, root));
 	return (root);
 }
