@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_error.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:47:00 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 18:23:49 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 19:47:05 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	print_unexpected_token_syntax_error(char *error_string, char error_ch)
 	{
 		if (error_ch == '\n')
 			ft_putstr_fd("minishell: syntax error near \
-		unexpected token `newline\'\n", 2);
+unexpected token `newline\'\n", 2);
 		else
 		{
 			ft_putstr_fd("minishell: syntax error near unexpected token `", 2);

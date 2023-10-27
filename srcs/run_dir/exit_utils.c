@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:58:12 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 17:58:22 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 19:45:38 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ void	exit_record_status(void)
 	exit(g_exit_status);
 }
 
-void	wait_record_status(void)
+void	wait_record_status(pid_t pro)
 {
 	int		status;
 
-	wait(&status);
+	waitpid(pro, &status, 0);
 	g_exit_status = WEXITSTATUS(status);
 }
 
