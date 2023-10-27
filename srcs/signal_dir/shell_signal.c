@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:54:42 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 15:51:49 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 18:05:34 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,12 @@ void	ctrl_c(int signum)
 	rl_replace_line("", 0);
 	rl_redisplay();
 	g_exit_status = 1;
+}
+
+void	set_ign_signal(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
 
 void	set_default_signal(void)

@@ -6,11 +6,32 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:58:12 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 15:51:18 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 17:58:22 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	check_signal_status(pid_t exe_fork)
+{
+	int		status;
+
+	waitpid(exe_fork, &status, 0);
+	if (isatty(0))
+	{
+		if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+		{
+			write(2, "^C\n", 3);
+			return ;
+		}
+		else if (WIFSIGNALED(status) && WTERMSIG(status) == SIGQUIT)
+		{
+			write(2, "^\\Quit: 3\n", 10);
+			return ;
+		}
+	}
+	g_exit_status = WEXITSTATUS(status);
+}
 
 void	exit_record_status(void)
 {
@@ -25,8 +46,6 @@ void	wait_record_status(void)
 	int		status;
 
 	wait(&status);
-	if (g_exit_status == 130 || g_exit_status == 131)
-		return ;
 	g_exit_status = WEXITSTATUS(status);
 }
 

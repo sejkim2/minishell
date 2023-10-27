@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 15:51:04 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 17:54:37 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	run_execve(t_cmd cmd_info, char **env)
 	}
 	else
 	{
-		set_blocking_signal();
+		check_signal_status(exe_fork);
 		wait_record_status();
 	}
 }
