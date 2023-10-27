@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 14:16:28 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 15:23:52 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*read_command_line(char ***env)
 			return (line);
 		free_list(list, 0);
 		run_root(root, env);
-		free_tree(root);
+		free_tree(root, 1);
 		unlink_tmpfile(root, 0);
 	}
 	else

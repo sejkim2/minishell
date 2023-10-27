@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 14:21:09 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 14:30:25 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ static	char	*input_heredoc(char *limit)
 		if (g_exit_status == 1)
 		{
 			unlink(tmp_name);
+			free(tmp_name);
 			return (0);
 		}
 	}

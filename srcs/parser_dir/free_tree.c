@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 14:22:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/26 20:19:33 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 15:30:13 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,22 @@ char	*free_token(t_token *token)
 		unlink(token->hd_name);
 		free(token->hd_name);
 	}
-	free(token);
+	if (token)
+		free(token);
 	return (0);
 }
 
-char	*free_tree_node(t_tree_node *node)
+char	*free_tree_node(t_tree_node *node, int is_remove_token)
 {
 	node->next = 0;
 	node->child_list = 0;
-	free_token(node->token);
+	if (is_remove_token == 1)
+		free_token(node->token);
 	free(node);
 	return (0);
 }
 
-char	*free_tree(t_tree_node *parent)
+char	*free_tree(t_tree_node *parent, int is_remove_token)
 {
 	t_tree_node	*child;
 	t_tree_node	*remove_node;
@@ -63,11 +65,12 @@ char	*free_tree(t_tree_node *parent)
 			remove_node = child;
 			child = child->next;
 			if (remove_node->child_list == 0)
-				free_tree_node(remove_node);
+				free_tree_node(remove_node, is_remove_token);
 			else
-				free_tree(remove_node);
+				free_tree(remove_node, is_remove_token);
 		}
 	}
 	free(parent);
+	// free_tree_node(parent, is_remove_token);
 	return (0);
 }

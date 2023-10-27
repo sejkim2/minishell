@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 14:11:44 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 15:15:56 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 			next_symbol(list);
 			addchild(parent, node);
 			if (get_heredoc(node) == -1)
-				return (-1);
+				return (-2);
 			if (list->num_of_node > 0)
 			{
 				symbol = list->head->token->symbol;
@@ -70,6 +70,7 @@ int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 int	parse_simple_command(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
+	int			error_flag;
 
 	while (1)
 	{
@@ -79,15 +80,17 @@ int	parse_simple_command(t_linked_list *list, t_tree_node *parent)
 			{
 				node = make_tree_node(list, REDIRECTION_LIST);
 				addchild(parent, node);
-				if (parse_redirection_list(list, node) == -1)
-					return (-1);
+				error_flag = parse_redirection_list(list, node);
+				if (error_flag < 0)
+					return (error_flag);
 			}
 			else
 			{
 				node = make_tree_node(list, SIMPLE_COMMAND_ELEMENT);
 				addchild(parent, node);
-				if (parse_simple_command_element(list, node) == -1)
-					return (-1);
+				error_flag = parse_simple_command_element(list, node);
+				if (error_flag < 0)
+					return (error_flag);
 			}
 		}
 		else
@@ -108,7 +111,7 @@ static	int	if_word_or_redir(t_linked_list *list, t_tree_node *parent)
 int	parse_command(t_linked_list *list, t_tree_node *parent)
 {
 	t_tree_node	*node;
-	int			syntax_error;
+	int			error_flag;
 
 	if (accept(list, WORD) || accept(list, REDIRECTION))
 		return (if_word_or_redir(list, parent));
@@ -116,17 +119,18 @@ int	parse_command(t_linked_list *list, t_tree_node *parent)
 	{
 		node = make_tree_node(list, SUBSHELL);
 		addchild(parent, node);
-		if (parse_subshell(list, node) == -1)
-			return (-1);
+		error_flag = parse_subshell(list, node);
+		if (error_flag < 0)
+			return (error_flag);
 		if (accept(list, REDIRECTION))
 		{
 			node = make_tree_node(list, REDIRECTION_LIST);
 			addchild(parent, node);
-			syntax_error = parse_redirection_list(list, node);
+			error_flag = parse_redirection_list(list, node);
 			if (accept(list, WORD))
 				return (parse_error(list->head->token->value));
 			else
-				return (syntax_error);
+				return (error_flag);
 		}
 		return (1);
 	}

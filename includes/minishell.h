@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 13:35:14 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 15:24:52 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,8 @@ int				check_is_meta_character(char ch);
 int				check_is_seperator(char ch);
 
 /*free_list*/
-char			*free_list(t_linked_list *list, int is_lexer);
-char			*free_token_node(t_token_node *node, int is_lexer);
+char			*free_list(t_linked_list *list, int is_remove_token);
+char			*free_token_node(t_token_node *node, int is_remove_token);
 char			*free_token(t_token *token);
 
 /*lexer_error*/
@@ -232,8 +232,8 @@ t_token_node	*tokenize(char *cmd_line, int *index);
 
 /*				parser_dir				*/
 /*free_tree*/
-char			*free_tree_node(t_tree_node *node);
-char			*free_tree(t_tree_node *parent);
+char			*free_tree_node(t_tree_node *node, int is_remove_token);
+char			*free_tree(t_tree_node *parent, int is_remove_token);
 
 /*parser_error*/
 int				parse_error(char *error_string);
