@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 13:05:06 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 14:21:09 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,23 +46,39 @@ static	char	*input_heredoc(char *limit)
 	char	*tmp_name;
 	int		hd_fd;
 	char	*line;
+	pid_t	child;
+	int		status;
 
 	tmp_name = generate_temp_filename("HD_Temp");
 	hd_fd = open(tmp_name, O_RDWR | O_CREAT, 0644);
-	set_heredoc_signal();
-	while (1)
+	child = fork();
+	if (child == 0)
 	{
-		line = readline("> ");
-		if (!line || !ft_strcmp(limit, line))
+		set_heredoc_signal();
+		while (1)
 		{
+			line = readline("> ");
+			if (!line || !ft_strcmp(limit, line))
+			{
+				free(line);
+				exit(0);
+			}
+			write(hd_fd, line, ft_strlen(line));
+			write(hd_fd, "\n", 1);
 			free(line);
-			break ;
 		}
-		write(hd_fd, line, ft_strlen(line));
-		write(hd_fd, "\n", 1);
-		free(line);
 	}
-	set_shell_signal();
+	else
+	{
+		signal(SIGINT, SIG_IGN);
+		waitpid(child, &status, 0);
+		g_exit_status = WEXITSTATUS(status);
+		if (g_exit_status == 1)
+		{
+			unlink(tmp_name);
+			return (0);
+		}
+	}
 	close(hd_fd);
 	return (tmp_name);
 }
@@ -76,7 +92,7 @@ static	int	check_is_heredoc(t_token *token)
 		return (0);
 }
 
-void	get_heredoc(t_tree_node *node)
+int	get_heredoc(t_tree_node *node)
 {
 	char	*file_name;
 
@@ -85,5 +101,8 @@ void	get_heredoc(t_tree_node *node)
 		file_name = set_redir_file_name(node);
 		node->token->hd_name = input_heredoc(file_name);
 		free(file_name);
+		if (node->token->hd_name == 0)
+			return (-1);
 	}
+	return (1);
 }

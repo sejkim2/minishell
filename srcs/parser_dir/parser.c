@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/25 15:17:58 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 14:16:26 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_token_node *head, int num_of_node)
 {
 	reset_list_info(list, head, num_of_node);
 	free_list(list, 0);
+	unlink_tmpfile(root, 0);
 	free_tree(root);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 13:04:10 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 13:35:14 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,11 +348,6 @@ t_str_info *str_info, int i);
 DIR				*run_opendir(void);
 
 /*heredoc*/
-void			get_heredoc(t_tree_node *node);
-
-/*test*/
-void			print_list(t_linked_list *list);
-void			tree_traverse(t_tree_node *node, int depth);
-void			print_symbol(t_symbol symbol);
+int				get_heredoc(t_tree_node *node);
 
 #endif

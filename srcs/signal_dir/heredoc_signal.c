@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_signal.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:55:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 12:55:36 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 13:31:45 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	heredoc_ctrl_c(int signum)
 	(void)signum;
 	close(STDIN_FILENO);
 	write(2, "\n", 1);
-	g_exit_status = 1;
+	exit(1);
 }
 
 void	set_heredoc_signal(void)
