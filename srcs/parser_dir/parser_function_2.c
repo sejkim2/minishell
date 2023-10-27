@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 17:23:14 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 13:06:43 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,8 @@ int	parse_command(t_linked_list *list, t_tree_node *parent)
 	else
 		return (parse_error(list->head->token->value));
 }
-/*추가된 부분 line 120-> (ls) >out1 pwd >out2*/
 /*
+line 120-> (ls) >out1 pwd >out2
 list && list == command && command
 if command != simple_command(redir, word) or subshell --> parse error
 

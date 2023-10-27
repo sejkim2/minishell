@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   parse_word_or_branket.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:40:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/18 15:53:20 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 13:05:48 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// word + (redi, pipe, andif, orif, equal, lbra, rbra, whitespace)
 int	parse_word(char *cmd_line, int *end, t_token *token)
 {
 	int	start;

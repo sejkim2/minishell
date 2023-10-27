@@ -1,3 +1,5 @@
+#BNF RULE#
+
 <REDIRECTION> ::= '<'<WORD> | '>'<WORD> | '<<'<WORD> | '>>'<WORD>
 <SIMPLE_COMMAND_ELEMENT> ::= <WORD> | <REDIRECTION>
 <REDIRECTION_LIST> ::= <REDIRECTION> | <REDIRECTION_LIST><REDIRECTION>
@@ -6,35 +8,3 @@
 <PIPELINE> ::= <PIPELINE> '|' <PIPELINE> | <COMMAND>
 <LIST> ::= <LIST>'&&'<LIST> | <LIST>'||'<LIST> | <PIPELINE>
 <SUBSHELL> ::= '('<LIST>')'
-
-<<<<<<< HEAD
-parse error
-&&&
-(ls) >out1 pwd >out2
-(ls |)
-ls |
-(())
->out1 (ls)
-(ls) ls
-=======
-파이프가 존재할 때 반드시 실행 단위(COMMAND)는 fork에서 실행할 것.
-파이프가 존재하지 않을 때, 실행 단위는(COMMAND)는 execve만 fork에서 실행할 것.
-<<<<<<< HEAD
->>>>>>> origin/jaehyji
-=======
-
-
-aaaa*b
-aaaa123456b12
-(틀림)
-
-
-3ab..c
-3*.c
-3**.c**ab
-
-1*2'*'3**.c"*"'12'**
-
-
-1*2'*'3**.c"*"'12'**
->>>>>>> sejin

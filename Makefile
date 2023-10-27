@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
+#    By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/26 18:56:41 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/27 13:08:10 by sejkim2          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,6 @@ WILD_CARD_SRCS = wild_card.c \
 HEREDOC_SRCS = get_heredoc.c
 
 MAIN_SRC = main.c
-
 
 SRCS1 = $(addprefix $(BUILTIN_DIR)/,$(BUILTIN_SRCS))
 SRCS2 = $(addprefix $(LEXER_DIR)/,$(LEXER_SRCS))
