@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 18:06:11 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 19:41:36 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -319,7 +319,7 @@ void			recover_std_fd(int *o_fd);
 /*exit_utils*/
 void			exit_record_status(void);
 void			check_signal_status(pid_t exe_fork);
-void			wait_record_status(void);
+void			wait_record_status(pid_t pro);
 void			wait_last_command(pid_t c_pro);
 
 /*				signal_dir				*/
