@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 17:21:17 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 12:56:28 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static	char	*input_heredoc(char *limit)
 
 	tmp_name = generate_temp_filename("HD_Temp");
 	hd_fd = open(tmp_name, O_RDWR | O_CREAT, 0644);
+	set_heredoc_signal();
 	while (1)
 	{
 		line = readline("> ");
@@ -61,6 +62,7 @@ static	char	*input_heredoc(char *limit)
 		write(hd_fd, "\n", 1);
 		free(line);
 	}
+	set_shell_signal();
 	close(hd_fd);
 	return (tmp_name);
 }

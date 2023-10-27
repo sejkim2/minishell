@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/26 17:34:32 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 12:09:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ void	run_simple_command(t_tree_node *node, char ***env, t_tree_node *root)
 	t_cmd		cmd_info;
 	int			fd_flag;
 
-	expand_env(node, *env);
-	cmd_info = make_cmd_info(node->child_list, *env);
 	cmd_info.input = ft_strdup(node->token->value);
+	expand_env(node, *env);
+	make_cmd_info(&cmd_info, node->child_list, *env);
 	child = node->child_list;
 	fd_flag = 0;
 	while (child)

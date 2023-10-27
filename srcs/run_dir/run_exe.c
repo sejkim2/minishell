@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/26 20:32:54 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 12:24:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,16 @@ static void	check_file_system(t_cmd cmd_info, char **env)
 	stat(cmd_info.cmd, &file_info);
 	if (S_ISDIR(file_info.st_mode))
 	{
-		ft_stderror_print(cmd_info.cmd, NULL, "is a directory");
-		exit(126);
+		if (ft_strchr(cmd_info.cmd, '/'))
+		{
+			ft_stderror_print(cmd_info.cmd, NULL, "is a direcotry");
+			exit(126);
+		}
+		else
+		{
+			ft_stderror_print(cmd_info.cmd, NULL, "command not found");
+			exit(127);
+		}
 	}
 	if (execve(cmd_info.cmd, cmd_info.cmd_line, env) == -1)
 		system_call_error();
@@ -57,7 +65,10 @@ static void	check_file_exist(t_cmd cmd_info, char **env)
 	}
 	else if (access(cmd_info.cmd, F_OK) == -1)
 	{
-		ft_stderror_print(cmd_info.cmd, NULL, "No such file or directory");
+		if (ft_strchr(cmd_info.cmd, '/'))
+			ft_stderror_print(cmd_info.cmd, NULL, "No such file or directory");
+		else
+			ft_stderror_print(cmd_info.cmd, NULL, "command not found");
 		exit(127);
 	}
 	else if (access(cmd_info.cmd, X_OK) == -1)

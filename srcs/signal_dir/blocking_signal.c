@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 20:17:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/04 16:00:53 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 12:51:57 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ static void	blocking_ctrl_c(int signum)
 
 static void	blocking_ctrl_backslash(int signum)
 {
-	(void)signum;
-	printf("Quit: 3\n");
+	printf("Quit: %d\n", signum);
 }
 
 void	set_blocking_signal(void)

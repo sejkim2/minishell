@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 14:55:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/10 13:40:34 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 12:55:36 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,59 +23,13 @@
 static void	heredoc_ctrl_c(int signum)
 {
 	(void)signum;
-	exit(1);
+	close(STDIN_FILENO);
+	write(2, "\n", 1);
+	g_exit_status = 1;
 }
 
-void	set_fork_heredoc_signal(void)
-// 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
+void	set_heredoc_signal(void)
 {
 	signal(SIGINT, heredoc_ctrl_c);
 	signal(SIGQUIT, SIG_IGN);
 }
-
-void	set_heredoc_signal(void)
-// 현재 프로세스가 다른 프로세스(cat, grep)를 실행하고 있을때의 시그널 상태로 설정
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
-}
-
-/*
-	void	signal_ctlc(int sig)
-	{
-		if (sig == SIGINT)
-		{
-			write(STDERR_FILENO, "\n", 1);
-			rl_replace_line("", 0);
-			rl_on_new_line();
-			rl_redisplay();
-		}
-	}
-
-	void	signal_ctlc_heredoc(int sig)
-	{
-		if (sig == SIGINT)
-		{
-			close(STDIN_FILENO);
-			write(STDERR_FILENO, "\n", 1);
-		}
-	}
-
-	int	termios_change(bool echo_ctl_chr)
-	{
-		struct termios	terminos_p;
-		int				status;
-
-		status = tcgetattr(STDOUT_FILENO, &terminos_p);
-		if (status == -1)
-			return (ERROR);
-		if (echo_ctl_chr)
-			terminos_p.c_lflag |= ECHOCTL;
-		else
-			terminos_p.c_lflag &= ~(ECHOCTL);
-		status = tcsetattr(STDOUT_FILENO, TCSANOW, &terminos_p);
-		if (status == -1)
-			return (ERROR);
-		return (0);
-	}
-*/

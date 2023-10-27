@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/26 20:18:13 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 12:08:51 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,7 @@ int				run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root);
 void			run_execve(t_cmd cmd_info, char **env);
 
 /*cmd_utils*/
-t_cmd			make_cmd_info(t_tree_node *node, char **env);
+void			make_cmd_info(t_cmd *cmd_info, t_tree_node *node, char **env);
 
 /*std_utils*/
 void			unlink_tmpfile(t_tree_node *node, int depth);
