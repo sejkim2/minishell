@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/23 14:58:12 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 19:34:56 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 15:51:18 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	wait_record_status(void)
 	int		status;
 
 	wait(&status);
+	if (g_exit_status == 130 || g_exit_status == 131)
+		return ;
 	g_exit_status = WEXITSTATUS(status);
 }
 

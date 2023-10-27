@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 15:24:52 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/27 15:53:20 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -326,19 +326,17 @@ void			wait_last_command(pid_t c_pro);
 void			set_blocking_signal(void);
 
 /*heredoc signal*/
-void			set_fork_heredoc_signal(void);
 void			set_heredoc_signal(void);
 
 /*shell_signal*/
-void			set_shell_signal(void);
 void			ctrl_c(int signum);
+void			set_default_signal(void);
+void			set_shell_signal(void);
 int				shell_ctrl_d(void);
 
 /*terminal option*/
-struct termios	terminal_option(void);
-void			set_origin_signal(void);
-void			set_terminal_print_off(void);
 void			set_terminal_print_on(void);
+void			set_terminal_print_off(void);
 
 /*wild_card*/
 char			**get_file_by_wild_card(t_str_info	*str_info);

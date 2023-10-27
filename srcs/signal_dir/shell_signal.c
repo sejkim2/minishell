@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 16:54:42 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 12:53:32 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/27 15:51:49 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,12 @@ void	ctrl_c(int signum)
 	g_exit_status = 1;
 }
 
+void	set_default_signal(void)
+{
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+}
+
 void	set_shell_signal(void)
 {
 	set_terminal_print_off();
@@ -31,6 +37,8 @@ void	set_shell_signal(void)
 
 int	shell_ctrl_d(void)
 {
+	ft_putstr_fd("\x1b[1A", 2);
+	ft_putstr_fd("\033[11C", 2);
 	write(2, "exit\n", 5);
 	set_terminal_print_on();
 	return (0);
