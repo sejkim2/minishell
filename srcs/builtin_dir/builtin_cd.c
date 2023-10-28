@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:28:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/28 12:55:10 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 15:18:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	no_argc(char **env)
 		free(path);
 }
 
-static void	yes_argc(char *path, char **env)
+static void	yes_argc(char *path)
 {
 	if (chdir(path) == -1)
 	{
@@ -37,7 +37,6 @@ static void	yes_argc(char *path, char **env)
 
 void	builtin_cd(char **cmd_argv, char **env)
 {
-	char	buff[PATH_MAX];
 	int		cmd_argc;
 
 	g_exit_status = 0;
@@ -45,5 +44,5 @@ void	builtin_cd(char **cmd_argv, char **env)
 	if (!cmd_argc)
 		no_argc(env);
 	else
-		yes_argc(*cmd_argv, env);
+		yes_argc(*cmd_argv);
 }

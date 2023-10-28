@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 19:41:36 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 16:50:22 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void			builtin_echo(char **cmd_argv);
 void			builtin_env(char **cmd_argv, char **env);
 void			builtin_exit(char **cmd_argv, t_tree_node *root);
 void			builtin_export(char **cmd_argv, char ***env);
-void			builtin_pwd(char **env);
+void			builtin_pwd(void);
 void			builtin_unset(char **cmd_argv, char ***env);
 
 /*builtin_utils*/
@@ -309,7 +309,7 @@ int				run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root);
 void			run_execve(t_cmd cmd_info, char **env);
 
 /*cmd_utils*/
-void			make_cmd_info(t_cmd *cmd_info, t_tree_node *node, char **env);
+void			make_cmd_info(t_cmd *cmd_info, t_tree_node *node);
 
 /*std_utils*/
 void			unlink_tmpfile(t_tree_node *node, int depth);
@@ -350,5 +350,7 @@ DIR				*run_opendir(void);
 /*heredoc*/
 int				get_heredoc(t_tree_node *node);
 char			*generate_temp_filename(char *mode);
-
+char			*heredoc_expand_env(char *line, char **env);
+void			heredoc_make_env(int *idx, char **string, char **env);
+void			heredoc_parser_strings(int *i, char *string, t_env_str *e_str);
 #endif

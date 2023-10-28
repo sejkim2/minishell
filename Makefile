@@ -6,7 +6,7 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/28 14:51:21 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/28 16:50:40 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,7 +86,8 @@ WILD_CARD_SRCS = wild_card.c \
 	check_is_right_wild_card_pattern.c 
 
 HEREDOC_SRCS = get_heredoc.c \
-	heredoc_utils.c
+	heredoc_utils.c \
+	heredoc_env.c
 
 MAIN_SRC = main.c
 

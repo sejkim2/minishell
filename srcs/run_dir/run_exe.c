@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 18:12:13 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 15:21:23 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root)
 	else if (!ft_strcmp(cmd_info.cmd, "export"))
 		builtin_export(cmd_info.cmd_line, env);
 	else if (!ft_strcmp(cmd_info.cmd, "pwd"))
-		builtin_pwd(*env);
+		builtin_pwd();
 	else if (!ft_strcmp(cmd_info.cmd, "unset"))
 		builtin_unset(cmd_info.cmd_line, env);
 	else

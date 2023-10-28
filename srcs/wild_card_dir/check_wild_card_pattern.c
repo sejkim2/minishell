@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_wild_card_pattern.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 16:24:58 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/26 19:03:31 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/28 15:19:40 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ int	check_wild_card_pattern(t_str_info *str_info, int *bit_mask)
 	DIR				*dir;
 	struct dirent	*entry;
 	int				count_of_file;
-	int				hidden_file_flag;
 
 	dir = run_opendir();
 	count_of_file = 0;

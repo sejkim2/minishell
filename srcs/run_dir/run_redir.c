@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/25 15:11:51 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 15:06:31 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	expand_single_redir(t_tree_node *child, char *expand_file)
 	return (0);
 }
 
-static int	expand_double_redir(t_tree_node *child, char *expand_file)
+static int	expand_double_redir(char *expand_file)
 {
 	int		fd;
 
@@ -84,7 +84,7 @@ char **file_table)
 		if (cnt > 1)
 			return (wild_card_error(redir_name, cnt));
 		else if (cnt == 1)
-			return (expand_double_redir(child, *file_table));
+			return (expand_double_redir(*file_table));
 		fd = open(redir_name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 		if (fd == -1)
 			return (open_error(redir_name));

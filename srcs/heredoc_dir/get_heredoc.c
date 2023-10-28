@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 16:49:09 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 16:27:58 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static	void	run_readline(char *limit, int hd_fd)
 			free(line);
 			exit(0);
 		}
+		line = heredoc_expand_env(line, environ);
 		write(hd_fd, line, ft_strlen(line));
 		write(hd_fd, "\n", 1);
 		free(line);

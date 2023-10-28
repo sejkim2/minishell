@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/28 12:34:15 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 15:19:05 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	expand_env(t_tree_node *parent, char **env)
 {
 	int			i;
-	int			j;
 	t_tree_node	*child;
 	t_tree_node	*head;
 

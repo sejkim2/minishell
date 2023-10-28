@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_quote_string.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 19:30:04 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 17:18:21 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/28 15:04:38 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ int *start, int end, t_str_info *str_info)
 
 t_str_info	*make_quote_string(char *cmd_line, int start, int end)
 {
-	int			len_string;
 	t_str_info	*str_info;
 	t_str_info	*info_address;
 

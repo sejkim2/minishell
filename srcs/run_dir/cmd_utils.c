@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:07:55 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 12:10:23 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 15:06:48 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,9 @@ static void	make_cmd_line(t_tree_node *node, t_cmd *cmd_info)
 	}
 }
 
-void	make_cmd_info(t_cmd *cmd_info, t_tree_node *node, char **env)
+void	make_cmd_info(t_cmd *cmd_info, t_tree_node *node)
 {
 	int		cnt;
-	char	*table;
 
 	setting_cmdinfo(node, cmd_info);
 	cnt = cmd_malloc_size(node);

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:43:22 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 16:46:37 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 16:48:06 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,6 @@ static char	*make_new_filename(char *str)
 char	*generate_temp_filename(char *mode)
 {
 	char	*str;
-	char	*rstr;
-	int		i;
 
 	str = ft_strdup(mode);
 	if (access(str, F_OK) == -1)
