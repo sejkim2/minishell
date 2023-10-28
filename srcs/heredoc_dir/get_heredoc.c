@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/28 16:27:58 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 17:40:54 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static int	open_file(char *tmp_name)
 	return (hd_fd);
 }
 
-static	void	run_readline(char *limit, int hd_fd)
+static	void	run_readline(char *limit, int hd_fd, char **env)
 {
 	char	*line;
 
@@ -35,14 +35,14 @@ static	void	run_readline(char *limit, int hd_fd)
 			free(line);
 			exit(0);
 		}
-		line = heredoc_expand_env(line, environ);
+		line = heredoc_expand_env(line, env);
 		write(hd_fd, line, ft_strlen(line));
 		write(hd_fd, "\n", 1);
 		free(line);
 	}
 }
 
-static	char	*input_heredoc(char *limit)
+static	char	*input_heredoc(char *limit, char **env)
 {
 	char	*tmp_name;
 	int		hd_fd;
@@ -53,7 +53,7 @@ static	char	*input_heredoc(char *limit)
 	hd_fd = open_file(tmp_name);
 	child = fork();
 	if (child == 0)
-		run_readline(limit, hd_fd);
+		run_readline(limit, hd_fd, env);
 	else
 	{
 		signal(SIGINT, SIG_IGN);
@@ -79,14 +79,14 @@ static	int	check_is_heredoc(t_token *token)
 		return (0);
 }
 
-int	get_heredoc(t_tree_node *node)
+int	get_heredoc(t_tree_node *node, char **env)
 {
 	char	*file_name;
 
 	if (check_is_heredoc(node->token) == 1)
 	{
 		file_name = set_redir_file_name(node);
-		node->token->hd_name = input_heredoc(file_name);
+		node->token->hd_name = input_heredoc(file_name, env);
 		free(file_name);
 		if (node->token->hd_name == 0)
 			return (-1);

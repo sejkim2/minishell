@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/07 12:57:18 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 16:03:34 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/28 17:34:48 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_tree_node *root)
 	return (0);
 }
 
-t_tree_node	*parser(t_linked_list *list)
+t_tree_node	*parser(t_linked_list *list, char **env)
 {
 	t_tree_node		*root;
 	t_tree_node		*node;
@@ -45,7 +45,7 @@ t_tree_node	*parser(t_linked_list *list)
 	{
 		node = make_tree_node(list, LIST);
 		addchild(root, node);
-		error_flag = parse_list(list, node);
+		error_flag = parse_list(list, node, env);
 	}
 	else
 		error_flag = parse_error(list->head->token->value);

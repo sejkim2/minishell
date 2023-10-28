@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 15:52:52 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 19:52:26 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 17:34:08 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*read_command_line(char ***env)
 		list = lexer(line);
 		if (list == 0)
 			return (line);
-		root = parser(list);
+		root = parser(list, *env);
 		if (root == 0)
 			return (line);
 		free_list(list, 0);

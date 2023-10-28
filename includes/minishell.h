@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/28 16:50:22 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 17:45:07 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,17 +239,22 @@ char			*free_tree(t_tree_node *parent, int is_remove_token);
 int				parse_error(char *error_string);
 
 /*parser_function_1*/
-int				parse_subshell(t_linked_list *list, t_tree_node *parent);
-int				parse_pipeline(t_linked_list *list, t_tree_node *parent);
-int				parse_list(t_linked_list *list, t_tree_node *parent);
+int				parse_subshell(t_linked_list *list, \
+t_tree_node *parent, char **env);
+int				parse_pipeline(t_linked_list *list, \
+t_tree_node *parent, char **env);
+int				parse_list(t_linked_list *list, \
+t_tree_node *parent, char **env);
 
 /*parser_function_2*/
-int				parse_simple_command(t_linked_list *list, t_tree_node *parent);
+int				parse_simple_command(t_linked_list *list, \
+t_tree_node *parent, char **env);
 int				parse_simple_command_element(t_linked_list *list, \
 t_tree_node *parent);
-int				parse_command(t_linked_list *list, t_tree_node *parent);
+int				parse_command(t_linked_list *list, \
+t_tree_node *parent, char **env);
 int				parse_redirection_list(t_linked_list *list, \
-t_tree_node *parent);
+t_tree_node *parent, char **env);
 
 /*parser_utils*/
 t_symbol		next_symbol(t_linked_list *list);
@@ -257,7 +262,7 @@ int				accept(t_linked_list *list, t_symbol symbol);
 int				expect(t_linked_list *list, t_symbol symbol);
 
 /*parser*/
-t_tree_node		*parser(t_linked_list *list);
+t_tree_node		*parser(t_linked_list *list, char **env);
 
 /*tree_node_utils*/
 void			init_tree_node(t_linked_list *list, t_tree_node *node, \
@@ -348,7 +353,7 @@ t_str_info *str_info, int i);
 DIR				*run_opendir(void);
 
 /*heredoc*/
-int				get_heredoc(t_tree_node *node);
+int				get_heredoc(t_tree_node *node, char **env);
 char			*generate_temp_filename(char *mode);
 char			*heredoc_expand_env(char *line, char **env);
 void			heredoc_make_env(int *idx, char **string, char **env);

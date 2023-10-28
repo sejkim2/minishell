@@ -6,7 +6,7 @@
 /*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 13:29:54 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 16:01:35 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/28 17:39:27 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	parse_simple_command_element(t_linked_list *list, t_tree_node *parent)
 /*
 ex1) >re1 (<re3)
 */
-int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
+int	parse_redirection_list(t_linked_list *list, t_tree_node *parent, char **env)
 {
 	t_tree_node	*node;
 	t_symbol	symbol;
@@ -52,7 +52,7 @@ int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 			node = make_tree_node(list, list->head->token->symbol);
 			next_symbol(list);
 			addchild(parent, node);
-			if (get_heredoc(node) == -1)
+			if (get_heredoc(node, env) == -1)
 				return (-1);
 			if (list->num_of_node > 0)
 			{
@@ -67,7 +67,7 @@ int	parse_redirection_list(t_linked_list *list, t_tree_node *parent)
 	return (1);
 }
 
-int	parse_simple_command(t_linked_list *list, t_tree_node *parent)
+int	parse_simple_command(t_linked_list *list, t_tree_node *parent, char **env)
 {
 	t_tree_node	*node;
 
@@ -79,7 +79,7 @@ int	parse_simple_command(t_linked_list *list, t_tree_node *parent)
 			{
 				node = make_tree_node(list, REDIRECTION_LIST);
 				addchild(parent, node);
-				if (parse_redirection_list(list, node) == -1)
+				if (parse_redirection_list(list, node, env) == -1)
 					return (-1);
 			}
 			else
@@ -96,33 +96,34 @@ int	parse_simple_command(t_linked_list *list, t_tree_node *parent)
 	return (1);
 }
 
-static	int	if_word_or_redir(t_linked_list *list, t_tree_node *parent)
+static	int	if_word_or_redir(t_linked_list *list, t_tree_node *parent, \
+char **env)
 {
 	t_tree_node	*node;
 
 	node = make_tree_node(list, SIMPLE_COMMAND);
 	addchild(parent, node);
-	return (parse_simple_command(list, node));
+	return (parse_simple_command(list, node, env));
 }
 
-int	parse_command(t_linked_list *list, t_tree_node *parent)
+int	parse_command(t_linked_list *list, t_tree_node *parent, char **env)
 {
 	t_tree_node	*node;
 	int			error_flag;
 
 	if (accept(list, WORD) || accept(list, REDIRECTION))
-		return (if_word_or_redir(list, parent));
+		return (if_word_or_redir(list, parent, env));
 	else if (accept(list, L_BRA))
 	{
 		node = make_tree_node(list, SUBSHELL);
 		addchild(parent, node);
-		if (parse_subshell(list, node) == -1)
+		if (parse_subshell(list, node, env) == -1)
 			return (-1);
 		if (accept(list, REDIRECTION))
 		{
 			node = make_tree_node(list, REDIRECTION_LIST);
 			addchild(parent, node);
-			error_flag = parse_redirection_list(list, node);
+			error_flag = parse_redirection_list(list, node, env);
 			if (accept(list, WORD))
 				return (parse_error(list->head->token->value));
 			else
