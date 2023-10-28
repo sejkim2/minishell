@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:28:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/28 12:33:30 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 17:04:41 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,9 @@ static int	check_key_string(char *str)
 	while (str[idx] && str[idx] != '=')
 	{
 		let = str[idx];
-		if (!(('A' <= let && let > 'Z') || ('a' <= let && let <= 'z') \
-		|| let == '_' || ('0' <= let && let <= '9')))
-			return (0);
+		if (!ft_isalpha(let))
+			if (!ft_isdigit(let))
+				return (0);
 		idx++;
 	}
 	return (1);
@@ -99,9 +99,9 @@ int	check_key_rule(char **cmd_argv, char ***env)
 	{
 		flag = 0;
 		f_let = cmd_argv[idx][0];
-		if (!(f_let == '_' \
-		|| ('A' <= f_let && f_let <= 'Z') || ('a' <= f_let && f_let <= 'z')))
-			flag = 1;
+		if (!(f_let == '_'))
+			if (!ft_isalpha(f_let))
+				flag = 1;
 		if (!check_key_string(cmd_argv[idx]))
 			flag = 1;
 		if (flag == 1)
