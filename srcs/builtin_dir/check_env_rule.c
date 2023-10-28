@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:28:19 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/26 14:51:30 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 12:33:30 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ static int	check_dup(char *str, char *env_name, char **env)
 		{
 			free(compare);
 			if (ft_strchr(str, '='))
-				env[i] = str;
+			{
+				free(env[i]);
+				env[i] = ft_strdup(str);
+			}
 			return (1);
 		}
 		free(compare);

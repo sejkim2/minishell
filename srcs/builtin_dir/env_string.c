@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 18:55:28 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 12:20:13 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 14:45:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	parser_strings(int *i, char *string, t_env_str *e_str)
 	if (!e_str->fstr)
 		malloc_error();
 	while (string[ldx + 1] && string[ldx + 1] != '$' \
-	&& (string[ldx + 1] != ' '))
+	&& (string[ldx + 1] != ' ') && (string[ldx + 1] != '/'))
 		ldx++;
 	e_str->env_str = ft_substr(string, *i, (ldx + 1) - *i);
 	if (!e_str->env_str)

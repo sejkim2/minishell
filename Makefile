@@ -6,15 +6,14 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/27 16:47:41 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/28 14:51:21 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = minishell
 CC = cc
-C_FLAGS = -Wall -Werror -Wextra
+C_FLAGS = -Wall -Werror -Wextra -I$(HEADER)
 HEADER = includes
-C_FLAGS = -I$(HEADER)
 BUILTIN_DIR = srcs/builtin_dir
 ENTRY_DIR = srcs/entry_dir
 LEXER_DIR = srcs/lexer_dir

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:49:39 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/26 16:36:24 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 14:43:38 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	check_unset_key_string(char *argv)
 	while (argv[idx] && argv[idx] != '=')
 	{
 		let = argv[idx];
-		if (!(('A' <= let && let > 'Z') || ('a' <= let && let <= 'z') \
-		|| let == '_' || ('0' <= let && let <= '9')))
-			return (0);
+		if (!ft_isalpha(let))
+			if (!ft_isdigit(let))
+				return (0);
 		idx++;
 	}
 	return (1);
@@ -63,9 +63,9 @@ int	check_unset_key_rule(char *argv)
 	flag = 0;
 	if (ft_strchr(argv, '='))
 		flag = 1;
-	if (!(argv[0] == '_' || ('A' <= argv[0] && argv[0] <= 'Z') \
-	|| ('a' <= argv[0] && argv[0] <= 'z')))
-		flag = 1;
+	if (!(argv[0] == '_'))
+		if (!ft_isalpha(argv[0]))
+			flag = 1;
 	if (!check_unset_key_string(argv))
 		flag = 1;
 	if (flag == 1)

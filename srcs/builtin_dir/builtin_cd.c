@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:28:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/23 16:06:41 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 12:55:10 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,8 @@ static void	no_argc(char **env)
 	char	*path;
 
 	path = get_envval("HOME", env);
-	if (path && chdir(path) == -1)
+	if ((chdir(path) == -1))
 	{
-		free(path);
 		ft_stderror_print("cd", NULL, "HOME not set");
 		g_exit_status = 1;
 	}
