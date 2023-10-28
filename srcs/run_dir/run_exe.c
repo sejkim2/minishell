@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/28 15:21:23 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 20:51:04 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,28 @@
 
 int	run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root)
 {
-	cmd_info.cmd_line++;
+	char	**cmdline;
+	int		cnt;
+
+	cnt = cnt_line(cmd_info.cmd_line);
+	cmdline = (char **)malloc(sizeof(char *) * cnt);
+	if (!cmdline)
+		malloc_error();
+	matrix_cpy(cmdline, cmd_info.cmd_line + 1);
 	if (!ft_strcmp(cmd_info.cmd, "cd"))
-		builtin_cd(cmd_info.cmd_line, *env);
+		builtin_cd(cmdline, *env);
 	else if (!ft_strcmp(cmd_info.cmd, "echo"))
-		builtin_echo(cmd_info.cmd_line);
+		builtin_echo(cmdline);
 	else if (!ft_strcmp(cmd_info.cmd, "env"))
-		builtin_env(cmd_info.cmd_line, *env);
+		builtin_env(cmdline, *env);
 	else if (!ft_strcmp(cmd_info.cmd, "exit"))
-		builtin_exit(cmd_info.cmd_line, root);
+		builtin_exit(cmdline, root);
 	else if (!ft_strcmp(cmd_info.cmd, "export"))
-		builtin_export(cmd_info.cmd_line, env);
+		builtin_export(cmdline, env);
 	else if (!ft_strcmp(cmd_info.cmd, "pwd"))
 		builtin_pwd();
 	else if (!ft_strcmp(cmd_info.cmd, "unset"))
-		builtin_unset(cmd_info.cmd_line, env);
+		builtin_unset(cmdline, env);
 	else
 		return (0);
 	return (1);

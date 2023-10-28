@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/28 16:50:22 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 19:56:14 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,12 @@ void			free_2str(char *s1, char *s2);
 void			free_4str(char *s1, char *s2, char *s3, char *s4);
 void			free_arr(char **arr);
 void			ft_stderror_print(char *cmd, char *argv, char *err_string);
+void			list_env(char **env, char **cmd_argv);
+void			set_env(char **cmd_argv, char **env);
+void			check_env_dup(char **env, char **cmd_argv);
+void			env_argv_error(char *argv, int error_code);
+char			**check_argv_dup(char **cmd_argv);
+int				check_dup_envname(char *s1, char *s2);
 
 /*env_utils*/
 void			expand_env(t_tree_node *parent, char **env);

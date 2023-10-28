@@ -6,7 +6,7 @@
 #    By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/05 16:27:04 by sejkim2           #+#    #+#              #
-#    Updated: 2023/10/28 16:50:40 by jaehyji          ###   ########.fr        #
+#    Updated: 2023/10/28 19:56:55 by jaehyji          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ HEREDOC_DIR = srcs/heredoc_dir
 
 BUILTIN_SRCS = builtin_cd.c \
 	builtin_echo.c \
+	builtin_env_utils.c \
 	builtin_env.c \
 	builtin_exit.c \
 	builtin_export_utils.c \
