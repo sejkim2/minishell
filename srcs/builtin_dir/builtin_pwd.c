@@ -18,5 +18,6 @@ void	builtin_pwd(void)
 
 	g_exit_status = 0;
 	getcwd(buff, PATH_MAX);
-	printf("%s\n", buff);
+	write(1, buff, ft_strlen(buff));
+	write(1, "\n", 1);
 }

@@ -21,7 +21,8 @@ void	list_env(char **env, char **cmd_argv)
 	{
 		while (env[i])
 		{
-			printf("%s\n", env[i]);
+			rite(1, env[i], 1);
+			write(1, " ", 1);
 			i++;
 		}
 	}
@@ -57,7 +58,7 @@ void	set_env(char **cmd_argv, char **env)
 		}
 		i++;
 	}
-	cmd_argv = check_argv_dup(cmd_argv);
+	cmd_argv = check_argv_dup1(cmd_argv);
 	list_env(env, cmd_argv);
 }
 

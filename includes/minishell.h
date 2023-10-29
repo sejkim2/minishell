@@ -157,8 +157,9 @@ void			list_env(char **env, char **cmd_argv);
 void			set_env(char **cmd_argv, char **env);
 void			check_env_dup(char **env, char **cmd_argv);
 void			env_argv_error(char *argv, int error_code);
-char			**check_argv_dup(char **cmd_argv);
 int				check_dup_envname(char *s1, char *s2);
+char			**check_argv_dup2(int cnt, char **cmd_argv_cpy);
+char			**check_argv_dup1(char **cmd_argv);
 
 /*env_utils*/
 void			expand_env(t_tree_node *parent, char **env);

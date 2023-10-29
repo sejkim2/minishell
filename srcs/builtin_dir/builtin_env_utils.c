@@ -12,6 +12,22 @@
 
 #include "minishell.h"
 
+static int	check_dup_envname(char *s1, char *s2)
+{
+	char	*envname1;
+	char	*envname2;
+
+	envname1 = get_envname(s1);
+	envname2 = get_envname(s2);
+	if (!ft_strcmp(envname1, envname2))
+	{
+		free_2str(envname1, envname2);
+		return (1);
+	}
+	free_2str(envname1, envname2);
+	return (0);
+}
+
 void	check_env_dup(char **env, char **cmd_argv)
 {
 	int		i;
@@ -28,7 +44,10 @@ void	check_env_dup(char **env, char **cmd_argv)
 		{
 			s2 = get_envname(env[j]);
 			if (ft_strcmp(s1, s2))
-				printf("%s\n", env[j]);
+			{
+				write(1, env[j], 1);
+				write(1, " ", 1);
+			}
 			free(s2);
 			j++;
 		}
@@ -56,46 +75,44 @@ void	env_argv_error(char *argv, int error_code)
 	write(2, "\n", 2);
 }
 
-int	check_dup_envname(char *s1, char *s2)
-{
-	char	*envname1;
-	char	*envname2;
-
-	envname1 = get_envname(s1);
-	envname2 = get_envname(s2);
-	if (!ft_strcmp(envname1, envname2))
-	{
-		free_2str(envname1, envname2);
-		return (1);
-	}
-	free_2str(envname1, envname2);
-	return (0);
-}
-
-char	**check_argv_dup(char **cmd_argv)
+char	**check_argv_dup2(int cnt, char **cmd_argv_cpy)
 {
 	int		i;
 	int		j;
-	int		cnt;
 
-	cnt = cnt_line(cmd_argv);
-	if (cnt == 1)
-		return (cmd_argv);
 	i = 0;
 	while (i < cnt - 1)
 	{
 		j = i + 1;
 		while (j < cnt)
 		{
-			if (check_dup_envname(cmd_argv[i], cmd_argv[j]))
+			if (check_dup_envname(cmd_argv_cpy[i], cmd_argv_cpy[j]))
 			{
-				free(cmd_argv[i]);
-				cmd_argv[i] = NULL;
+				free(cmd_argv_cpy[i]);
+				cmd_argv_cpy[i] = NULL;
 				break ;
 			}
 			j++;
 		}
 		i++;
 	}
-	return (rearrange_env(cnt, cmd_argv));
+	return (rearrange_env(cnt, cmd_argv_cpy));
+}
+
+char	**check_argv_dup1(char **cmd_argv)
+{
+	int		cnt;
+	char	**cmd_argv_cpy;
+
+	cnt = cnt_line(cmd_argv);
+	if (cnt == 1)
+		return (cmd_argv);
+	else
+	{
+		cmd_argv_cpy = (char **)malloc(sizeof(char *) * cnt + 1);
+		if (cmd_argv_cpy)
+			malloc_error();
+		matrix_cpy(cmd_argv_cpy, cmd_argv);
+		return (check_argv_dup2(cnt, cmd_argv_cpy));
+	}
 }

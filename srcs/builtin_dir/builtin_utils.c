@@ -55,3 +55,30 @@ void	ft_stderror_print(char *cmd, char *argv, char *err_string)
 	write(2, "\n", 1);
 	g_exit_status = 1;
 }
+
+char	**rearrange_env(int cnt, char **env)
+{
+	int		i;
+	int		j;
+	int		size;
+	char	**renv;
+
+	i = 0;
+	j = 0;
+	size = cnt_size(env, cnt);
+	renv = (char **)malloc(sizeof(char *) * (size + 1));
+	while (i < cnt)
+	{
+		if (!env[i])
+		{
+			i++;
+			continue ;
+		}
+		renv[j] = env[i];
+		i++;
+		j++;
+	}
+	renv[j] = NULL;
+	free(env);
+	return (renv);
+}

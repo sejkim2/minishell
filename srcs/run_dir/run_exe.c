@@ -15,27 +15,22 @@
 int	run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root)
 {
 	char	**cmdline;
-	int		cnt;
 
-	cnt = cnt_line(cmd_info.cmd_line);
-	cmdline = (char **)malloc(sizeof(char *) * cnt);
-	if (!cmdline)
-		malloc_error();
-	matrix_cpy(cmdline, cmd_info.cmd_line + 1);
+	cmd_info.cmd_line++;
 	if (!ft_strcmp(cmd_info.cmd, "cd"))
-		builtin_cd(cmdline, *env);
+		builtin_cd(cmd_info.cmd_line, *env);
 	else if (!ft_strcmp(cmd_info.cmd, "echo"))
-		builtin_echo(cmdline);
+		builtin_echo(cmd_info.cmd_line);
 	else if (!ft_strcmp(cmd_info.cmd, "env"))
-		builtin_env(cmdline, *env);
+		builtin_env(cmd_info.cmd_line, *env);
 	else if (!ft_strcmp(cmd_info.cmd, "exit"))
-		builtin_exit(cmdline, root);
+		builtin_exit(cmd_info.cmd_line, root);
 	else if (!ft_strcmp(cmd_info.cmd, "export"))
-		builtin_export(cmdline, env);
+		builtin_export(cmd_info.cmd_line, env);
 	else if (!ft_strcmp(cmd_info.cmd, "pwd"))
 		builtin_pwd();
 	else if (!ft_strcmp(cmd_info.cmd, "unset"))
-		builtin_unset(cmdline, env);
+		builtin_unset(cmd_info.cmd_line, env);
 	else
 		return (0);
 	return (1);
