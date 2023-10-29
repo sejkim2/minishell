@@ -126,6 +126,13 @@ typedef struct s_env_str
 	char	*exp_str;
 }	t_env_str;
 
+typedef struct s_env_str_2
+{
+	char	*fstr;
+	char	*env_str;
+	char	*bstr;
+}	t_env_str_2;
+
 /*				builtin_dir				*/
 /*builtin*/
 void			builtin_cd(char **cmd_argv, char **env);
@@ -357,7 +364,6 @@ DIR				*run_opendir(void);
 /*heredoc*/
 int				get_heredoc(t_tree_node *node);
 char			*generate_temp_filename(char *mode);
-char			*heredoc_expand_env(char *line, char **env);
-void			heredoc_make_env(int *idx, char **string, char **env);
-void			heredoc_parser_strings(int *i, char *string, t_env_str *e_str);
+char			*heredoc_check_env(char *line, char **env);
+char			*heredoc_make_env(int *i, char *line, char **env);
 #endif

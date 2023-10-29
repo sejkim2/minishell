@@ -10,78 +10,125 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+/*
+	환경변수 조건에서 $$처럼 다수의 $에 대해 해석의 방향성이 존재하지 않으므로
+
+	1. $$.... 처럼 다수의 $를 1개로 볼 것인가.
+	2. $$.... 처럼 다수의 $가 입력되어도 마지막 $만 해석할 것인가.
+*/
+
 #include "minishell.h"
 
-char	*heredoc_expand_env(char *line, char **env)
+static char	*heredoc_exit_status_env(int *i, char *line)
 {
-	int		i;
-	char	*rstr;
+	t_env_str_2	string;
+	char		*tmp1;
+	char		*tmp2;
 
-	i = 0;
-	rstr = line;
-	while (rstr[i])
-	{
-		if (dollar_string(rstr))
-			break ;
-		if (rstr[i] != '$')
-			i++;
-		else
-			heredoc_make_env(&i, &rstr, env);
-	}
-	return (rstr);
+	string.fstr = ft_substr(line, 0, *i - 1);
+	if (!string.fstr)
+		malloc_error();
+	string.env_str = ft_itoa((int)g_exit_status);
+	if (!string.env_str)
+		malloc_error();
+	string.bstr = ft_substr(line, *i + 1, ft_strlen(line) - (*i + 1))
+	if (!string.bstr)
+		malloc_error();
+	tmp1 = ft_strjoin(string.fstr, string.env_str);
+	free_2str(string.fstr, string.env_str);
+	if (!tmp1)
+		malloc_error();
+	tmp2 = ft_strjoin(tmp1, string.bstr);
+	free_2str(tmp1, string.bstr);
+	if (!tmp2)
+		malloc_error();
+	free(line);
+	*i = *i + 1;
+	return (tmp2);
 }
 
-void	heredoc_make_env(int *idx, char **string, char **env)
+int		heredoc_check_key_rule(int *i, char *line)
 {
-	t_env_str	e_str;
-	char		*env_val;
-	char		*tmp;
+	int		idx;
 
-	heredoc_parser_strings(idx, *string, &e_str);
-	if ((*string)[*idx + 1] && (*string)[*idx + 1] == '?')
+	idx = *i
+	if (line[idx] == '_' || ft_isalpha(line[idx]))
+		idx++;
+	else
+		return (0);
+	while (line[idx] && line[idx] != '$')
 	{
-		e_str.exp_str = ft_itoa((int)g_exit_status);
-		free(e_str.bstr);
-		e_str.bstr = ft_strdup(*string + *idx + 2);
+		if (line[idx] == '_' || ft_isalpha(line[idx]) || ft_isdigit(line[idx]))
+			idx++;
+		else
+			return (0);
 	}
+	return (ldx);
+}
+
+static char	*heredoc_expand_env(int *i, int len, char *line, char **env)
+{
+	t_env_str_2	string;
+	char		*tmp1;
+	char		*tmp2;
+
+	string.fstr = ft_substr(line, 0, *i - 1);
+	if (!string.fstr)
+		malloc_error();
+	tmp1 = ft_substr(line, *i, len);
+	string.env_str = get_envval(tmp1);
+	free(tmp1);
+	if (!string.env_str)
+		string.env_str = ft_strdup("\0");
+	if (!string.env_str)
+		malloc_error();
+	string.bstr = ft_substr(line, *i + len, ft_strlen(line) - (*i + len))
+	if (!string.bstr)
+		malloc_error();
+	tmp1 = ft_strjoin(string.fstr, string.env_str);
+	free_2str(string.fstr, string.env_str);
+	if (!tmp1)
+		malloc_error();
+	tmp2 = ft_strjoin(tmp1, string.bstr);
+	free_2str(tmp1, string.bstr);
+	if (!tmp2)
+		malloc_error();
+	free(line);
+	*i = *i + len;
+	return (tmp2);
+}
+
+char	*heredoc_make_env(int *i, char *line, char **env)
+{
+	int		envname_len;
+
+	if (line[*i] == '?')
+		return (heredoc_exit_status_env(i, line));
 	else
 	{
-		env_val = get_envval(e_str.env_str + 1, env);
-		if (env_val)
-			e_str.exp_str = env_val;
+		envname_len = heredoc_check_key_rule(i, line);
+		if (envname_len != 0)
+			return (heredoc_expand_env(i, envname_len, line, env));
 		else
-			e_str.exp_str = ft_strdup("");
+			return (line);
 	}
-	tmp = ft_strjoin(e_str.fstr, e_str.exp_str);
-	*idx += ft_strlen(e_str.exp_str);
-	free_4str(e_str.fstr, e_str.env_str, e_str.exp_str, *string);
-	*string = ft_strjoin(tmp, e_str.bstr);
-	free_2str(tmp, e_str.bstr);
 }
 
-void	heredoc_parser_strings(int *i, char *string, t_env_str *e_str)
+char	*heredoc_check_env(char *line, char **env)
 {
-	int		ldx;
+	int		i;
 
-	ldx = *i;
-	e_str->fstr = ft_substr(string, 0, *i);
-	if (!e_str->fstr)
-		malloc_error();
-	while (string[ldx + 1] && string[ldx + 1] != '$' \
-	&& (string[ldx + 1] != ' ') && (string[ldx + 1] != '/') \
-	&& (string[ldx + 1] != '\'') && (string[ldx + 1] != '\"'))
-		ldx++;
-	e_str->env_str = ft_substr(string, *i, (ldx + 1) - *i);
-	if (!e_str->env_str)
-		malloc_error();
-	e_str->bstr = ft_strdup("\0");
-	if (!e_str->bstr)
-		malloc_error();
-	if (string[ldx + 1])
+	i = 0;
+	while (line[i])
 	{
-		free(e_str->bstr);
-		e_str->bstr = ft_substr(string, ldx + 1, ft_strlen(string) - ldx);
-		if (!e_str->bstr)
-			malloc_error();
+		while (line[i] && line[i] != '$')
+			i++;
+		while (line[i] && line[i] == '$')
+			i++;
+		if (!line[i])
+			return (line);
+		else
+			line = heredoc_make_env(&i, line, env);
 	}
+	return (line);
 }

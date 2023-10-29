@@ -35,7 +35,7 @@ static	void	run_readline(char *limit, int hd_fd)
 			free(line);
 			exit(0);
 		}
-		line = heredoc_expand_env(line, environ);
+		line = heredoc_check_env(line, environ);
 		write(hd_fd, line, ft_strlen(line));
 		write(hd_fd, "\n", 1);
 		free(line);
