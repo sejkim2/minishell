@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/28 17:45:07 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/30 20:48:39 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,13 @@ typedef struct s_env_str
 	char	*exp_str;
 }	t_env_str;
 
+typedef struct s_env_str_2
+{
+	char	*fstr;
+	char	*env_str;
+	char	*bstr;
+}	t_env_str_2;
+
 /*				builtin_dir				*/
 /*builtin*/
 void			builtin_cd(char **cmd_argv, char **env);
@@ -145,25 +152,33 @@ void			compare_envname(char *unset_name, char ***env, int cnt);
 void			sort_ascii(char **envp, int cnt);
 void			print_export(int i, char *env_name, char *env_val, char **env);
 void			list_export(char **env);
-int				check_key_rule(char **cmd_argv, char ***env);
-void			parser_strings(int *i, char *string, t_env_str *e_str);
 void			matrix_cpy(char **dest, char **origin);
 int				cnt_line(char **str_arr);
 void			free_2str(char *s1, char *s2);
 void			free_4str(char *s1, char *s2, char *s3, char *s4);
 void			free_arr(char **arr);
+void			check_malloc_fail(char *buff);
 void			ft_stderror_print(char *cmd, char *argv, char *err_string);
+void			list_env(char **env, char **cmd_argv);
+void			set_env(char **cmd_argv, char **env);
+void			check_env_dup(char **env, char **cmd_argv);
+void			env_argv_error(char *argv, int error_code);
+char			**check_argv_dup2(int cnt, char **cmd_argv_cpy);
+char			**check_argv_dup1(char **cmd_argv);
 
 /*env_utils*/
-void			expand_env(t_tree_node *parent, char **env);
-void			make_env(int *idx, char **string, char **env);
-char			*check_redir(t_tree_node *node);
-char			*apply_in_tree(t_tree_node *node, t_tree_node *head);
-int				dollar_string(char *str);
-void			parser_env(int i, t_tree_node *child, char **env);
 char			**init_setting(char **envp, int *o_fd);
 char			*get_envname(char *av);
 char			*get_envval(char *env_name, char **env);
+char			*exit_status_env(int *i, char *line);
+char			*expand_env(int *i, int len, char *line, char **env);
+char			*check_env_case(int *i, char *line, char **env);
+char			*parser_env(char *line, char **env);
+int				get_envname_idx(int *i, char *line);
+int				check_key_rule(char **cmd_argv, char ***env);
+void			parser_env_in_tree(t_tree_node *parent, char **env);
+char			*check_redir(t_tree_node *node);
+char			*apply_in_tree(t_tree_node *node);
 
 /*				lexer_dir				*/
 /*check_character_symbol*/
@@ -355,7 +370,5 @@ DIR				*run_opendir(void);
 /*heredoc*/
 int				get_heredoc(t_tree_node *node, char **env);
 char			*generate_temp_filename(char *mode);
-char			*heredoc_expand_env(char *line, char **env);
-void			heredoc_make_env(int *idx, char **string, char **env);
-void			heredoc_parser_strings(int *i, char *string, t_env_str *e_str);
+
 #endif

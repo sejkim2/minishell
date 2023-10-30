@@ -6,38 +6,11 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 15:49:39 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/28 14:43:38 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/28 20:50:04 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	**rearrange_env(int cnt, char **env)
-{
-	int		i;
-	int		j;
-	int		size;
-	char	**renv;
-
-	i = 0;
-	j = 0;
-	size = cnt_size(env, cnt);
-	renv = (char **)malloc(sizeof(char *) * (size + 1));
-	while (i < cnt)
-	{
-		if (!env[i])
-		{
-			i++;
-			continue ;
-		}
-		renv[j] = env[i];
-		i++;
-		j++;
-	}
-	renv[j] = NULL;
-	free(env);
-	return (renv);
-}
 
 int	check_unset_key_string(char *argv)
 {

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:38:10 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/28 15:06:31 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/30 20:02:04 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ int	run_redirection_list(t_tree_node *node, char ***env)
 	char			**file_table;
 
 	child = node->child_list;
-	expand_env(child, *env);
+	parser_env_in_tree(child, *env);
 	while (child)
 	{
 		file_table = get_file_by_wild_card(child->token->str_info);

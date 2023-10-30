@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_heredoc.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/28 17:40:54 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/30 20:49:15 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	open_file(char *tmp_name)
 static	void	run_readline(char *limit, int hd_fd, char **env)
 {
 	char	*line;
+	char	*tmp;
 
 	set_heredoc_signal();
 	while (1)
@@ -35,10 +36,10 @@ static	void	run_readline(char *limit, int hd_fd, char **env)
 			free(line);
 			exit(0);
 		}
-		line = heredoc_expand_env(line, env);
-		write(hd_fd, line, ft_strlen(line));
+		tmp = parser_env(line, environ);
+		write(hd_fd, tmp, ft_strlen(tmp));
 		write(hd_fd, "\n", 1);
-		free(line);
+		free(tmp);
 	}
 }
 

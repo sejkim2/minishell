@@ -18,18 +18,18 @@ static void	echo_no_opt_print(int cmd_argc, char **cmd_argv)
 
 	if (cmd_argc == 0)
 	{
-		printf("\n");
+		write(1, "\n", 1);
 		return ;
 	}
 	idx = 0;
 	while (idx < cmd_argc)
 	{
-		printf("%s", cmd_argv[idx]);
+		write(1, cmd_argv[idx], ft_strlen(cmd_argv[idx]));
 		if (idx < cmd_argc - 1)
-			printf(" ");
+			write(1, " ", 1);
 		idx++;
 	}
-	printf("\n");
+	write(1, "\n", 1);
 	return ;
 }
 
@@ -40,9 +40,9 @@ static void	echo_opt_print(int cmd_argc, char **cmd_argv)
 	idx = 0;
 	while (idx < cmd_argc)
 	{
-		printf("%s", cmd_argv[idx]);
+		write(1, cmd_argv[idx], ft_strlen(cmd_argv[idx]));
 		if (idx < cmd_argc - 1)
-			printf(" ");
+			write(1, " ", 1);
 		idx++;
 	}
 	return ;

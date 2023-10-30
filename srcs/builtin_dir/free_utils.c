@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/05 16:58:29 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 17:31:10 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/30 19:51:37 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,10 @@ void	free_arr(char **arr)
 		idx++;
 	}
 	free(arr);
+}
+
+void	check_malloc_fail(char *buff)
+{
+	if (!buff)
+		malloc_error();
 }

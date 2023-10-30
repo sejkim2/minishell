@@ -58,7 +58,7 @@ void	print_export(int i, char *env_name, char *env_val, char **env)
 		}
 		write(1, "\"", 1);
 	}
-	printf("\n");
+	write(1, "\n", 1);
 }
 
 void	list_export(char **env)
