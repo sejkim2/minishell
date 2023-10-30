@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/30 20:49:15 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/30 20:51:52 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static	void	run_readline(char *limit, int hd_fd, char **env)
 			free(line);
 			exit(0);
 		}
-		tmp = parser_env(line, environ);
+		tmp = parser_env(line, env);
 		write(hd_fd, tmp, ft_strlen(tmp));
 		write(hd_fd, "\n", 1);
 		free(tmp);
