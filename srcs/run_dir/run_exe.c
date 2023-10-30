@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 16:54:45 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/28 20:51:04 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:41:51 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	run_builtin(t_cmd cmd_info, char ***env, t_tree_node *root)
 {
-	char	**cmdline;
-
 	cmd_info.cmd_line++;
 	if (!ft_strcmp(cmd_info.cmd, "cd"))
 		builtin_cd(cmd_info.cmd_line, *env);

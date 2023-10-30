@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/28 16:27:58 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/30 19:59:14 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ static int	open_file(char *tmp_name)
 static	void	run_readline(char *limit, int hd_fd)
 {
 	char	*line;
+	char	*tmp;
 
 	set_heredoc_signal();
 	while (1)
@@ -35,10 +36,10 @@ static	void	run_readline(char *limit, int hd_fd)
 			free(line);
 			exit(0);
 		}
-		line = heredoc_check_env(line, environ);
-		write(hd_fd, line, ft_strlen(line));
+		tmp = parser_env(line, environ);
+		write(hd_fd, tmp, ft_strlen(tmp));
 		write(hd_fd, "\n", 1);
-		free(line);
+		free(tmp);
 	}
 }
 

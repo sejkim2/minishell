@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:06:44 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/28 17:58:24 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/30 16:42:33 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	list_env(char **env, char **cmd_argv)
 	{
 		while (env[i])
 		{
-			rite(1, env[i], 1);
+			write(1, env[i], 1);
 			write(1, " ", 1);
 			i++;
 		}

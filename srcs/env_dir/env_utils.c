@@ -6,33 +6,11 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/28 17:22:03 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/30 19:50:05 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-void	expand_env(t_tree_node *parent, char **env)
-{
-	int			i;
-	t_tree_node	*child;
-	t_tree_node	*head;
-
-	child = parent->child_list;
-	while (child)
-	{
-		head = child;
-		i = 0;
-		while (child->token->str_info[i].str_type != NUL)
-		{
-			if (child->token->str_info[i].str_type != SINGLE_QUOTE)
-				parser_env(i, child, env);
-			i++;
-		}
-		child->token->value = apply_in_tree(child, head);
-		child = child->next;
-	}
-}
 
 char	**init_setting(char **envp, int *o_fd)
 {
@@ -77,14 +55,15 @@ char	*get_envval(char *env_name, char **env)
 			if (!ft_strchr(env[idx[0]], '='))
 				return (NULL);
 			while (env[idx[0]][idx[1]] && env[idx[0]][idx[1]] != '=')
-				j++;
-			str[1] = ft_substr(env[idx[0]], idx[1] + 1, ft_strlen(env[idx[0]]) - (idx[1] + 1));
+				idx[1]++;
+			str[1] = ft_substr(env[idx[0]], idx[1] + 1, \
+			ft_strlen(env[idx[0]]) - (idx[1] + 1));
 			if (!str[1])
 				malloc_error();
 			return (str[1]);
 		}
 		free(str[0]);
-		i++;
+		idx[0]++;
 	}
 	return (NULL);
 }
