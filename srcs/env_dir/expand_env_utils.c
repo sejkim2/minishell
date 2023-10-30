@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:25:18 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/30 20:37:18 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/30 20:44:01 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	parser_env_in_tree(t_tree_node *parent, char **env)
 	int			i;
 	t_tree_node	*child;
 	t_tree_node	*head;
+	char		*tmp;
 
 	child = parent->child_list;
 	while (child)
@@ -46,8 +47,9 @@ void	parser_env_in_tree(t_tree_node *parent, char **env)
 		i = 0;
 		while (child->token->str_info[i].str_type != NUL)
 		{
+			tmp = child->token->str_info[i].str;
 			if (child->token->str_info[i].str_type != SINGLE_QUOTE)
-				child->token->str_info[i].str = parser_env(child->token->str_info[i].str, env);
+				child->token->str_info[i].str = parser_env(tmp, env);
 			i++;
 		}
 		child->token->value = apply_in_tree(child);
