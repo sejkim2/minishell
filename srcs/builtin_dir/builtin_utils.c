@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:27:46 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/31 20:08:42 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:28:13 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char	**rearrange_env(int cnt, char **env)
 		j++;
 	}
 	renv[j] = NULL;
-	free_str(env);
+	free(env);
+	env = 0;
 	return (renv);
 }
