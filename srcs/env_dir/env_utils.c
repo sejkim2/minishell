@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 13:42:37 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/30 19:50:05 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:09:54 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	*get_envval(char *env_name, char **env)
 		str[0] = get_envname(env[idx[0]]);
 		if (!ft_strcmp(env_name, str[0]))
 		{
-			free(str[0]);
+			free_str(str[0]);
 			if (!ft_strchr(env[idx[0]], '='))
 				return (NULL);
 			while (env[idx[0]][idx[1]] && env[idx[0]][idx[1]] != '=')
@@ -62,7 +62,7 @@ char	*get_envval(char *env_name, char **env)
 				malloc_error();
 			return (str[1]);
 		}
-		free(str[0]);
+		free_str(str[0]);
 		idx[0]++;
 	}
 	return (NULL);

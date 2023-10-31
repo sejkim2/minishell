@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/10 08:25:18 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/31 11:25:28 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:10:24 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ char	*apply_in_tree(t_tree_node *node)
 		remov = tmp;
 		tmp = ft_strjoin(tmp, node->token->str_info[i].str);
 		check_malloc_fail(tmp);
-		free(remov);
+		free_str(remov);
 		i++;
 	}
-	free(node->token->value);
+	free_str(node->token->value);
 	node->token->value = 0;
 	return (tmp);
 }
@@ -75,5 +75,7 @@ char	*check_redir(t_tree_node *node)
 	}
 	else
 		tmp = ft_strdup("");
+	if (!tmp)
+		malloc_error();
 	return (tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/31 14:20:00 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:03:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ void			print_export(int i, char *env_name, char *env_val, char **env);
 void			list_export(char **env);
 void			matrix_cpy(char **dest, char **origin);
 int				cnt_line(char **str_arr);
+void			free_str(char *str);
 void			free_2str(char *s1, char *s2);
 void			free_4str(char *s1, char *s2, char *s3, char *s4);
 void			free_arr(char **arr);

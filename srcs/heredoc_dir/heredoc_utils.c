@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/27 16:43:22 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/30 19:47:39 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:11:29 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,13 @@ static char	*make_new_filename(char *str)
 			rstr[ft_strlen(str) + 1] = '\0';
 			if (access(rstr, F_OK) == -1)
 			{
-				free(str);
+				free_str(str);
 				return (rstr);
 			}
 			i++;
 		}
 		rstr[ft_strlen(str)] = '_';
-		free(str);
+		free_str(str);
 		str = rstr;
 	}
 	return (str);

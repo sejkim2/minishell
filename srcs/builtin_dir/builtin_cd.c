@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 10:28:08 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/31 19:47:49 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:05:36 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ static void	re_path(char **env, char *type, char *path)
 			idx++;
 		else
 		{
-			free(env[idx]);
+			free_str(env[idx]);
 			tmp = ft_strjoin(type, path);
+			if (!tmp)
+				malloc_error();
 			env[idx] = tmp;
 			break ;
 		}
@@ -50,8 +52,7 @@ static void	no_argc(char **env)
 		getcwd(buff, PATH_MAX);
 		re_path(env, "PWD=", buff);
 	}
-	if (path)
-		free(path);
+	free_str(path);
 }
 
 static void	yes_argc(char *path, char **env)

@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:54:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/31 12:32:52 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:12:00 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,13 @@ static	char	*check_cmd_is_availabe(char **path, char *input_cmd)
 			malloc_error();
 		if (access(cmd_with_path, X_OK) == 0)
 		{
-			free(cmd_with_root);
+			free_str(cmd_with_root);
 			return (cmd_with_path);
 		}
-		free(cmd_with_path);
+		free_str(cmd_with_path);
 		i++;
 	}
-	free(cmd_with_root);
+	free_str(cmd_with_root);
 	return (input_cmd);
 }
 

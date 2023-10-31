@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:46:28 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/31 11:35:40 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:10:48 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*exit_status_env(int *i, char *line)
 	tmp[1] = ft_strjoin(tmp[0], s.bstr);
 	check_malloc_fail(tmp[1]);
 	free_4str(s.fstr, s.env_str, s.bstr, tmp[0]);
-	free(line);
+	free_str(line);
 	return (tmp[1]);
 }
 
@@ -43,7 +43,7 @@ char	*expand_env(int *i, int len, char *line, char **env)
 	tmp[0] = ft_substr(line, *i, len - *i);
 	check_malloc_fail(tmp[0]);
 	s.env_str = get_envval(tmp[0], env);
-	free(tmp[0]);
+	free_str(tmp[0]);
 	if (!s.env_str)
 	{
 		s.env_str = ft_strdup("\0");
@@ -57,7 +57,7 @@ char	*expand_env(int *i, int len, char *line, char **env)
 	tmp[1] = ft_strjoin(tmp[0], s.bstr);
 	check_malloc_fail(tmp[1]);
 	free_4str(s.fstr, s.env_str, s.bstr, tmp[0]);
-	free(line);
+	free_str(line);
 	return (tmp[1]);
 }
 

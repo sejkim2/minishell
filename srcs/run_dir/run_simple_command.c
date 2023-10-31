@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/31 19:51:16 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:13:20 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,8 @@
 
 void	free_cmd(t_cmd *cmd_info)
 {
-	if (cmd_info->cmd)
-		free(cmd_info->cmd);
-	if (cmd_info->input)
-		free(cmd_info->input);
+	free_str(cmd_info->cmd);
+	free_str(cmd_info->input);
 	free_arr(cmd_info->cmd_line);
 }
 

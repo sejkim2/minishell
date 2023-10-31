@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 17:34:00 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 17:41:21 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:12:37 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*set_redir_file_name(t_tree_node *node)
 	{
 		remove_str = file_name;
 		file_name = ft_strjoin(file_name, node->token->str_info[i].str);
-		free(remove_str);
+		free_str(remove_str);
 		i++;
 	}
 	return (file_name);

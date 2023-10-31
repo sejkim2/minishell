@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/20 14:35:29 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/30 20:51:52 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:11:20 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,13 @@ static	void	run_readline(char *limit, int hd_fd, char **env)
 		line = readline("> ");
 		if (!line || !ft_strcmp(limit, line))
 		{
-			free(line);
+			free_str(line);
 			exit(0);
 		}
 		tmp = parser_env(line, env);
 		write(hd_fd, tmp, ft_strlen(tmp));
 		write(hd_fd, "\n", 1);
-		free(tmp);
+		free_str(tmp);
 	}
 }
 
@@ -63,7 +63,7 @@ static	char	*input_heredoc(char *limit, char **env)
 		if (g_exit_status == 1)
 		{
 			unlink(tmp_name);
-			free(tmp_name);
+			free_str(tmp_name);
 			return (0);
 		}
 	}
@@ -88,7 +88,7 @@ int	get_heredoc(t_tree_node *node, char **env)
 	{
 		file_name = set_redir_file_name(node);
 		node->token->hd_name = input_heredoc(file_name, env);
-		free(file_name);
+		free_str(file_name);
 		if (node->token->hd_name == 0)
 			return (-1);
 	}

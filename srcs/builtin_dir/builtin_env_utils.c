@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 17:42:38 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/31 14:20:34 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:06:55 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	check_env_dup(char **env, char **cmd_argv)
 				write(1, env[i], ft_strlen(env[i]));
 				write(1, "\n", 1);
 			}
-			free(s2);
+			free_str(s2);
 			j++;
 		}
-		free(s1);
+		free_str(s1);
 		i++;
 	}
 }
@@ -88,8 +88,7 @@ char	**check_argv_dup2(int cnt, char **cmd_argv_cpy)
 		{
 			if (check_dup_envname(cmd_argv_cpy[i], cmd_argv_cpy[j]))
 			{
-				free(cmd_argv_cpy[i]);
-				cmd_argv_cpy[i] = NULL;
+				free_str(cmd_argv_cpy[i]);
 				break ;
 			}
 			j++;
