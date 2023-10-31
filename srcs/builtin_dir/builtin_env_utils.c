@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 17:42:38 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/31 13:43:27 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 14:20:34 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,20 +99,25 @@ char	**check_argv_dup2(int cnt, char **cmd_argv_cpy)
 	return (rearrange_env(cnt, cmd_argv_cpy));
 }
 
-char	**check_argv_dup1(char **cmd_argv)
+char	**check_argv_dup1(char **cmd_argv, char **env)
 {
-	int		cnt;
+	int		cnt[2];
 	char	**cmd_argv_cpy;
+	int		i;
+	int		j;
 
-	cnt = cnt_line(cmd_argv);
-	if (cnt == 1)
-		return (cmd_argv);
-	else
-	{
-		cmd_argv_cpy = (char **)malloc(sizeof(char *) * cnt + 1);
-		if (cmd_argv_cpy)
-			malloc_error();
-		matrix_cpy(cmd_argv_cpy, cmd_argv);
-		return (check_argv_dup2(cnt, cmd_argv_cpy));
-	}
+	cnt[0] = cnt_line(env);
+	cnt[1] = cnt_line(cmd_argv);
+	cmd_argv_cpy = (char **)malloc(sizeof(char *) * cnt[0] + cnt[1] + 1);
+	if (!cmd_argv_cpy)
+		malloc_error();
+	i = 0;
+	j = 0;
+	while (env[i])
+		cmd_argv_cpy[j++] = ft_strdup(env[i++]);
+	i = 0;
+	while (cmd_argv[i])
+		cmd_argv_cpy[j++] = ft_strdup(cmd_argv[i++]);
+	cmd_argv_cpy[j] = NULL;
+	return (check_argv_dup2(cnt[0] + cnt[1], cmd_argv_cpy));
 }

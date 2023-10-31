@@ -1,5 +1,3 @@
-\#!/bin/bash
-
 while :
 do
     echo -n "Enter the program name to run (or 'q' to quit): "

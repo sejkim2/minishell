@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/31 11:35:06 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 14:20:00 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,12 +151,12 @@ void			free_4str(char *s1, char *s2, char *s3, char *s4);
 void			free_arr(char **arr);
 void			check_malloc_fail(char *buff);
 void			ft_stderror_print(char *cmd, char *argv, char *err_string);
-void			list_env(char **env, char **cmd_argv);
+void			list_env(char **env);
 void			set_env(char **cmd_argv, char **env);
 void			check_env_dup(char **env, char **cmd_argv);
 void			env_argv_error(char *argv, int error_code);
 char			**check_argv_dup2(int cnt, char **cmd_argv_cpy);
-char			**check_argv_dup1(char **cmd_argv);
+char			**check_argv_dup1(char **cmd_argv, char **env);
 
 /*env_utils*/
 char			**init_setting(char **envp, int *o_fd);
