@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_tree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
+/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 14:22:41 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/27 18:00:08 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 20:25:19 by sejkim2          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,44 @@ static char	*free_str_info(t_str_info *str_info)
 	i = 0;
 	while (str_info[i].str_type != NUL)
 	{
-		free(str_info[i].str);
+		if (str_info[i].str)
+		{
+			free(str_info[i].str);
+			str_info[i].str = 0;
+		}
 		i++;
 	}
-	free(str_info);
+	if (str_info)
+	{
+		free(str_info);
+		str_info = 0;
+	}
 	return (0);
 }
 
 char	*free_token(t_token *token)
 {
 	if (token->value)
+	{
 		free(token->value);
+		token->value = 0;
+	}
 	if (token->str_info)
+	{
 		free_str_info(token->str_info);
+		token->str_info = 0;
+	}
 	if (token->hd_name)
 	{
 		unlink(token->hd_name);
 		free(token->hd_name);
+		token->hd_name = 0;
 	}
 	if (token)
+	{
 		free(token);
+		token = 0;
+	}
 	return (0);
 }
 
@@ -48,7 +66,11 @@ char	*free_tree_node(t_tree_node *node, int is_remove_token)
 	node->child_list = 0;
 	if (is_remove_token == 1)
 		free_token(node->token);
-	free(node);
+	if (node)
+	{
+		free(node);
+		node = 0;
+	}
 	return (0);
 }
 
@@ -70,6 +92,10 @@ char	*free_tree(t_tree_node *parent, int is_remove_token)
 				free_tree(remove_node, is_remove_token);
 		}
 	}
-	free(parent);
+	if (parent)
+	{	
+		free(parent);
+		parent = 0;
+	}
 	return (0);
 }
