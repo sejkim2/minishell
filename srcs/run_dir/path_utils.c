@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/18 10:54:15 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/26 20:07:16 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 12:32:52 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static	char	*check_cmd_is_availabe(char **path, char *input_cmd)
 
 	i = 0;
 	cmd_with_root = ft_strjoin("/", input_cmd);
-	free(input_cmd);
 	while (path[i])
 	{
 		cmd_with_path = ft_strjoin(path[i], cmd_with_root);

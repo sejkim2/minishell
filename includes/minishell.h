@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/25 11:10:22 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/30 20:48:39 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 11:35:06 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,15 +123,7 @@ typedef struct s_env_str
 	char	*fstr;
 	char	*env_str;
 	char	*bstr;
-	char	*exp_str;
 }	t_env_str;
-
-typedef struct s_env_str_2
-{
-	char	*fstr;
-	char	*env_str;
-	char	*bstr;
-}	t_env_str_2;
 
 /*				builtin_dir				*/
 /*builtin*/

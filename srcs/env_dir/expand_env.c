@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 16:46:28 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/30 20:45:10 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 11:35:40 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	*exit_status_env(int *i, char *line)
 {
-	t_env_str_2	s;
+	t_env_str	s;
 	char		*tmp[2];
 
 	s.fstr = ft_substr(line, 0, *i - 1);
@@ -35,7 +35,7 @@ char	*exit_status_env(int *i, char *line)
 
 char	*expand_env(int *i, int len, char *line, char **env)
 {
-	t_env_str_2	s;
+	t_env_str	s;
 	char		*tmp[2];
 
 	s.fstr = ft_substr(line, 0, *i - 1);
