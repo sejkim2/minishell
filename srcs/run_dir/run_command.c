@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/13 15:44:36 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/27 19:40:51 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 11:24:21 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,7 @@ void	run_command_pipe(t_tree_node *node, char ***env, t_tree_node *root)
 {
 	t_tree_node	*child;
 	pid_t		sub_pro;
-	int			fd_flag;
 
-	fd_flag = 0;
 	child = node->child_list;
 	if (child->symbol == SIMPLE_COMMAND)
 		run_simple_command(child, env, root);

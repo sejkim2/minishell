@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_node_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/13 18:03:01 by sejkim2           #+#    #+#             */
-/*   Updated: 2023/10/24 17:21:51 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/31 11:24:36 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ t_token	*make_token(void)
 
 t_token_node	*make_node(t_token *token)
 {
-	int				i;
 	t_token_node	*new_node;
 
-	i = 0;
 	new_node = (t_token_node *)malloc(sizeof(t_token_node));
 	if (new_node == 0)
 		malloc_error();
