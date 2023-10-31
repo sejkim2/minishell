@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/28 17:42:38 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/28 20:50:32 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/10/31 13:43:27 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@ void	check_env_dup(char **env, char **cmd_argv)
 			s2 = get_envname(env[j]);
 			if (ft_strcmp(s1, s2))
 			{
-				write(1, env[j], 1);
-				write(1, " ", 1);
+				write(1, env[i], ft_strlen(env[i]));
+				write(1, "\n", 1);
 			}
 			free(s2);
 			j++;

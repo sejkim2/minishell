@@ -1,4 +1,4 @@
-#!/bin/bash
+\#!/bin/bash
 
 while :
 do
@@ -15,6 +15,6 @@ do
 	while :
 	do
 		leaks $program_name
-    	sleep 2
+    	sleep 0.5
 	done
 done

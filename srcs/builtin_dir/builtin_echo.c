@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_echo.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejkim2 <sejkim2@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/12 16:36:27 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/20 15:01:33 by sejkim2          ###   ########.fr       */
+/*   Updated: 2023/10/31 13:56:00 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static void	echo_opt(int cmd_argc, char **cmd_argv)
 
 	if (echo_opt_flag(*cmd_argv))
 	{
-		i = 1;
-		while (cmd_argv[i][0] == '-')
+		i = 0;
+		while (cmd_argv[i] && cmd_argv[i][0] == '-')
 		{
 			j = 1;
 			if (!cmd_argv[i][j])
