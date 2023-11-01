@@ -9,13 +9,9 @@ do
         break
     fi
 
-    # 실행할 프로그램 명칭으로 설정하고 실행
-    $program_name
-
-    # 에러 체크 (리턴 코드를 사용)
-    if [ $? -ne 0 ]; then
-        echo "Error: $program_name 실행 중 오류가 발생했습니다."
-    fi
-
-    sleep 2
+    while :
+    do
+        leaks $program_name
+        sleep 0.5
+    done
 done

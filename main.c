@@ -57,14 +57,16 @@ char	*read_command_line(char ***env)
 	return (line);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **envp)
 {
 	char	**env;
 	char	*line;
 	int		o_fd[2];
 
+	(void)argc;
+	(void)argv;
 	print_ascii_banner();
-	env = init_setting(environ, o_fd);
+	env = init_setting(envp, o_fd);
 	while (1)
 	{
 		set_shell_signal();

@@ -44,6 +44,8 @@ char	*get_path(char *exe, char **env)
 	if (!*exe)
 		return (exe);
 	path = find_path_in_envp_and_split(env);
+	if (!path)
+		return (exe);
 	res = init_path_env(exe, path);
 	return (res);
 }

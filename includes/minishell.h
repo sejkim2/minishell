@@ -33,7 +33,6 @@
 # include "../mylib/includes/get_next_line.h"
 
 typedef unsigned long long	t_ull;
-extern char					**environ;
 unsigned char				g_exit_status;
 
 /*		define struct		*/
