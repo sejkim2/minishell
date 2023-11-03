@@ -6,7 +6,7 @@
 /*   By: jaehyji <jaehyji@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/12 15:45:56 by jaehyji           #+#    #+#             */
-/*   Updated: 2023/10/31 20:13:20 by jaehyji          ###   ########.fr       */
+/*   Updated: 2023/11/03 14:22:56 by jaehyji          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	redirect_file(t_tree_node *child, char ***env)
 			fd_flag = run_redirection_list(child, env);
 		child = child->next;
 		if (fd_flag == -1)
-			break;
+			break ;
 	}
 	return (fd_flag);
 }
