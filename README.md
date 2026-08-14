@@ -160,14 +160,7 @@ srcs/
 
 완성된 Minishell은 대략 다음과 같이 동작합니다.
 
-```text
-minishell$ ls
-minishell$ pwd
-/home/sejin
-minishell$ echo hello
-hello
-minishell$ exit
-```
+[이미지]
 
 사용자가 명령을 입력하면 Minishell이 이를 해석하고 실행한 뒤 다시 prompt를 출력합니다.
 
@@ -175,7 +168,7 @@ minishell$ exit
 
 # 3. 이 프로젝트에서 배울 수 있는 개념들
 
-Minishell의 가장 큰 장점은 **여러 운영체제 개념이 하나의 프로젝트 안에서 연결된다는 것** 입니다.
+Minishell의 가장 큰 특징은 **여러 운영체제 개념이 하나의 프로젝트 안에서 연결된다는 것** 입니다.
 
 | 개념 | Minishell에서 배우는 내용 |
 | --- | --- |
@@ -194,8 +187,6 @@ Minishell의 가장 큰 장점은 **여러 운영체제 개념이 하나의 프�
 | Builtin | Shell 내부 명령어 구현 |
 | Memory Management | 동적 메모리와 메모리 누수 관리 |
 | Process synchronization | 부모/자식 프로세스 실행 순서 관리 |
-
-특히 중요한 것은 이 개념들이 독립적으로 존재하지 않는다는 것입니다.
 
 예를 들어:
 
@@ -347,7 +338,7 @@ Execution
 
 # 4. 구현 범위 — 구현해야 하는 내용
 
-Minishell의 구현 범위는 크게 **Shell 기본 기능 + 명령 실행 + redirection + pipe + environment + signal + builtin**으로 나눌 수 있습니다.
+Minishell의 구현 범위는 크게 **명령어 해석 + Shell 기본 기능 + 명령 실행 + redirection + pipe + environment + signal + builtin**으로 나눌 수 있습니다.
 
 ---
 
