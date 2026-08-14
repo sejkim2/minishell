@@ -338,13 +338,11 @@ Execution
 
 # 4. 구현 범위 — 구현해야 하는 내용
 
-Minishell의 구현 범위는 크게 **명령어 해석 + Shell 기본 기능 + 명령 실행 + redirection + pipe + environment + signal + builtin**으로 나눌 수 있습니다.
+Minishell의 구현 범위는 크게 **입력창 + 파싱 + 외부 명령 실행 + redirection + pipe + environment + signal + builtin**으로 나눌 수 있습니다.
 
 ---
 
-## 4-1. 기본 Shell
-
-### Prompt 및 History
+## 4-1. Prompt 및 History
 
 main.c에서 readline()을 이용해 사용자 입력을 받고, 입력된 명령을 처리한 후 다시 Prompt를 출력하는 REPL 구조를 사용합니다.
 
@@ -384,126 +382,9 @@ add_history();
 
 ---
 
-# 4-2. Lexer
-
-Lexer는 단순히 공백을 기준으로 문자열을 분리하는 방식이 아닙니다.
-
-다음과 같은 Token 종류를 정의하고 있습니다.
-
-```text
-WORD
-REDIRECTION
-PIPE
-AND_IF
-OR_IF
-L_BRA
-R_BRA
-...
-```
-
-Lexer 디렉터리는 다음과 같이 구성되어 있습니다.
-
-```text
-srcs/lexer_dir/
-├── lexer.c
-├── tokenize.c
-├── parse_redirection.c
-├── parse_quote_string.c
-├── parse_pipe_or_orif_or_andif.c
-├── parse_word_or_branket.c
-└── ...
-```
-
-따라서 다음과 같은 문법을 구분할 수 있습니다.
-
-```text
-echo hello
-echo "hello world"
-cat < input.txt
-cat << EOF
-ls | grep txt
-echo A && echo B
-echo A || echo B
-```
-
-또한 (, )도 Token으로 처리하며, 괄호의 짝과 잘못된 괄호 구조를 검사합니다.
-
-# 4-3. Parser
+## 4-2. Parsing
 
 [Lexer & Parser](docs/PARSE.md)
-
-Parser는 Lexer가 만든 Token Linked List를 Tree 구조로 변환합니다.
-
-전체적인 흐름은 다음과 같습니다.
-
-```text
-Token Linked List
-        ↓
-      parser()
-        ↓
-    parse_list()
-        ↓
-      Tree
-```
-
-예를 들어 다음 명령어는
-
-```
-cat file | grep hello > result.txt
-```
-
-Lexer에서는 다음과 같은 Token이 만들어집니다.
-
-```
-WORD
-WORD
-PIPE
-WORD
-WORD
-REDIRECTION
-WORD
-```
-
-Parser는 이를 Tree 구조로 변환합니다.
-
-개념적으로 다음과 같은 구조가 됩니다.
-
-```text
-              ROOT
-                │
-               LIST
-                │
-             PIPELINE
-             /      \
-          cat       grep
-           │          │
-         file        hello
-                       │
-                       ↓
-                  result.txt
-```
-
-이렇게 만들어진 Tree를 Executor가 순회하면서 실제 명령을 실행합니다.
-
-# 4-4. Tree
-
-이 프로젝트의 핵심적인 특징 중 하나는 Tree 기반의 실행 구조입니다.
-
-Header에서는 다음과 같은 t_tree_node를 사용합니다.
-
-```
-typedef struct s_tree_node
-{
-    int in_fork;
-    t_symbol symbol;
-    t_token *token;
-    int num_of_child;
-    struct s_tree_node *next;
-    struct s_tree_node *child_list;
-} t_tree_node;
-```
-
-실행의 진입점은 run_root()입니다.
 
 전체 실행 흐름은 다음과 같습니다.
 
@@ -529,7 +410,7 @@ builtin / execve
 
 즉 Parser는 실행할 명령의 구조를 만드는 역할을 담당하고, run_* 계열의 함수는 만들어진 Tree를 실제 프로세스 실행으로 연결합니다.
 
-# 4-2. 외부 명령 실행
+## 4-3. 외부 명령 실행
 
 다음과 같은 명령을 실행할 수 있어야 합니다.
 
@@ -578,7 +459,7 @@ waitpid()
 
 ---
 
-# 4-3. Quote
+## 4-4. Quote
 
 ### Single Quote
 
@@ -616,7 +497,7 @@ echo "$USER"
 
 ---
 
-# 4-4. Environment Variable
+## 4-5. Environment Variable
 
 환경변수 expansion을 지원합니다.
 
@@ -649,7 +530,7 @@ echo $?
 
 ---
 
-# 4-5. Redirection
+## 4-6. Redirection
 
 네 가지 redirection을 구현합니다.
 
@@ -719,7 +600,7 @@ EOF
 
 ---
 
-# 4-6. Pipe
+## 4-7. Pipe
 
 ```bash
 ls | grep txt
@@ -764,7 +645,7 @@ wc
 
 ---
 
-# 4-7. Builtin
+## 4-8. Builtin
 
 Shell 내부에서 직접 구현해야 하는 명령어가 있습니다.
 
@@ -814,7 +695,7 @@ Shell
 
 ---
 
-# 4-8. Signal
+## 4-9. Signal
 
 다음 세 가지를 처리해야 합니다.
 
@@ -843,7 +724,7 @@ Ctrl-\
 
 ---
 
-# 4-9. Memory Management
+## 4-10. Memory Management
 
 모든 heap memory는 적절하게 해제해야 합니다.
 
@@ -867,7 +748,7 @@ execution
 
 ---
 
-# 4-10. Bonus
+## 4-11. Bonus
 
 Bonus에서는 추가적으로:
 
