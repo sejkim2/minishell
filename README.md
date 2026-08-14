@@ -216,9 +216,9 @@ waitpid()
 
 ---
 
-## 핵심적으로 배울 수 있는 4가지
+## 핵심적으로 배울 수 있는 5가지
 
-### ① Process
+### 1. Process
 
 ```c
 fork();
@@ -230,7 +230,7 @@ waitpid();
 
 ---
 
-### ② File Descriptor
+### 2. File Descriptor
 
 Unix에서:
 
@@ -255,7 +255,7 @@ dup2();
 
 ---
 
-### ③ IPC와 Pipe
+### 3. IPC와 Pipe
 
 ```bash
 ls | grep txt
@@ -277,7 +277,7 @@ ls | grep txt
 
 ---
 
-### ④ Parser
+### 4. Parser
 
 Shell은 입력 문자열을 단순히 공백 기준으로 자르면 안 됩니다.
 
@@ -335,6 +335,8 @@ Execution
 ```
 
 ---
+
+### 5. Memory Management
 
 # 4. 구현 범위 — 구현해야 하는 내용
 
